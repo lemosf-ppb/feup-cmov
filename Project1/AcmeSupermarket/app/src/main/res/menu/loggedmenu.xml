@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/photo"
+        android:icon="@mipmap/camera_icon_foreground"
+        android:title="QR reader"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/logOut"
+        android:icon="@mipmap/user_icon"
+        android:title="Log out"
+        app:showAsAction="always" />
+
+</menu>
