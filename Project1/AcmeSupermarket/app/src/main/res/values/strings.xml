@@ -1,9 +1,18 @@
 <resources>
     <string name="app_name">AcmeSupermarket</string>
     <string name="title_activity_login">Sign in</string>
-    <string name="prompt_email">Email</string>
+
+    <string name="prompt_username">Username</string>
+    <string name="prompt_name">Full Name</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="prompt_confirm_password">Confirm Password</string>
+    <string name="prompt_credit_card_details">Credit Card Details</string>
+    <string name="credit_card_type_visa">Visa</string>
+    <string name="credit_card_type_master_card">Master Card</string>
+    <string name="prompt_credit_card_number">Credit Card Number</string>
+    <string name="prompt_credit_card_validity">Expiration Date (mm/yy)</string>
+    <string name="action_register">Register</string>
+
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>

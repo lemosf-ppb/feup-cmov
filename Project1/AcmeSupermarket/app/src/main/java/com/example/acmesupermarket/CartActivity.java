@@ -1,5 +1,6 @@
 package com.example.acmesupermarket;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -59,7 +60,7 @@ public class CartActivity extends AppCompatActivity {
             double price = 10.6;
             int quantity = 2;
             Item item = new Item(title, description, price, quantity);
-            //cartAdapter.add(item);
+            cartAdapter.add(item);
             Toast.makeText(getApplicationContext(), "Created Batata", Toast.LENGTH_LONG).show();
         }
 
@@ -121,6 +122,7 @@ public class CartActivity extends AppCompatActivity {
             super(CartActivity.this, R.layout.cart_row, items);
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public @NonNull
         View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -129,8 +131,8 @@ public class CartActivity extends AppCompatActivity {
                 row = getLayoutInflater().inflate(R.layout.cart_row, parent, false);
             Item item = items.get(position);
             ((TextView) row.findViewById(R.id.itemTitle)).setText(item.getTitle());
-            ((TextView) row.findViewById(R.id.priceUnit)).setText((int) item.getPrice());
-            ((TextView) row.findViewById(R.id.quantityItem)).setText(item.getQuantity());
+            ((TextView) row.findViewById(R.id.priceUnit)).setText(item.getPrice()+"");
+            ((TextView) row.findViewById(R.id.quantityItem)).setText(item.getQuantity()+"");
 
             return (row);
         }
