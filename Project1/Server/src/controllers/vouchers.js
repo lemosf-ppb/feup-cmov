@@ -2,7 +2,7 @@ const { Voucher } = require('../models');
 
 const retrieveUnusedByUser = async (userId) => Voucher.findAll({
   where: {
-    userId,
+    UserId: userId,
     isUsed: false,
   },
 });

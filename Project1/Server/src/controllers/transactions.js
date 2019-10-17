@@ -2,6 +2,8 @@ const {
   User, Transaction, TransactionItem, Voucher,
 } = require('../models');
 
+const VOUCHER_FACTOR = 100;
+
 const create = async (productsList, useDiscounts, userId, voucherId) => {
   const transaction = await Transaction.create({ useDiscounts, UserId: userId, voucherId });
   const user = await User.findByPk(userId);
@@ -9,11 +11,11 @@ const create = async (productsList, useDiscounts, userId, voucherId) => {
 
   const totalPrice = await createTransactionItems(productsList, transaction.id);
 
-  const usedDiscount = await calculateUsedDiscount(useDiscounts, totalPrice, user);
+  await newVoucher(user, totalPrice);
+
+  const usedDiscount = await calculateUsedDiscount(transaction.useDiscounts, totalPrice, user);
 
   if (voucherId) await applyVoucher(totalPrice, voucherId, user, transaction);
-
-  await newVoucher(user, totalPrice);
 
   return transaction.update({ totalPrice: totalPrice - usedDiscount });
 };
@@ -40,12 +42,12 @@ const createTransactionItems = async (productsList, transactionId) => {
 };
 
 const newVoucher = async (user, totalPrice) => {
-  // TODO: Check if it will be created a new voucher
+  const newTotalValueSpent = user.totalValueSpent + totalPrice;
+  const numberOfVouchers = Math.floor(newTotalValueSpent / VOUCHER_FACTOR) - Math.floor(user.totalValueSpent / VOUCHER_FACTOR);
 
-  // Update user total value spent
-  await user.update({ totalValueSpent: user.totalValueSpent + totalPrice });
+  await user.update({ totalValueSpent: newTotalValueSpent });
 
-  // TODO: Create new voucher
+  for (let i = 0; i < numberOfVouchers; i++) await Voucher.create({ UserId: user.id });
 };
 
 const calculateUsedDiscount = async (useDiscounts, totalPrice, user) => {
@@ -63,12 +65,12 @@ const calculateUsedDiscount = async (useDiscounts, totalPrice, user) => {
 const applyVoucher = async (totalPrice, voucherId, user, transaction) => {
   const voucher = await Voucher.findByPk(voucherId);
   if (!voucher) throw new Error('Voucher not found');
+  if (voucher.isUsed) return;
 
   const discountValue = totalPrice * (voucher.discount / 100.0);
-
   await user.update({ discountValueAvailable: user.discountValueAvailable + discountValue });
 
-  await voucher.update({ isUsed: true });
+  await voucher.update({ isUsed: true, TransactionId: transaction.id });
 
   await transaction.update({ voucherId });
 };

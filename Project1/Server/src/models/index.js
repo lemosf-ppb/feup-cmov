@@ -31,7 +31,8 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
+Sequelize.postgres.DECIMAL.parse = function (value) { return parseFloat(value); };
+
 db.sequelize = sequelize;
-db.Sequelize = Sequelize;
 
 module.exports = db;
