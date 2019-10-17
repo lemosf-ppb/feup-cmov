@@ -13,6 +13,8 @@ const create = async (productsList, useDiscounts, userId, voucherId) => {
 
   if (voucherId) await applyVoucher(totalPrice, voucherId, user, transaction);
 
+  await newVoucher(user, totalPrice);
+
   return transaction.update({ totalPrice: totalPrice - usedDiscount });
 };
 
@@ -37,13 +39,22 @@ const createTransactionItems = async (productsList, transactionId) => {
   return totalPrice;
 };
 
+const newVoucher = async (user, totalPrice) => {
+  // TODO: Check if it will be created a new voucher
+
+  // Update user total value spent
+  await user.update({ totalValueSpent: user.totalValueSpent + totalPrice });
+
+  // TODO: Create new voucher
+};
+
 const calculateUsedDiscount = async (useDiscounts, totalPrice, user) => {
   let usedDiscount = 0;
   if (useDiscounts) {
-    const priceToPay = Math.max(totalPrice - user.totalValueAccumulated, 0);
+    const priceToPay = Math.max(totalPrice - user.discountValueAvailable, 0);
     usedDiscount = totalPrice - priceToPay;
 
-    await user.update({ totalValueAccumulated: user.totalValueAccumulated - usedDiscount });
+    await user.update({ discountValueAvailable: user.discountValueAvailable - usedDiscount });
   }
 
   return usedDiscount;
@@ -55,7 +66,7 @@ const applyVoucher = async (totalPrice, voucherId, user, transaction) => {
 
   const discountValue = totalPrice * (voucher.discount / 100.0);
 
-  await user.update({ totalValueAccumulated: user.totalValueAccumulated + discountValue });
+  await user.update({ discountValueAvailable: user.discountValueAvailable + discountValue });
 
   await voucher.update({ isUsed: true });
 

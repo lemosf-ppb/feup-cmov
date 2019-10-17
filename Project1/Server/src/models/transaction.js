@@ -20,15 +20,5 @@ module.exports = (sequelize, DataTypes) => {
     // });
   };
 
-  Transaction.beforeCreate(async (transaction) => {
-    // Update total Price
-    // const book = await order.getBook();
-    // order.totalPrice = order.quantity * book.price;
-  });
-
-  Transaction.afterCreate(async (transaction) => {
-    // Create voucher? new multiple of 100.00€
-  });
-
   return Transaction;
 };
