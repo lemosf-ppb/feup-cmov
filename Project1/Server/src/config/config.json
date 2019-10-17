@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "user",
-    "password": "password",
-    "database": "template",
-    "host": "template-psqldb",
+    "username": "cmov",
+    "password": "cmov",
+    "database": "supermarket",
+    "host": "supermarket-psqldb",
     "dialect": "postgres"
   },
   "test": {
