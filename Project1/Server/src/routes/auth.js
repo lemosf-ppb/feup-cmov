@@ -16,7 +16,7 @@ router.post('/signup', async (req, res) => {
     delete user._previousDataValues.password;
     /* eslint-enable */
     return req.login(user, { session: false }, async () => {
-      const body = { id: user.id, email: user.email };
+      const body = { id: user.id, username: user.username };
       const token = jwt.sign({ user: body }, JWT_SECRET);
 
       return res.json({
@@ -40,7 +40,7 @@ router.post('/login', async (req, res, next) => {
       req.login(user, { session: false }, async (error) => {
         if (error) return next(error);
 
-        const body = { id: user.id, email: user.email };
+        const body = { id: user.id, username: user.username };
         const token = jwt.sign({ user: body }, JWT_SECRET);
 
         return res.json({ token });

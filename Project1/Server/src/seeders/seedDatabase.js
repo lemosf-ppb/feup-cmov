@@ -1,8 +1,7 @@
 const { User } = require('../models');
 
 const {
-  todoController,
-  todoItemsController,
+  transactionsController,
 } = require('../controllers');
 
 const initializeUsers = async () => {
@@ -13,27 +12,18 @@ const initializeUsers = async () => {
   ]);
 };
 
-const initializeTodos = async () => {
+const initializeTransactions = async () => {
   await Promise.all([
-    todoController.create('My First Todo'),
-    todoController.create('Lorem impsum'),
-    todoController.create('Buy some books'),
-  ]);
-};
-
-const initializeTodoItems = async () => {
-  await Promise.all([
-    todoItemsController.create('My First Todo Item', 1),
-    todoItemsController.create('Random', 1),
-    todoItemsController.create('The Monkey Test', 3),
+    transactionsController.create(),
+    transactionsController.create(),
+    transactionsController.create(),
   ]);
 };
 
 
 const initializeDatabase = async () => {
-  await initializeUsers();
-  await initializeTodos();
-  await initializeTodoItems();
+  // await initializeUsers();
+  // await initializeTransactions();
 };
 
 module.exports = {

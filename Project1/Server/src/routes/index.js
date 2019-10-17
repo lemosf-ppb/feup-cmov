@@ -6,14 +6,16 @@ const router = require('express').Router();
 
 const passport = require('passport');
 const auth = require('./auth');
-const todos = require('./todos');
-const todoItems = require('./todoItems');
+const transactions = require('./transactions');
+const users = require('./users');
+const vouchers = require('./vouchers');
 
 
-router.use('/api/', auth);
-router.use('/api/', passport.authenticate('jwt', { session: false }));
-router.use('/api/', todos);
-router.use('/api/', todoItems);
+router.use('/', auth);
+router.use('/', passport.authenticate('jwt', { session: false }));
+router.use('/', transactions);
+router.use('/', users);
+router.use('/', vouchers);
 
 
 module.exports = router;

@@ -1,7 +1,9 @@
-const todoController = require('./todos');
-const todoItemsController = require('./todoitems');
+const transactionsController = require('./transactions');
+const usersController = require('./users');
+const vouchersController = require('./vouchers');
 
 module.exports = {
-  todoController,
-  todoItemsController,
+  transactionsController,
+  usersController,
+  vouchersController,
 };

@@ -5,19 +5,23 @@ const { User } = require('../../models');
 const { JWT_SECRET } = require('../../config/configs');
 
 passport.use('signup', new LocalStrategy({
-  usernameField: 'email',
+  usernameField: 'username',
   passwordField: 'password',
-}, async (email, password, done) => {
+  passReqToCallback: true,
+}, async (req, username, password, done) => {
   try {
     const user = await User.findOne({
-      where: { email },
+      where: { username },
     });
 
     if (user) {
       return done(null, false, { message: 'User already exists' });
     }
+    const { name, creditCard, publicKey } = req.body;
+    const newUser = await User.create({
+      name, username, password, creditCard, publicKey,
+    });
 
-    const newUser = await User.create({ email, password });
     return done(null, newUser);
   } catch (error) {
     return done(error);
@@ -25,12 +29,12 @@ passport.use('signup', new LocalStrategy({
 }));
 
 passport.use('login', new LocalStrategy({
-  usernameField: 'email',
+  usernameField: 'username',
   passwordField: 'password',
-}, async (email, password, done) => {
+}, async (username, password, done) => {
   try {
     const user = await User.findOne({
-      where: { email },
+      where: { username },
     });
     if (!user) {
       return done(null, false, { message: 'User not found' });
