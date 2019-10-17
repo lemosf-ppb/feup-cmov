@@ -4,7 +4,7 @@ const SALT_WORK_FACTOR = 10;
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    uuid: {
+    id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
@@ -46,16 +46,6 @@ module.exports = (sequelize, DataTypes) => {
   User.prototype.isValidPassword = async function (password) {
     const compare = await bcrypt.compare(password, this.password);
     return compare;
-  };
-
-  // TODO: Check this
-  User.associate = (models) => {
-    User.hasMany(models.Transaction, {
-      foreignKey: 'userId',
-    });
-    User.hasMany(models.Voucher, {
-      foreignKey: 'userId',
-    });
   };
 
   User.beforeCreate(async (user) => {

@@ -7,20 +7,17 @@ module.exports = (sequelize, DataTypes) => {
     totalPrice: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
+      defaultValue: 0,
     },
   });
 
   Transaction.associate = (models) => {
-    Transaction.hasMany(models.TransactionItem, {
-      foreignKey: 'transactionId',
-    });
-    Transaction.belongsTo(models.User, {
-      foreignKey: 'userId',
-    });
+    Transaction.hasMany(models.TransactionItem);
+    Transaction.belongsTo(models.User);
     // TODO: Check this if allow null or not
-    Transaction.hasOne(models.Voucher, {
-      foreignKey: 'voucherId',
-    });
+    // Transaction.hasOne(models.Voucher, {
+    //   foreignKey: 'voucherId',
+    // });
   };
 
   Transaction.beforeCreate(async (transaction) => {

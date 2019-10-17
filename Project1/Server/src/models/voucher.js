@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Voucher = sequelize.define('Voucher', {
-    uuid: {
+    id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
@@ -19,7 +19,10 @@ module.exports = (sequelize, DataTypes) => {
 
   Voucher.associate = (models) => {
     Voucher.belongsTo(models.User, {
-      foreignKey: 'userId',
+      // foreignKey: 'userUuid',
+    });
+    Voucher.belongsTo(models.Transaction, {
+      // foreignKey: 'transactionId',
     });
   };
 

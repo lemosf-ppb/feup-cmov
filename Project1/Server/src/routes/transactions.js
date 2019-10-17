@@ -3,14 +3,14 @@ const { transactionsController } = require('../controllers');
 
 router.post('/transactions', async (req, res) => {
   const {
-    productsList, useDiscounts, userId, voucherId,
+    productsList, useDiscounts, voucherId,
   } = req.body;
 
   try {
     const transaction = await transactionsController.create(
       productsList,
       useDiscounts,
-      userId,
+      req.user.id,
       voucherId,
     );
     res.status(201).send(transaction);
@@ -20,7 +20,7 @@ router.post('/transactions', async (req, res) => {
 });
 
 router.get('/transactions', async (req, res) => {
-  const { userId } = req.body;
+  const userId = req.user.id;
 
   try {
     const transactions = await transactionsController.retrieveByUser(userId);

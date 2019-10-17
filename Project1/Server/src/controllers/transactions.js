@@ -3,7 +3,7 @@ const {
 } = require('../models');
 
 const create = async (productsList, useDiscounts, userId, voucherId) => {
-  const transaction = await Transaction.create({ useDiscounts, userId, voucherId });
+  const transaction = await Transaction.create({ useDiscounts, UserId: userId, voucherId });
   const user = await User.findByPk(userId);
   if (!user) throw new Error('User not found');
 
@@ -18,23 +18,22 @@ const create = async (productsList, useDiscounts, userId, voucherId) => {
 
 const retrieveByUser = async (userId) => Transaction.findAll({
   where: {
-    userId,
+    UserId: userId,
   },
   include: [{
     model: TransactionItem,
   }],
 });
 
-const createTransactionItems = async (transactionId, productsList) => {
+const createTransactionItems = async (productsList, transactionId) => {
   let totalPrice = 0;
   for await (const product of productsList) {
     await TransactionItem.create({
       ...product, // (uuid, price, quantity)
-      transactionId,
+      TransactionId: transactionId,
     });
     totalPrice += product.quantity * product.price;
   }
-
   return totalPrice;
 };
 
