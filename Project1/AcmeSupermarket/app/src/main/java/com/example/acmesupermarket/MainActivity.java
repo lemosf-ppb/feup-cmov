@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.cooltechworks.creditcarddesign.CardEditActivity;
+import com.cooltechworks.creditcarddesign.CreditCardUtils;
+
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -35,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.signIn) {
-            Intent intent = new Intent(this, CartActivity.class);
+        if (id == R.id.signUp) {
+            Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
         }
 
