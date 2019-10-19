@@ -1,6 +1,8 @@
 package com.example.acmesupermarket;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,38 +31,87 @@ public class RegistryFragment2 extends Fragment {
         expiry = v.findViewById(R.id.credit_card_validity);
         cvv = v.findViewById(R.id.credit_card_cvv);
 
-        card_holder.setOnFocusChangeListener((v, hasFocus) -> {
-            if(card_holder.getText().toString().equals("")){
-                card_holder.setError("Please fill in this field");
-            }
-            else{
-                creditCardView.setCardHolderName(card_holder.getText().toString());
-            }
-        });
+        number.addTextChangedListener(new TextWatcher() {
 
-        number.setOnFocusChangeListener((v, hasFocus) -> {
-            if(number.getText().toString().equals("")){
-                number.setError("Please fill in this field");
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-            else{
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() != 0) {
+                    //flipToBlue();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 16) {
+                    return;
+                }
                 creditCardView.setCardNumber(number.getText().toString());
             }
         });
 
-        expiry.setOnFocusChangeListener((v, hasFocus) -> {
-            if(expiry.getText().toString().equals("")){
-                expiry.setError("Please fill in this field");
+        card_holder.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-            else{
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() != 0) {
+                    //flipToBlue();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 17) {
+                    return;
+                }
+                creditCardView.setCardHolderName(card_holder.getText().toString());
+            }
+        });
+
+        expiry.addTextChangedListener(new TextWatcher() {
+
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 5) {
+                    return;
+                }
                 creditCardView.setCardExpiry(expiry.getText().toString());
             }
         });
 
-        cvv.setOnFocusChangeListener((v, hasFocus) -> {
-            if(cvv.getText().toString().equals("")){
-                cvv.setError("Please fill in this field");
+        cvv.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-            else{
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 3) {
+                    return;
+                }
                 creditCardView.setCVV(cvv.getText().toString());
             }
         });

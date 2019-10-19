@@ -16,7 +16,7 @@
     <string name="prompt_credit_card_number">Credit Card Number</string>
     <string name="prompt_credit_card_validity">Expiration Date (mm/yy)</string>
     <string name="action_register">Register</string>
-    <string name="card_vcc">VCC</string>
+    <string name="card_vcc">CVV</string>
 
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
