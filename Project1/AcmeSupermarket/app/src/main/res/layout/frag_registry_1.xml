@@ -7,74 +7,71 @@
     tools:context=".RegistryFragment1">
 
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
-        android:layout_centerHorizontal="false"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="160dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
 
-            android:layout_marginTop="96dp"
-            android:hint="@string/prompt_username"
-            android:inputType="text"
-            android:selectAllOnFocus="true" />
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
 
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+                android:layout_marginTop="96dp"
+                android:hint="@string/prompt_username"
+                android:inputType="text"
+                android:selectAllOnFocus="true" />
 
-            android:layout_marginTop="8dp"
-            android:hint="@string/prompt_name"
-            android:inputType="text"
-            android:selectAllOnFocus="true" />
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:hint="@string/prompt_name"
+                android:inputType="text"
+                android:selectAllOnFocus="true" />
 
-            android:layout_marginTop="8dp"
-            android:hint="@string/prompt_password"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:selectAllOnFocus="true" />
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
 
-        <EditText
-            android:id="@+id/confirm_password"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:hint="@string/prompt_password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:selectAllOnFocus="true" />
 
-            android:layout_marginTop="8dp"
-            android:hint="@string/prompt_confirm_password"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:selectAllOnFocus="true" />
+            <EditText
+                android:id="@+id/confirm_password"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
 
-        <Button
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="64dp"
-            android:text="@string/btn_next" />
-    </LinearLayout>
+                android:layout_marginTop="8dp"
+                android:hint="@string/prompt_confirm_password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:selectAllOnFocus="true" />
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="64dp"
+                android:text="@string/btn_next" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </RelativeLayout>

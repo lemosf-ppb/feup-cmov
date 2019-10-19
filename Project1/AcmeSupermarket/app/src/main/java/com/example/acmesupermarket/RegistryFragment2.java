@@ -6,6 +6,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,8 +17,11 @@ import com.cooltechworks.creditcarddesign.CreditCardView;
 
 public class RegistryFragment2 extends Fragment {
 
-    View v;
-    TextView card_holder, number, expiry, cvv;
+    private static final String TAG = "RegistryFragment2";
+
+    private View v;
+    private TextView card_holder, number, expiry, cvv;
+    private Button submit_btn;
 
     @Nullable
     @Override
@@ -30,6 +34,8 @@ public class RegistryFragment2 extends Fragment {
         number = v.findViewById(R.id.credit_card_number);
         expiry = v.findViewById(R.id.credit_card_validity);
         cvv = v.findViewById(R.id.credit_card_cvv);
+        submit_btn = v.findViewById(R.id.submit_registry);
+
 
         number.addTextChangedListener(new TextWatcher() {
 
@@ -114,6 +120,36 @@ public class RegistryFragment2 extends Fragment {
                 }
                 creditCardView.setCVV(cvv.getText().toString());
             }
+        });
+
+        submit_btn.setOnClickListener((View v) -> {
+
+            String number = this.number.getText().toString();
+            if(number.length()!=16){
+                this.number.setError("Please fill a valid 16 digit card number!");
+                return;
+            }
+
+            String card_holder = this.card_holder.getText().toString();
+            if(card_holder.equals("")){
+                this.card_holder.setError("Please fill in this field");
+                return;
+            }
+
+            String expiry = this.expiry.getText().toString();
+            if(expiry.length()!=5){
+                this.expiry.setError("Please fill in this field with MM/YY");
+                return;
+            }
+
+            String cvv = this.cvv.getText().toString();
+            if(cvv.length()!=3){
+                this.cvv.setError("Please fill in this field");
+                return;
+            }
+
+            ((RegisterActivity)getActivity()).onBtnSignUpClick(card_holder,number,expiry,cvv);
+
         });
 
         return v;
