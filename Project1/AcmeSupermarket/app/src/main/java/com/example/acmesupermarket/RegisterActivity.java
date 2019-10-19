@@ -12,10 +12,15 @@ import android.view.View;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.register_frame, new RegistryFragment1()).commit();
     }

@@ -30,26 +30,29 @@ public class RegistryFragment1 extends Fragment {
         password = v.findViewById(R.id.password);
         confirm_password = v.findViewById(R.id.confirm_password);
 
-        name.setOnFocusChangeListener((v, hasFocus) -> {
+        Button next_btn = v.findViewById(R.id.next);
+        next_btn.setOnClickListener(view -> {
+
             if(username.getText().toString().equals("")){
                 username.setError("Please fill in this field");
+                return;
             }
             if(name.getText().toString().equals("")){
                 name.setError("Please fill in this field");
+                return;
             }
             if(password.getText().toString().equals("")){
                 password.setError("Please fill in this field");
+                return;
             }
             if(confirm_password.getText().toString().equals("")){
                 confirm_password.setError("Please fill in this field");
+                return;
             }
             else if(!confirm_password.getText().toString().equals(password.getText().toString())){
                 confirm_password.setError("Please make sure the passwords match");
+                return;
             }
-        });
-
-        Button next_btn = v.findViewById(R.id.next);
-        next_btn.setOnClickListener(view -> {
 
             RegistryFragment2  secondFragment= new RegistryFragment2();
 
