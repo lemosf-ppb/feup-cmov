@@ -1,4 +1,4 @@
-package com.example.acmesupermarket;
+package com.example.acmesupermarket.fragments.registry;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.cooltechworks.creditcarddesign.CreditCardView;
+import com.example.acmesupermarket.R;
+import com.example.acmesupermarket.RegisterActivity;
 
 public class RegistryFragment2 extends Fragment {
 

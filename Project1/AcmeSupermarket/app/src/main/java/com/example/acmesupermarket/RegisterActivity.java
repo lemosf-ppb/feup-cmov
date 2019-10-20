@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.acmesupermarket.fragments.SectionsStatePagerAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.acmesupermarket.fragments.registry.RegistryFragment1;
+import com.example.acmesupermarket.fragments.registry.RegistryFragment2;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
-
-import android.view.View;
 
 public class RegisterActivity extends AppCompatActivity {
 

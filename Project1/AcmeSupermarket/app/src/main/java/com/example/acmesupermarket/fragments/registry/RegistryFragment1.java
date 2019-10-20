@@ -1,4 +1,4 @@
-package com.example.acmesupermarket;
+package com.example.acmesupermarket.fragments.registry;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.acmesupermarket.R;
+import com.example.acmesupermarket.RegisterActivity;
 
 public class RegistryFragment1 extends Fragment {
 

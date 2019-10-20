@@ -9,13 +9,17 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import com.cooltechworks.creditcarddesign.CardEditActivity;
 import com.cooltechworks.creditcarddesign.CreditCardUtils;
+import com.example.acmesupermarket.fragments.SectionsStatePagerAdapter;
+import com.example.acmesupermarket.fragments.homepage.HomepageFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
+    private ViewPager mViewPager;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +29,15 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        findViewById(R.id.signUpbutton).setOnClickListener((View v) -> onBtSignUpClick());
+        mViewPager = findViewById(R.id.homepage_viewpager);
+        setupViewPager(mViewPager);
+    }
+
+
+    private void setupViewPager(ViewPager mViewPager){
+        SectionsStatePagerAdapter adapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new HomepageFragment(), "HomepageFragment");
+        mViewPager.setAdapter(adapter);
     }
 
     @Override
@@ -44,11 +56,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
-    }
-
-    void onBtSignUpClick() {
-        //Register user
-        Intent intent = new Intent(this, CartActivity.class);
-        startActivity(intent);
     }
 }
