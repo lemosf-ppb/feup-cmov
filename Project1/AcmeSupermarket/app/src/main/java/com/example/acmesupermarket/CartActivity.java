@@ -16,6 +16,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.acmesupermarket.fragments.SectionsStatePagerAdapter;
 import com.example.acmesupermarket.fragments.shop.CartFragment;
+import com.example.acmesupermarket.fragments.shop.TransactionFragment;
+import com.example.acmesupermarket.fragments.shop.VoucherFragment;
+import com.google.android.material.tabs.TabLayout;
 
 import java.nio.charset.StandardCharsets;
 
@@ -25,6 +28,7 @@ public class CartActivity extends AppCompatActivity {
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
     private CartFragment cartFragment;
     private ViewPager mViewPager;
+    private TabLayout tabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,35 @@ public class CartActivity extends AppCompatActivity {
 
         mViewPager = findViewById(R.id.shop_view_pager);
         setupViewPager(mViewPager);
+
+        tabs = findViewById(R.id.tabs);
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                switch (position){
+                    case 0:
+                        setViewPager(0);
+                        break;
+                    case 1:
+                        setViewPager(1);
+                        break;
+                    case 2:
+                        setViewPager(2);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     private void setupViewPager(ViewPager mViewPager){
@@ -43,8 +76,8 @@ public class CartActivity extends AppCompatActivity {
 
         SectionsStatePagerAdapter adapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
         adapter.addFragment(cartFragment, "CartFragment");
-        //adapter.addFragment(new TransactionFragment(), "TransactionFragment");
-        //adapter.addFragment(new VoucherFragment(), "VoucherFragment");
+        adapter.addFragment(new TransactionFragment(), "TransactionFragment");
+        adapter.addFragment(new VoucherFragment(), "VoucherFragment");
         mViewPager.setAdapter(adapter);
     }
 
@@ -120,5 +153,9 @@ public class CartActivity extends AppCompatActivity {
         for(byte b: ba)
             sb.append(String.format("%02x", b));
         return sb.toString();
+    }
+
+    public void setViewPager(int fragmentNumber){
+        mViewPager.setCurrentItem(fragmentNumber);
     }
 }
