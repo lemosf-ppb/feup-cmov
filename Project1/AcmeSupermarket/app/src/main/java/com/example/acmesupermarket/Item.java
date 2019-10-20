@@ -1,25 +1,40 @@
 package com.example.acmesupermarket;
 
-public class Item {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Item implements Parcelable {
 
     private String title;
-    private String description;
     private double price;
     private int quantity;
 
-    public Item(String title, String description, double price, int quantity) {
+    public Item(String title, double price, int quantity) {
         this.title = title;
-        this.description = description;
         this.price = price;
         this.quantity = quantity;
     }
 
-    public String getTitle() {
-        return title;
+    protected Item(Parcel in) {
+        title = in.readString();
+        price = in.readDouble();
+        quantity = in.readInt();
     }
 
-    public String getDescription() {
-        return description;
+    public static final Creator<Item> CREATOR = new Creator<Item>() {
+        @Override
+        public Item createFromParcel(Parcel in) {
+            return new Item(in);
+        }
+
+        @Override
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
+
+    public String getTitle() {
+        return title;
     }
 
     public double getPrice() {
@@ -28,5 +43,17 @@ public class Item {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeDouble(price);
+        dest.writeInt(quantity);
     }
 }

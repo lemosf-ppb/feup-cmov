@@ -1,34 +1,30 @@
 package com.example.acmesupermarket;
 
-import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
+
+import com.example.acmesupermarket.fragments.SectionsStatePagerAdapter;
+import com.example.acmesupermarket.fragments.shop.CartFragment;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    List<Item> items = new ArrayList<>();
-    ArrayAdapter<Item> cartAdapter;
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+    private CartFragment cartFragment;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +34,18 @@ public class CartActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ListView list = findViewById(R.id.cartList);
-        cartAdapter = new CartItemAdapter();
-        list.setAdapter(cartAdapter);
+        mViewPager = findViewById(R.id.shop_view_pager);
+        setupViewPager(mViewPager);
+    }
+
+    private void setupViewPager(ViewPager mViewPager){
+        cartFragment = new CartFragment();
+
+        SectionsStatePagerAdapter adapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(cartFragment, "CartFragment");
+        //adapter.addFragment(new TransactionFragment(), "TransactionFragment");
+        //adapter.addFragment(new VoucherFragment(), "VoucherFragment");
+        mViewPager.setAdapter(adapter);
     }
 
     @Override
@@ -56,11 +61,11 @@ public class CartActivity extends AppCompatActivity {
         if (id == R.id.photo) {
             scan(true);
             String title = "Batata";
-            String description = "Viscosa mas saborosa";
             double price = 10.6;
             int quantity = 2;
-            Item item = new Item(title, description, price, quantity);
-            cartAdapter.add(item);
+            Item item = new Item(title, price, quantity);
+
+            cartFragment.addItem(item);
             Toast.makeText(getApplicationContext(), "Created Batata", Toast.LENGTH_LONG).show();
         }
 
@@ -115,26 +120,5 @@ public class CartActivity extends AppCompatActivity {
         for(byte b: ba)
             sb.append(String.format("%02x", b));
         return sb.toString();
-    }
-
-    class CartItemAdapter extends ArrayAdapter<Item> {
-        CartItemAdapter() {
-            super(CartActivity.this, R.layout.cart_row, items);
-        }
-
-        @SuppressLint("SetTextI18n")
-        @Override
-        public @NonNull
-        View getView(int position, View convertView, @NonNull ViewGroup parent) {
-            View row = convertView;
-            if (row == null)
-                row = getLayoutInflater().inflate(R.layout.cart_row, parent, false);
-            Item item = items.get(position);
-            ((TextView) row.findViewById(R.id.itemTitle)).setText(item.getTitle());
-            ((TextView) row.findViewById(R.id.priceUnit)).setText(item.getPrice()+"");
-            ((TextView) row.findViewById(R.id.quantityItem)).setText(item.getQuantity()+"");
-
-            return (row);
-        }
     }
 }

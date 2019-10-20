@@ -34,8 +34,8 @@
             android:text="@string/vouchers" />
     </com.google.android.material.tabs.TabLayout>
 
-    <ListView
-        android:id="@+id/cartList"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/shop_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tabs" />
