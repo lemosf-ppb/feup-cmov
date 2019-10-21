@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../models');
+const { usersController } = require('../controllers');
 const { auth } = require('../services/auth');
 
 router.post('/signup', async (req, res) => {
@@ -7,47 +7,33 @@ router.post('/signup', async (req, res) => {
     username, password, name, creditCard, publicKey,
   } = req.body;
 
-  const user = await User.findOne({
-    where: { username },
-  });
-
-  if (user) {
-    return res.status(400).send('User already exists');
+  try {
+    const newUser = await usersController.signup(
+      username, password, name, creditCard, publicKey,
+    );
+    return res.status(200).send({
+      message: 'Signup successful',
+      userId: newUser.id,
+      supermarketPublicKey: auth.getPublicKey(),
+    });
+  } catch (error) {
+    return res.status(400).send(error.message);
   }
-
-  const newUser = await User.create({
-    name, username, password, creditCard, publicKey,
-  });
-
-  return res.json({
-    message: 'Login successful',
-    userId: newUser.id,
-    supermarketPublicKey: auth.getPublicKey(),
-  });
 });
 
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
-  const user = await User.findOne({
-    where: { username },
-  });
-
-  if (!user) {
-    return res.status(400).send('User not found');
+  try {
+    const newUser = await usersController.login(username, password);
+    return res.status(200).send({
+      message: 'Login successful',
+      userId: newUser.id,
+      supermarketPublicKey: auth.getPublicKey(),
+    });
+  } catch (error) {
+    return res.status(400).send(error.message);
   }
-
-  const validate = await user.isValidPassword(password);
-  if (!validate) {
-    return res.status(400).send('Wrong Password');
-  }
-
-  return res.json({
-    message: 'Login successful',
-    userId: user.id,
-    supermarketPublicKey: auth.getPublicKey(),
-    userPK: user.publicKey,
-  });
 });
 
 module.exports = router;

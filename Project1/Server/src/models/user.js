@@ -22,19 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    role: {
-      type: DataTypes.ENUM('CLIENT', 'TERMINAL'),
-      allowNull: false,
-      defaultValue: 'CLIENT',
-    },
-    // TODO: Think if it will be necessary to extract credit card to an independent entity
-    creditCard: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isCreditCard: true,
-      },
-    },
     publicKey: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -51,6 +38,13 @@ module.exports = (sequelize, DataTypes) => {
     },
   },
   {});
+
+  User.associate = (models) => {
+    User.hasOne(models.CreditCard, {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+  };
 
   // eslint-disable-next-line
   User.prototype.isValidPassword = async function (password) {
