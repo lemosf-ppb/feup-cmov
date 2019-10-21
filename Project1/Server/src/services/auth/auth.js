@@ -53,5 +53,5 @@ module.exports = {
   getPublicKey,
   getPrivateKey,
   createPublicKey,
-  createPrivateKey
+  createPrivateKey,
 };

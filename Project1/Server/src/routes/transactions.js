@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const { usersController, transactionsController } = require('../controllers');
-const {auth} = require('../services/auth');
+const { usersController, transactionsController, vouchersController } = require('../controllers');
+const { auth } = require('../services/auth');
 
 router.post('/transactions', async (req, res) => {
   const {
-    userId, productsList, useDiscounts, voucherId, signature
+    userId, productsList, useDiscounts, voucherId, signature,
   } = req.body;
 
   const user = await usersController.retrieve(userId);
@@ -12,9 +12,11 @@ router.post('/transactions', async (req, res) => {
     return res.status(400).send('User not found');
   }
 
-  const payload = {userId, productsList, useDiscounts, voucherId};
+  const payload = {
+    userId, productsList, useDiscounts, voucherId,
+  };
   const verifyAuth = auth.verifySignature(payload, user.publicKey, signature);
-  if(!verifyAuth) {
+  if (!verifyAuth) {
     return res.status(400).send('Signature invalid');
   }
 
@@ -25,9 +27,9 @@ router.post('/transactions', async (req, res) => {
       userId,
       voucherId,
     );
-    res.status(201).send(transaction);
+    return res.status(201).send(transaction);
   } catch (error) {
-    res.status(400).send(error.message);
+    return res.status(400).send(error.message);
   }
 });
 
@@ -39,17 +41,18 @@ router.get('/transactions', async (req, res) => {
     return res.status(400).send('User not found');
   }
 
-  const payload = {userId};
+  const payload = { userId };
   const verifyAuth = auth.verifySignature(payload, user.publicKey, signature);
-  if(!verifyAuth) {
+  if (!verifyAuth) {
     return res.status(400).send('Signature invalid');
   }
 
   try {
     const transactions = await transactionsController.retrieveByUser(userId);
-    res.status(200).send(transactions);
+    const unusedVouchers = await vouchersController.retrieveUnusedByUser(userId);
+    return res.status(200).send({ transactions, vouchers: unusedVouchers });
   } catch (error) {
-    res.status(400).send(error.message);
+    return res.status(400).send(error.message);
   }
 });
 
