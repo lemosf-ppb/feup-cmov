@@ -1,55 +1,53 @@
 const router = require('express').Router();
-const jwt = require('jsonwebtoken');
-const passport = require('passport');
-const { JWT_SECRET } = require('../config/configs');
-
+const { User } = require('../models');
+const { auth } = require('../services/auth');
 
 router.post('/signup', async (req, res) => {
-  passport.authenticate('signup', { session: false }, async (err, user, info) => {
-    if (!user && info) {
-      return res.status(400).send(info.message);
-    }
+  const {
+    username, password, name, creditCard, publicKey,
+  } = req.body;
 
-    if (!user) return res.status(400).send();
-    /* eslint-disable */
-    delete user.dataValues.password;
-    delete user._previousDataValues.password;
-    /* eslint-enable */
-    return req.login(user, { session: false }, async () => {
-      const body = { id: user.id, username: user.username };
-      const token = jwt.sign({ user: body }, JWT_SECRET);
+  const user = await User.findOne({
+    where: { username },
+  });
 
-      return res.json({
-        message: 'Signup successful',
-        user,
-        token,
-      });
-    });
-  })(req, res);
+  if (user) {
+    return res.status(400).send('User already exists');
+  }
+
+  const newUser = await User.create({
+    name, username, password, creditCard, publicKey,
+  });
+
+  return res.json({
+    message: 'Login successful',
+    userId: newUser.id,
+    supermarketPublicKey: auth.getPublicKey(),
+  });
 });
 
-router.post('/login', async (req, res, next) => {
-  passport.authenticate('login', async (err, user, info) => {
-    try {
-      if (!user && info) {
-        return res.status(400).send(info.message);
-      }
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
 
-      if (!user) return res.status(400).send();
+  const user = await User.findOne({
+    where: { username },
+  });
 
-      req.login(user, { session: false }, async (error) => {
-        if (error) return next(error);
+  if (!user) {
+    return res.status(400).send('User not found');
+  }
 
-        const body = { id: user.id, username: user.username };
-        const token = jwt.sign({ user: body }, JWT_SECRET);
+  const validate = await user.isValidPassword(password);
+  if (!validate) {
+    return res.status(400).send('Wrong Password');
+  }
 
-        return res.json({ token });
-      });
-      return next();
-    } catch (error) {
-      return next(error);
-    }
-  })(req, res, next);
+  return res.json({
+    message: 'Login successful',
+    userId: user.id,
+    supermarketPublicKey: auth.getPublicKey(),
+    userPK: user.publicKey,
+  });
 });
 
 module.exports = router;
