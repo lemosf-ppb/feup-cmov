@@ -30,16 +30,20 @@ const verifySignature = (object, publicKey, signature) => {
   return verified;
 };
 
+const createPublicKey = (publicKeyString) => crypto.createPublicKey(publicKeyString);
+
+const createPrivateKey = (privateKeyString) => crypto.createPrivateKey(privateKeyString);
+
 const getPublicKey = () => PUBLIC_KEY.export(PUBLIC_KEY_ENCODING);
 
 const getPrivateKey = () => PRIVATE_KEY.export(PRIVATE_KEY_ENCODING);
 
 const init = () => {
   const publicKeyFile = fs.readFileSync(path.join(path.resolve(), 'src/keys/supermarket_public.pem'));
-  PUBLIC_KEY = crypto.createPublicKey(publicKeyFile);
+  PUBLIC_KEY = createPublicKey(publicKeyFile);
 
   const privateKeyFile = fs.readFileSync(path.join(path.resolve(), 'src/keys/supermarket_private.pem'));
-  PRIVATE_KEY = crypto.createPrivateKey(privateKeyFile);
+  PRIVATE_KEY = createPrivateKey(privateKeyFile);
 };
 
 module.exports = {
@@ -48,4 +52,6 @@ module.exports = {
   verifySignature,
   getPublicKey,
   getPrivateKey,
+  createPublicKey,
+  createPrivateKey
 };

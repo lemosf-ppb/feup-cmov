@@ -1,16 +1,28 @@
 const router = require('express').Router();
-const { transactionsController } = require('../controllers');
+const { usersController, transactionsController } = require('../controllers');
+const {auth} = require('../services/auth');
 
 router.post('/transactions', async (req, res) => {
   const {
-    productsList, useDiscounts, voucherId,
+    userId, productsList, useDiscounts, voucherId, signature
   } = req.body;
+
+  const user = await usersController.retrieve(userId);
+  if (!user) {
+    return res.status(400).send('User not found');
+  }
+
+  const payload = {userId, productsList, useDiscounts, voucherId};
+  const verifyAuth = auth.verifySignature(payload, user.publicKey, signature);
+  if(!verifyAuth) {
+    return res.status(400).send('Signature invalid');
+  }
 
   try {
     const transaction = await transactionsController.create(
       productsList,
       useDiscounts,
-      req.user.id,
+      userId,
       voucherId,
     );
     res.status(201).send(transaction);
@@ -20,7 +32,18 @@ router.post('/transactions', async (req, res) => {
 });
 
 router.get('/transactions', async (req, res) => {
-  const userId = req.user.id;
+  const { userId, signature } = req.body;
+
+  const user = await usersController.retrieve(userId);
+  if (!user) {
+    return res.status(400).send('User not found');
+  }
+
+  const payload = {userId};
+  const verifyAuth = auth.verifySignature(payload, user.publicKey, signature);
+  if(!verifyAuth) {
+    return res.status(400).send('Signature invalid');
+  }
 
   try {
     const transactions = await transactionsController.retrieveByUser(userId);
