@@ -39,6 +39,13 @@ module.exports = (sequelize, DataTypes) => {
   },
   {});
 
+  User.associate = (models) => {
+    User.hasOne(models.CreditCard, {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+  };
+
   // eslint-disable-next-line
   User.prototype.isValidPassword = async function (password) {
     const compare = await bcrypt.compare(password, this.password);

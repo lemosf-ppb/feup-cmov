@@ -20,7 +20,7 @@ const signup = async (username, password, name, creditCard, publicKey) => {
     validity: creditCard.validity,
   });
 
-  await userCreditCard.setUser(newUser);
+  await newUser.setCreditCard(userCreditCard);
 
   return newUser;
 };
@@ -42,7 +42,12 @@ const login = async (username, password) => {
   return user;
 };
 
-const retrieve = async (userId) => User.findByPk(userId);
+const retrieve = async (userId) => User.findByPk(userId,
+  {
+    include: [{
+      model: CreditCard,
+    }],
+  });
 
 module.exports = {
   signup,

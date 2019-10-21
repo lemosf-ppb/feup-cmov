@@ -18,12 +18,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  CreditCard.associate = (models) => {
-    CreditCard.belongsTo(models.User, {
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    });
-  };
-
   return CreditCard;
 };
