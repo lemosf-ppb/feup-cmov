@@ -18,7 +18,6 @@ import androidx.fragment.app.Fragment;
 import com.example.acmesupermarket.R;
 import com.example.acmesupermarket.ShopActivity;
 import com.example.acmesupermarket.Transaction;
-import com.example.acmesupermarket.Voucher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class TransactionFragment extends Fragment {
             ArrayList<Transaction> values = savedInstanceState.getParcelableArrayList("transactions");
             if (values != null) {
                 transactions = values;
-                ((ShopActivity)getActivity()).setTab(2);
+                ((ShopActivity) getActivity()).setTab(2);
             }
         }
 
@@ -73,7 +72,7 @@ public class TransactionFragment extends Fragment {
                 row = getLayoutInflater().inflate(R.layout.transaction_row, parent, false);
             Transaction transaction = transactions.get(position);
             ((TextView) row.findViewById(R.id.transaction_id)).setText(transaction.getId());
-            ((TextView) row.findViewById(R.id.transaction_price)).setText(transaction.getPrice()+"");
+            ((TextView) row.findViewById(R.id.transaction_price)).setText(transaction.getPrice() + "");
 
             return (row);
         }

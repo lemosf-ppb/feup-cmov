@@ -1,14 +1,15 @@
 package com.example.acmesupermarket.fragments.registry;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.acmesupermarket.R;
 import com.example.acmesupermarket.RegisterActivity;
@@ -40,22 +41,22 @@ public class RegistryFragment1 extends Fragment {
         Button next_btn = v.findViewById(R.id.next);
         next_btn.setOnClickListener(view -> {
 
-            if(username.getText().toString().equals("")){
+            if (username.getText().toString().equals("")) {
                 username.setError("Please fill in this field");
                 return;
             }
-            if(name.getText().toString().equals("")){
+            if (name.getText().toString().equals("")) {
                 name.setError("Please fill in this field");
                 return;
             }
-            if(password.getText().toString().equals("")){
+            if (password.getText().toString().equals("")) {
                 password.setError("Please fill in this field");
                 return;
             }
             checkPassword();
 
 
-            RegisterActivity registerActivity = (RegisterActivity)getActivity();
+            RegisterActivity registerActivity = (RegisterActivity) getActivity();
             registerActivity.setUserDetails(username.getText().toString(), name.getText().toString(), password.getText().toString());
             registerActivity.setViewPager(1);
         });
@@ -63,12 +64,11 @@ public class RegistryFragment1 extends Fragment {
         return v;
     }
 
-    private void checkPassword(){
-        if(confirm_password.getText().toString().equals("")){
+    private void checkPassword() {
+        if (confirm_password.getText().toString().equals("")) {
             confirm_password.setError("Please fill in this field");
             return;
-        }
-        else if(!confirm_password.getText().toString().equals(password.getText().toString())){
+        } else if (!confirm_password.getText().toString().equals(password.getText().toString())) {
             confirm_password.setError("Please make sure the passwords match");
             return;
         }

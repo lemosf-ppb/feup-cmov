@@ -127,30 +127,30 @@ public class RegistryFragment2 extends Fragment {
         submit_btn.setOnClickListener((View v) -> {
 
             String number = this.number.getText().toString();
-            if(number.length()!=16){
+            if (number.length() != 16) {
                 this.number.setError("Please fill a valid 16 digit card number!");
                 return;
             }
 
             String card_holder = this.card_holder.getText().toString();
-            if(card_holder.equals("")){
+            if (card_holder.equals("")) {
                 this.card_holder.setError("Please fill in this field");
                 return;
             }
 
             String expiry = this.expiry.getText().toString();
-            if(expiry.length()!=5){
+            if (expiry.length() != 5) {
                 this.expiry.setError("Please fill in this field with MM/YY");
                 return;
             }
 
             String cvv = this.cvv.getText().toString();
-            if(cvv.length()!=3){
+            if (cvv.length() != 3) {
                 this.cvv.setError("Please fill in this field");
                 return;
             }
 
-            ((RegisterActivity)getActivity()).onBtnSignUpClick(card_holder,number,expiry,cvv);
+            ((RegisterActivity) getActivity()).onBtnSignUpClick(card_holder, number, expiry, cvv);
 
         });
 

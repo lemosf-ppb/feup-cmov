@@ -5,9 +5,20 @@ import android.os.Parcelable;
 
 public class Customer implements Parcelable {
 
+    public static final Creator<Customer> CREATOR = new Creator<Customer>() {
+        @Override
+        public Customer createFromParcel(Parcel in) {
+            return new Customer(in);
+        }
+
+        @Override
+        public Customer[] newArray(int size) {
+            return new Customer[size];
+        }
+    };
     private String name, username, card_holder, number, expiry, cvv;
 
-    public Customer(String name, String username, String card_holder, String number, String expiry, String cvv){
+    public Customer(String name, String username, String card_holder, String number, String expiry, String cvv) {
         this.name = name;
         this.username = username;
         this.card_holder = card_holder;
@@ -25,18 +36,6 @@ public class Customer implements Parcelable {
         cvv = in.readString();
     }
 
-    public static final Creator<Customer> CREATOR = new Creator<Customer>() {
-        @Override
-        public Customer createFromParcel(Parcel in) {
-            return new Customer(in);
-        }
-
-        @Override
-        public Customer[] newArray(int size) {
-            return new Customer[size];
-        }
-    };
-
     public String getName() {
         return name;
     }
@@ -44,7 +43,6 @@ public class Customer implements Parcelable {
     public String getUsername() {
         return username;
     }
-
 
 
     @Override

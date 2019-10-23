@@ -15,8 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.acmesupermarket.ShopActivity;
 import com.example.acmesupermarket.R;
+import com.example.acmesupermarket.ShopActivity;
 import com.example.acmesupermarket.Voucher;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class VoucherFragment extends Fragment {
             ArrayList<Voucher> values = savedInstanceState.getParcelableArrayList("vouchers");
             if (values != null) {
                 vouchers = values;
-                ((ShopActivity)getActivity()).setTab(2);
+                ((ShopActivity) getActivity()).setTab(2);
             }
         }
 
@@ -72,7 +72,7 @@ public class VoucherFragment extends Fragment {
                 row = getLayoutInflater().inflate(R.layout.voucher_row, parent, false);
             Voucher voucher = vouchers.get(position);
             ((TextView) row.findViewById(R.id.voucher_title)).setText(voucher.getName());
-            ((TextView) row.findViewById(R.id.voucher_discount)).setText(voucher.getDiscount()+"");
+            ((TextView) row.findViewById(R.id.voucher_discount)).setText(voucher.getDiscount() + "");
 
             return (row);
         }

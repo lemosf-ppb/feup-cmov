@@ -15,9 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.acmesupermarket.ShopActivity;
 import com.example.acmesupermarket.Item;
 import com.example.acmesupermarket.R;
+import com.example.acmesupermarket.ShopActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class CartFragment extends Fragment {
             ArrayList<Item> values = savedInstanceState.getParcelableArrayList("cart_items");
             if (values != null) {
                 items = values;
-                ((ShopActivity)getActivity()).setTab(0);
+                ((ShopActivity) getActivity()).setTab(0);
             }
         }
 
@@ -58,7 +58,7 @@ public class CartFragment extends Fragment {
         savedState.putParcelableArrayList("cart_items", (ArrayList<? extends Parcelable>) items);
     }
 
-    public void addItem(Item item){
+    public void addItem(Item item) {
         cartAdapter.add(item);
     }
 
@@ -77,8 +77,8 @@ public class CartFragment extends Fragment {
                 row = getLayoutInflater().inflate(R.layout.cart_row, parent, false);
             Item item = items.get(position);
             ((TextView) row.findViewById(R.id.itemTitle)).setText(item.getTitle());
-            ((TextView) row.findViewById(R.id.priceUnit)).setText(item.getPrice()+"");
-            ((TextView) row.findViewById(R.id.quantityItem)).setText(item.getQuantity()+"");
+            ((TextView) row.findViewById(R.id.priceUnit)).setText(item.getPrice() + "");
+            ((TextView) row.findViewById(R.id.quantityItem)).setText(item.getQuantity() + "");
 
             return (row);
         }

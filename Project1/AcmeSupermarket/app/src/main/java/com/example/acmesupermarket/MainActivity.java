@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
-import com.cooltechworks.creditcarddesign.CardEditActivity;
-import com.cooltechworks.creditcarddesign.CreditCardUtils;
 import com.example.acmesupermarket.fragments.SectionsStatePagerAdapter;
 import com.example.acmesupermarket.fragments.homepage.HomepageFragment;
 
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setupViewPager(ViewPager mViewPager){
+    private void setupViewPager(ViewPager mViewPager) {
         SectionsStatePagerAdapter adapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new HomepageFragment(), "HomepageFragment");
         mViewPager.setAdapter(adapter);

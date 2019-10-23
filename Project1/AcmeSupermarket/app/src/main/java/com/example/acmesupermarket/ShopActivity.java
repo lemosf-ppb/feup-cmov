@@ -24,11 +24,24 @@ import java.nio.charset.StandardCharsets;
 
 public class ShopActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+    Toolbar toolbar;
     private CartFragment cartFragment;
     private ViewPager mViewPager;
     private TabLayout tabs;
+
+    private static AlertDialog showDialog(final AppCompatActivity act, CharSequence title, CharSequence message, CharSequence buttonYes, CharSequence buttonNo) {
+        AlertDialog.Builder downloadDialog = new AlertDialog.Builder(act);
+        downloadDialog.setTitle(title);
+        downloadDialog.setMessage(message);
+        downloadDialog.setPositiveButton(buttonYes, (dialogInterface, i) -> {
+            Uri uri = Uri.parse("market://search?q=pname:" + "com.google.zxing.client.android");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            act.startActivity(intent);
+        });
+        downloadDialog.setNegativeButton(buttonNo, null);
+        return downloadDialog.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +59,7 @@ public class ShopActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-                switch (position){
+                switch (position) {
                     case 0:
                         setViewPager(0);
                         break;
@@ -71,7 +84,7 @@ public class ShopActivity extends AppCompatActivity {
         });
     }
 
-    private void setupViewPager(ViewPager mViewPager){
+    private void setupViewPager(ViewPager mViewPager) {
         cartFragment = new CartFragment();
 
         SectionsStatePagerAdapter adapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
@@ -110,23 +123,9 @@ public class ShopActivity extends AppCompatActivity {
             Intent intent = new Intent(ACTION_SCAN);
             intent.putExtra("SCAN_MODE", qrcode ? "QR_CODE_MODE" : "PRODUCT_MODE");
             startActivityForResult(intent, 0);
-        }
-        catch (ActivityNotFoundException anfe) {
+        } catch (ActivityNotFoundException anfe) {
             showDialog(this, "No Scanner Found", "Download a scanner code activity?", "Yes", "No").show();
         }
-    }
-
-    private static AlertDialog showDialog(final AppCompatActivity act, CharSequence title, CharSequence message, CharSequence buttonYes, CharSequence buttonNo) {
-        AlertDialog.Builder downloadDialog = new AlertDialog.Builder(act);
-        downloadDialog.setTitle(title);
-        downloadDialog.setMessage(message);
-        downloadDialog.setPositiveButton(buttonYes, (dialogInterface, i) -> {
-            Uri uri = Uri.parse("market://search?q=pname:" + "com.google.zxing.client.android");
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            act.startActivity(intent);
-        });
-        downloadDialog.setNegativeButton(buttonNo, null);
-        return downloadDialog.show();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -138,8 +137,7 @@ public class ShopActivity extends AppCompatActivity {
                 String format = data.getStringExtra("SCAN_RESULT_FORMAT");
                 try {
                     baMess = contents.getBytes(StandardCharsets.ISO_8859_1);
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                     return;
                 }
@@ -150,18 +148,18 @@ public class ShopActivity extends AppCompatActivity {
 
     String byteArrayToHex(byte[] ba) {
         StringBuilder sb = new StringBuilder(ba.length * 2);
-        for(byte b: ba)
+        for (byte b : ba)
             sb.append(String.format("%02x", b));
         return sb.toString();
     }
 
-    public void setViewPager(int fragmentNumber){
+    public void setViewPager(int fragmentNumber) {
         mViewPager.setCurrentItem(fragmentNumber);
     }
 
 
     //TODO: Descobrir porque raio isto faz crashar
-    public void setTab(int index){
+    public void setTab(int index) {
         //tabs.getTabAt(index).select();
     }
 }

@@ -10,8 +10,9 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.example.acmesupermarket.ShopActivity;
+
 import com.example.acmesupermarket.R;
+import com.example.acmesupermarket.ShopActivity;
 
 public class HomepageFragment extends Fragment {
 
@@ -30,11 +31,11 @@ public class HomepageFragment extends Fragment {
 
         v.findViewById(R.id.sign_in).setOnClickListener(view -> {
 
-            if(username.getText().toString().equals("")){
+            if (username.getText().toString().equals("")) {
                 username.setError("Please fill in this field");
                 return;
             }
-            if(password.getText().toString().equals("")){
+            if (password.getText().toString().equals("")) {
                 password.setError("Please fill in this field");
                 return;
             }
