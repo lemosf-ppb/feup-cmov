@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.acmesupermarket.ShopActivity;
 import com.example.acmesupermarket.Item;
 import com.example.acmesupermarket.R;
 
@@ -41,6 +42,7 @@ public class CartFragment extends Fragment {
             ArrayList<Item> values = savedInstanceState.getParcelableArrayList("cart_items");
             if (values != null) {
                 items = values;
+                ((ShopActivity)getActivity()).setTab(0);
             }
         }
 

@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void onBtnSignUpClick(String card_holder,String number,String expiry,String cvv){
 
         Customer customer = new Customer(this.name, this.username, card_holder, number, expiry, cvv);
-        Intent intent = new Intent(this, CartActivity.class);
+        Intent intent = new Intent(this, ShopActivity.class);
         intent.putExtra("Customer", customer);
         startActivity(intent);
     }

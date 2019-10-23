@@ -22,7 +22,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.nio.charset.StandardCharsets;
 
-public class CartActivity extends AppCompatActivity {
+public class ShopActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
@@ -33,7 +33,7 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
+        setContentView(R.layout.activity_shop);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -157,5 +157,11 @@ public class CartActivity extends AppCompatActivity {
 
     public void setViewPager(int fragmentNumber){
         mViewPager.setCurrentItem(fragmentNumber);
+    }
+
+
+    //TODO: Descobrir porque raio isto faz crashar
+    public void setTab(int index){
+        //tabs.getTabAt(index).select();
     }
 }

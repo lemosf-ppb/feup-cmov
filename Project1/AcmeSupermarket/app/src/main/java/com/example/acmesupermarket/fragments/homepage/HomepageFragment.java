@@ -10,7 +10,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.example.acmesupermarket.CartActivity;
+import com.example.acmesupermarket.ShopActivity;
 import com.example.acmesupermarket.R;
 
 public class HomepageFragment extends Fragment {
@@ -40,7 +40,7 @@ public class HomepageFragment extends Fragment {
             }
             //TODO: Validate user with DB
 
-            Intent intent = new Intent(getActivity(), CartActivity.class);
+            Intent intent = new Intent(getActivity(), ShopActivity.class);
             startActivity(intent);
 
         });

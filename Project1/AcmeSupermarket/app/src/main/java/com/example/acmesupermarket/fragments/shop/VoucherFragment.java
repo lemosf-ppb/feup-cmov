@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.acmesupermarket.ShopActivity;
 import com.example.acmesupermarket.R;
 import com.example.acmesupermarket.Voucher;
 
@@ -41,6 +42,7 @@ public class VoucherFragment extends Fragment {
             ArrayList<Voucher> values = savedInstanceState.getParcelableArrayList("vouchers");
             if (values != null) {
                 vouchers = values;
+                ((ShopActivity)getActivity()).setTab(2);
             }
         }
 
