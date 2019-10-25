@@ -17,16 +17,16 @@ public class Voucher implements Parcelable {
         }
     };
     private String name;
-    private String discount;
+    private int discount;
 
-    public Voucher(String name, String discount) {
+    public Voucher(String name, int discount) {
         this.name = name;
         this.discount = discount;
     }
 
     protected Voucher(Parcel in) {
         name = in.readString();
-        discount = in.readString();
+        discount = in.readInt();
     }
 
     @Override
@@ -37,14 +37,19 @@ public class Voucher implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeString(discount);
+        dest.writeInt(discount);
     }
 
     public String getName() {
         return name;
     }
 
-    public String getDiscount() {
+    public int getDiscount() {
         return discount;
+    }
+
+    public boolean equals(Object object){
+        Voucher other = (Voucher) object;
+        return this.name == other.name && this.discount == other.discount;
     }
 }

@@ -20,6 +20,9 @@ import androidx.fragment.app.Fragment;
 import com.example.acmesupermarket.Item;
 import com.example.acmesupermarket.R;
 import com.example.acmesupermarket.ShopActivity;
+import com.example.acmesupermarket.Voucher;
+
+import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -63,6 +66,8 @@ public class CartFragment extends Fragment {
         cartAdapter = new CartItemAdapter(context);
         list.setAdapter(cartAdapter);
 
+        setSelectedVoucher();
+
         TextView discount_value = v.findViewById(R.id.discount_value);
         discount_value.setText(String.format("%s", df.format(discount)));
 
@@ -89,6 +94,18 @@ public class CartFragment extends Fragment {
         savedState.putDouble("total_price", totalPrice);
         savedState.putBoolean("applyDiscount", applyDiscount);
         savedState.putDouble("discount", discount);
+    }
+
+    private void setSelectedVoucher()
+    {
+        TextView voucher_id_text_view = v.findViewById(R.id.voucher_id);
+        Voucher voucher = ((ShopActivity) getActivity()).getSelectedVoucher();
+        String voucher_id = "None";
+        if(voucher != null)
+        {
+            voucher_id = voucher.getName();
+        }
+        voucher_id_text_view.setText(voucher_id);
     }
 
     public void addItem(Item item) {

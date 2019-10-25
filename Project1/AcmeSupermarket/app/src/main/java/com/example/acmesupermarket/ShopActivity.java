@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ public class ShopActivity extends AppCompatActivity {
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
     Toolbar toolbar;
     private CartFragment cartFragment;
+    private Voucher selectedVoucher = null;
     private ViewPager mViewPager;
     private TabLayout tabs;
 
@@ -46,6 +48,10 @@ public class ShopActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(savedInstanceState != null){
+            selectedVoucher = savedInstanceState.getParcelable("active_voucher");
+        }
         setContentView(R.layout.activity_shop);
 
         toolbar = findViewById(R.id.toolbar);
@@ -82,6 +88,12 @@ public class ShopActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void onSaveInstanceState(Bundle savedState) {
+
+        super.onSaveInstanceState(savedState);
+        savedState.putParcelable("active_voucher", selectedVoucher);
     }
 
     private void setupViewPager(ViewPager mViewPager) {
@@ -166,5 +178,14 @@ public class ShopActivity extends AppCompatActivity {
     //TODO: Descobrir porque raio isto faz crashar
     public void setTab(int index) {
         //tabs.getTabAt(index).select();
+    }
+
+    public void setSelectedVoucher(Voucher voucher)
+    {
+        selectedVoucher = voucher;
+    }
+
+    public Voucher getSelectedVoucher(){
+        return selectedVoucher;
     }
 }

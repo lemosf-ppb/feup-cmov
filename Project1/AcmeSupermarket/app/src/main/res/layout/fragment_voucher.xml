@@ -4,13 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <RadioGroup
+        android:id="@+id/voucher_radio_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/voucher_list"
+        <RadioButton
+            android:id="@+id/radioButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/none_voucher" />
+    </RadioGroup>
 </LinearLayout>
