@@ -21,6 +21,7 @@ import com.example.acmesupermarket.Item;
 import com.example.acmesupermarket.R;
 import com.example.acmesupermarket.ShopActivity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +35,7 @@ public class CartFragment extends Fragment {
     ArrayAdapter<Item> cartAdapter;
     private double totalPrice = 0;
     private View v;
+    DecimalFormat df = new DecimalFormat("#.##");
 
     @Nullable
     @Override
@@ -94,7 +96,7 @@ public class CartFragment extends Fragment {
     private void updateTotalPrice(double price){
         totalPrice += price;
         TextView total_price_value = v.findViewById(R.id.total_price_value);
-        total_price_value.setText(String.format("%s", totalPrice));
+        total_price_value.setText(String.format("%s", df.format(totalPrice)));
     }
 
 
