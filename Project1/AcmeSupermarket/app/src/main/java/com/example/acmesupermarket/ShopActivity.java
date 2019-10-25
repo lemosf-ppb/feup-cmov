@@ -105,14 +105,19 @@ public class ShopActivity extends AppCompatActivity {
         int id = menuItem.getItemId();
 
         if (id == R.id.photo) {
-            scan(true);
-            String title = "Batata";
-            double price = 10.6;
-            int quantity = 2;
-            Item item = new Item(title, price, quantity);
 
-            cartFragment.addItem(item);
-            Toast.makeText(getApplicationContext(), "Created Batata", Toast.LENGTH_LONG).show();
+            if(cartFragment.isFull()){
+                Toast.makeText(getApplicationContext(), "Your cart is already full!", Toast.LENGTH_LONG).show();
+            }
+            else {
+                scan(true);
+                String title = "Batata";
+                double price = 10.6;
+                int quantity = 2;
+                Item item = new Item(title, price, quantity);
+
+                cartFragment.addItem(item);
+            }
         }
 
         return true;

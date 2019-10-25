@@ -26,6 +26,7 @@ import java.util.Objects;
 public class CartFragment extends Fragment {
 
     private static final String TAG = "CartFragment";
+    private static final int MAX_CART_ITEMS = 10;
 
     List<Item> items = new ArrayList<>();
     ArrayAdapter<Item> cartAdapter;
@@ -60,6 +61,10 @@ public class CartFragment extends Fragment {
 
     public void addItem(Item item) {
         cartAdapter.add(item);
+    }
+
+    public boolean isFull(){
+        return items.size() == MAX_CART_ITEMS;
     }
 
 
