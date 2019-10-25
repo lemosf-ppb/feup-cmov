@@ -37,4 +37,7 @@
 
     <string name="total_price">Total(€)=</string>
     <string name="action_checkout">CHECKOUT</string>
+    <string name="discount_label">Discount available(€)=</string>
+    <string name="apply">Apply</string>
+    <string name="use_voucher">Voucher selected =</string>
 </resources>

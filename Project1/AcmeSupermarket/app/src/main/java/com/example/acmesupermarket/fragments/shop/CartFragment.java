@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +36,8 @@ public class CartFragment extends Fragment {
     private double totalPrice = 0;
     private View v;
     DecimalFormat df = new DecimalFormat("#.##");
+    private boolean applyDiscount = false;
+    private double discount = 2;
 
     @Nullable
     @Override
@@ -51,11 +53,31 @@ public class CartFragment extends Fragment {
                 items = values;
                 ((ShopActivity) getActivity()).setTab(0);
             }
-            this.totalPrice = savedInstanceState.getDouble("total_price");
+            totalPrice = savedInstanceState.getDouble("total_price");
+            applyDiscount = savedInstanceState.getBoolean("applyDiscount");
+            discount = savedInstanceState.getDouble("discount");
+
+            updateTotalPrice(0);
         }
 
         cartAdapter = new CartItemAdapter(context);
         list.setAdapter(cartAdapter);
+
+        TextView discount_value = v.findViewById(R.id.discount_value);
+        discount_value.setText(String.format("%s", df.format(discount)));
+
+        CheckBox apply_discount_checkbox = v.findViewById(R.id.apply_discount);
+        apply_discount_checkbox.setOnCheckedChangeListener((buttonView, isChecked) ->
+        {
+            if(apply_discount_checkbox.isChecked() && !applyDiscount) {
+                updateTotalPrice(-discount);
+                applyDiscount = true;
+            }
+            else if(!apply_discount_checkbox.isChecked() && applyDiscount){
+                updateTotalPrice(discount);
+                applyDiscount = false;
+            }
+        });
 
         return v;
     }
@@ -65,6 +87,8 @@ public class CartFragment extends Fragment {
         super.onSaveInstanceState(savedState);
         savedState.putParcelableArrayList("cart_items", (ArrayList<? extends Parcelable>) items);
         savedState.putDouble("total_price", totalPrice);
+        savedState.putBoolean("applyDiscount", applyDiscount);
+        savedState.putDouble("discount", discount);
     }
 
     public void addItem(Item item) {
