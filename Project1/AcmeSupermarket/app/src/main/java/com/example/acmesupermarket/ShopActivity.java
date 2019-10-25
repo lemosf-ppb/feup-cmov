@@ -113,7 +113,7 @@ public class ShopActivity extends AppCompatActivity {
                 scan(true);
                 String title = "Batata";
                 double price = 10.6;
-                int quantity = 2;
+                int quantity = 1;
                 Item item = new Item(title, price, quantity);
 
                 cartFragment.addItem(item);

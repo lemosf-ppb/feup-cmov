@@ -30,11 +30,13 @@ public class CartFragment extends Fragment {
 
     List<Item> items = new ArrayList<>();
     ArrayAdapter<Item> cartAdapter;
+    private double totalPrice = 0;
+    private View v;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_cart, container, false);
+        v = inflater.inflate(R.layout.fragment_cart, container, false);
 
         ListView list = v.findViewById(R.id.cart_list);
         Context context = Objects.requireNonNull(getActivity()).getApplicationContext();
@@ -45,6 +47,7 @@ public class CartFragment extends Fragment {
                 items = values;
                 ((ShopActivity) getActivity()).setTab(0);
             }
+            this.totalPrice = savedInstanceState.getDouble("total_price");
         }
 
         cartAdapter = new CartItemAdapter(context);
@@ -57,14 +60,33 @@ public class CartFragment extends Fragment {
 
         super.onSaveInstanceState(savedState);
         savedState.putParcelableArrayList("cart_items", (ArrayList<? extends Parcelable>) items);
+        savedState.putDouble("total_price", totalPrice);
     }
 
     public void addItem(Item item) {
-        cartAdapter.add(item);
+        if(items.contains(item)){
+            int index = items.indexOf(item);
+            items.get(index).increaseQuantity();
+            cartAdapter.notifyDataSetChanged();
+        }
+        else {
+            cartAdapter.add(item);
+        }
+        updateTotalPrice(item.getPrice());
     }
 
     public boolean isFull(){
-        return items.size() == MAX_CART_ITEMS;
+        int total = 0;
+        for(Item i : items){
+            total += i.getQuantity();
+        }
+        return total == MAX_CART_ITEMS;
+    }
+
+    private void updateTotalPrice(double price){
+        totalPrice += price;
+        TextView total_price_value = v.findViewById(R.id.total_price_value);
+        total_price_value.setText(String.format("%s", totalPrice));
     }
 
 
