@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -75,6 +77,12 @@ public class CartFragment extends Fragment {
         updateTotalPrice(item.getPrice());
     }
 
+    public void removeItem(Item item) {
+        double itemsPrice = item.getTotalPrice();
+        updateTotalPrice(-itemsPrice);
+        items.remove(item);
+    }
+
     public boolean isFull(){
         int total = 0;
         for(Item i : items){
@@ -106,6 +114,30 @@ public class CartFragment extends Fragment {
             ((TextView) row.findViewById(R.id.itemTitle)).setText(item.getTitle());
             ((TextView) row.findViewById(R.id.priceUnit)).setText(item.getPrice() + "");
             ((TextView) row.findViewById(R.id.quantityItem)).setText(item.getQuantity() + "");
+
+            row.findViewById(R.id.increase_btn).setOnClickListener(view -> {
+                if(isFull()){
+                    Toast.makeText(getContext(), "Your cart is already full!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    addItem(item);
+                }
+            });
+
+            row.findViewById(R.id.decrease_btn).setOnClickListener(view -> {
+                if(item.getQuantity() == 1){
+                    Toast.makeText(getContext(), "You only have one item of that type left!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    item.decreaseQuantity();
+                    cartAdapter.notifyDataSetChanged();
+                    updateTotalPrice(-item.getPrice());
+                }
+            });
+
+            row.findViewById(R.id.remove_btn).setOnClickListener(view -> {
+                removeItem(item);
+            });
 
             return (row);
         }

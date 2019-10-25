@@ -61,6 +61,14 @@ public class Item implements Parcelable {
         quantity++;
     }
 
+    public void decreaseQuantity() {
+        quantity--;
+    }
+
+    public double getTotalPrice(){
+        return quantity*price;
+    }
+
     public boolean equals(Object object){
         Item other = (Item) object;
         return this.title == other.title && this.price == other.price;
