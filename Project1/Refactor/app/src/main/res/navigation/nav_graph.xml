@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.acmesupermarket.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_registration_graph"
+            app:destination="@id/registration_graph" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.acmesupermarket.ui.login.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.acmesupermarket.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <navigation
+        android:id="@+id/registration_graph"
+        app:startDestination="@id/personalDataFragment">
+        <fragment
+            android:id="@+id/creditCardFragment"
+            android:name="com.example.acmesupermarket.ui.registration.CreditCardFragment"
+            android:label="CreditCardFragment" />
+        <fragment
+            android:id="@+id/personalDataFragment"
+            android:name="com.example.acmesupermarket.ui.registration.PersonalDataFragment"
+            android:label="fragment_registry_personal"
+            tools:layout="@layout/fragment_registry_personal">
+            <action
+                android:id="@+id/action_personalDataFragment_to_creditCardFragment"
+                app:destination="@id/creditCardFragment" />
+        </fragment>
+    </navigation>
+</navigation>
