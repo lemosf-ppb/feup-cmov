@@ -6,23 +6,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/transaction_id"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_weight="0.3"
-            android:gravity="center_vertical"
             android:text="UUID" />
+
+        <TextView
+            android:id="@+id/used_discounts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/chip_height_normal"
+            android:text="TextView" />
 
         <TextView
             android:id="@+id/transaction_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
+            android:layout_marginStart="@dimen/chip_height_normal"
             android:text="X€" />
 
     </LinearLayout>
