@@ -83,6 +83,7 @@ public class VoucherFragment extends Fragment {
             else{
                 active_voucher = vouchers.get(index-1);
             }
+            ((ShopActivity) getActivity()).setSelectedVoucher(active_voucher);
 
         });
     }

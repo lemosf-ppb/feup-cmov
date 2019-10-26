@@ -22,8 +22,6 @@ import com.example.acmesupermarket.R;
 import com.example.acmesupermarket.ShopActivity;
 import com.example.acmesupermarket.Voucher;
 
-import org.w3c.dom.Text;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +39,7 @@ public class CartFragment extends Fragment {
     DecimalFormat df = new DecimalFormat("#.##");
     private boolean applyDiscount = false;
     private double discount = 2;
+    private int voucherDiscount = 0;
 
     @Nullable
     @Override
@@ -59,8 +58,6 @@ public class CartFragment extends Fragment {
             totalPrice = savedInstanceState.getDouble("total_price");
             applyDiscount = savedInstanceState.getBoolean("applyDiscount");
             discount = savedInstanceState.getDouble("discount");
-
-            updateTotalPrice(0);
         }
 
         cartAdapter = new CartItemAdapter(context);
@@ -84,6 +81,8 @@ public class CartFragment extends Fragment {
             }
         });
 
+        updateTotalPrice(0);
+
         return v;
     }
 
@@ -101,9 +100,11 @@ public class CartFragment extends Fragment {
         TextView voucher_id_text_view = v.findViewById(R.id.voucher_id);
         Voucher voucher = ((ShopActivity) getActivity()).getSelectedVoucher();
         String voucher_id = "None";
+        voucherDiscount = 0;
         if(voucher != null)
         {
             voucher_id = voucher.getName();
+            voucherDiscount = voucher.getDiscount();
         }
         voucher_id_text_view.setText(voucher_id);
     }
@@ -137,7 +138,11 @@ public class CartFragment extends Fragment {
     private void updateTotalPrice(double price){
         totalPrice += price;
         TextView total_price_value = v.findViewById(R.id.total_price_value);
-        total_price_value.setText(String.format("%s", df.format(totalPrice)));
+
+        double voucherPercent = (double) voucherDiscount/100;
+
+        double totalAfterVoucher = (1.0-voucherPercent)*totalPrice;
+        total_price_value.setText(String.format("%s", df.format(totalAfterVoucher)));
     }
 
 
