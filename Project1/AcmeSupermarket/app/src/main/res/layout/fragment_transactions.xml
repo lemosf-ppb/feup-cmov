@@ -4,8 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/transactions_list"
+    <ExpandableListView
+        android:id="@+id/simpleExpandableListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:divider="#0f0"
+        android:dividerHeight="1dp">
+
+    </ExpandableListView>
+
 </LinearLayout>

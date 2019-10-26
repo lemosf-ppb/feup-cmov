@@ -46,4 +46,5 @@
 
     <string name="used_discounts">Used discounts: %1$b</string>
     <string name="total_payed_price">Total price: %1$s</string>
+    <string name="items_row">%1$s - %2$d unit(s)</string>
 </resources>
