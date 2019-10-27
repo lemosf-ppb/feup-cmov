@@ -51,7 +51,7 @@
         tools:layout="@layout/shop_fragment" />
     <fragment
         android:id="@+id/transactionsFragment"
-        android:name="com.example.acmesupermarket.ui.transactions.Transacations"
+        android:name="com.example.acmesupermarket.ui.transactions.TransactionsFragment"
         android:label="transactions_fragment"
         tools:layout="@layout/transactions_fragment" />
 </navigation>

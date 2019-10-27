@@ -14,6 +14,7 @@ public class ShopPagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int i) {
         Fragment fragment;
@@ -28,7 +29,6 @@ public class ShopPagerAdapter extends FragmentStatePagerAdapter {
                 return new Fragment();
         }
         Bundle args = new Bundle();
-        // Our object is just an integer :-P
         args.putInt(CartFragment.ARG_OBJECT, i + 1);
         fragment.setArguments(args);
         return fragment;
