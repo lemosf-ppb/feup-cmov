@@ -66,7 +66,7 @@ public class LoginFragment extends Fragment {
                 authenticationState -> {
                     switch (authenticationState) {
                         case AUTHENTICATED:
-                            navController.navigate(R.id.profileFragment);
+                            navController.navigate(R.id.shopFragment);
                             break;
                         case INVALID_AUTHENTICATION:
                             Snackbar.make(root,

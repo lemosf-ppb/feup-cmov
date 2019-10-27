@@ -201,7 +201,7 @@ public class CreditCardFragment extends Fragment {
                         // status will be tested and should be authenticated.
                         String authToken = registrationViewModel.getAuthToken();
                         loginViewModel.authenticate(authToken);
-                        navController.navigate(R.id.profileFragment);
+                        navController.navigate(R.id.shopFragment);
                     }
                 }
         );

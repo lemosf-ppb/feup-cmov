@@ -13,13 +13,13 @@ import com.example.acmesupermarket.R;
 
 // Instances of this class are fragments representing a single
 // object in our collection.
-public class CartFragment extends Fragment {
+public class VoucherFragment extends Fragment {
     public static final String ARG_OBJECT = "object";
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.cart_fragment, container, false);
+        return inflater.inflate(R.layout.voucher_fragment, container, false);
     }
 
     @Override

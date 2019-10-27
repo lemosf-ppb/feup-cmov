@@ -45,13 +45,13 @@
         </fragment>
     </navigation>
     <fragment
-        android:id="@+id/galleryFragment"
-        android:name="com.example.acmesupermarket.ui.gallery.GalleryFragment"
-        android:label="fragment_gallery"
-        tools:layout="@layout/gallery_fragment" />
-    <fragment
         android:id="@+id/shopFragment"
         android:name="com.example.acmesupermarket.ui.shop.ShopFragment"
         android:label="shop_fragment"
         tools:layout="@layout/shop_fragment" />
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="com.example.acmesupermarket.ui.transactions.Transacations"
+        android:label="transactions_fragment"
+        tools:layout="@layout/transactions_fragment" />
 </navigation>

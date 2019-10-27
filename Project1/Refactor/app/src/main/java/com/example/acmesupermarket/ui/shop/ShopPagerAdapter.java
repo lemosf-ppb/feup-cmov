@@ -16,7 +16,17 @@ public class ShopPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        Fragment fragment = new CartFragment();
+        Fragment fragment;
+        switch (i) {
+            case 0:
+                fragment = new CartFragment();
+                break;
+            case 1:
+                fragment = new VoucherFragment();
+                break;
+            default:
+                return new Fragment();
+        }
         Bundle args = new Bundle();
         // Our object is just an integer :-P
         args.putInt(CartFragment.ARG_OBJECT, i + 1);
