@@ -1,4 +1,4 @@
-package com.example.acmesupermarket.ui.registration;
+package ui.registration;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

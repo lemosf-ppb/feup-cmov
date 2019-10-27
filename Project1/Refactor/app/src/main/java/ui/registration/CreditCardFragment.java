@@ -1,4 +1,4 @@
-package com.example.acmesupermarket.ui.registration;
+package ui.registration;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,10 +18,11 @@ import androidx.navigation.NavController;
 
 import com.cooltechworks.creditcarddesign.CreditCardView;
 import com.example.acmesupermarket.R;
-import com.example.acmesupermarket.ui.login.LoginViewModel;
+
+import ui.login.LoginViewModel;
 
 import static androidx.navigation.Navigation.findNavController;
-import static com.example.acmesupermarket.ui.registration.RegistrationViewModel.RegistrationState.REGISTRATION_COMPLETED;
+import static ui.registration.RegistrationViewModel.RegistrationState.REGISTRATION_COMPLETED;
 
 public class CreditCardFragment extends Fragment {
 

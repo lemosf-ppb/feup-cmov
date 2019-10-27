@@ -1,4 +1,4 @@
-package com.example.acmesupermarket.ui.registration;
+package ui.registration;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,7 +16,7 @@ import androidx.navigation.NavController;
 import com.example.acmesupermarket.R;
 
 import static androidx.navigation.Navigation.findNavController;
-import static com.example.acmesupermarket.ui.registration.RegistrationViewModel.RegistrationState.COLLECT_CREDIT_CARD_DATA;
+import static ui.registration.RegistrationViewModel.RegistrationState.COLLECT_CREDIT_CARD_DATA;
 
 public class PersonalDataFragment extends Fragment {
 

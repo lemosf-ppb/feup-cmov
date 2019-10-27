@@ -1,4 +1,4 @@
-package com.example.acmesupermarket.ui.transactions;
+package ui.transactions;
 
 import android.content.Context;
 import android.content.res.Resources;

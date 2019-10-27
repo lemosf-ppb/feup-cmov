@@ -1,4 +1,4 @@
-package com.example.acmesupermarket.ui.profile;
+package ui.profile;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +15,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.acmesupermarket.R;
-import com.example.acmesupermarket.ui.login.LoginViewModel;
+
+import ui.login.LoginViewModel;
 
 public class ProfileFragment extends Fragment {
 

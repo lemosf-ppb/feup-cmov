@@ -1,4 +1,4 @@
-package com.example.acmesupermarket.ui.profile;
+package ui.profile;
 
 import androidx.lifecycle.ViewModel;
 

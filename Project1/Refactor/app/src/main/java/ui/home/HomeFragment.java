@@ -1,4 +1,4 @@
-package com.example.acmesupermarket.ui.home;
+package ui.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

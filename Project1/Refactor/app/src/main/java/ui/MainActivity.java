@@ -1,4 +1,4 @@
-package com.example.acmesupermarket.ui;
+package ui;
 
 import android.os.Bundle;
 import android.view.Menu;

@@ -1,4 +1,4 @@
-package com.example.acmesupermarket.ui.login;
+package ui.login;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

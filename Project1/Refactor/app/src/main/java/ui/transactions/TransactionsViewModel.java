@@ -1,4 +1,4 @@
-package com.example.acmesupermarket.ui.transactions;
+package ui.transactions;
 
 import androidx.lifecycle.ViewModel;
 

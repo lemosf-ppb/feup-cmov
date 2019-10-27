@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.acmesupermarket.ui.home.HomeFragment"
+        android:name="ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/home_fragment">
         <action
@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.acmesupermarket.ui.login.LoginFragment"
+        android:name="ui.login.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.acmesupermarket.ui.profile.ProfileFragment"
+        android:name="ui.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/profile_fragment" />
     <navigation
@@ -32,11 +32,11 @@
         app:startDestination="@id/personalDataFragment">
         <fragment
             android:id="@+id/creditCardFragment"
-            android:name="com.example.acmesupermarket.ui.registration.CreditCardFragment"
+            android:name="ui.registration.CreditCardFragment"
             android:label="CreditCardFragment" />
         <fragment
             android:id="@+id/personalDataFragment"
-            android:name="com.example.acmesupermarket.ui.registration.PersonalDataFragment"
+            android:name="ui.registration.PersonalDataFragment"
             android:label="fragment_registry_personal"
             tools:layout="@layout/registry_personal_fragment">
             <action
@@ -46,12 +46,12 @@
     </navigation>
     <fragment
         android:id="@+id/shopFragment"
-        android:name="com.example.acmesupermarket.ui.shop.ShopFragment"
+        android:name="ui.shop.ShopFragment"
         android:label="shop_fragment"
         tools:layout="@layout/shop_fragment" />
     <fragment
         android:id="@+id/transactionsFragment"
-        android:name="com.example.acmesupermarket.ui.transactions.TransactionsFragment"
+        android:name="ui.transactions.TransactionsFragment"
         android:label="transactions_fragment"
         tools:layout="@layout/transactions_fragment" />
 </navigation>

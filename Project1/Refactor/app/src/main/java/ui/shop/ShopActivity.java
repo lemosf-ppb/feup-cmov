@@ -1,4 +1,4 @@
-//package com.example.acmesupermarket.ui.shop;
+//package ui.shop;
 //
 //import android.content.ActivityNotFoundException;
 //import android.content.Intent;
