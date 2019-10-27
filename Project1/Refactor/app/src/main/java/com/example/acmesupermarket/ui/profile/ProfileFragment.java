@@ -61,6 +61,7 @@ public class ProfileFragment extends Fragment {
                             break;
                     }
                 });
+
     }
 
     private void showWelcomeMessage() {

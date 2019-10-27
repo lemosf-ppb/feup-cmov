@@ -44,4 +44,9 @@
                 app:destination="@id/creditCardFragment" />
         </fragment>
     </navigation>
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.example.acmesupermarket.ui.gallery.GalleryFragment"
+        android:label="fragment_gallery"
+        tools:layout="@layout/fragment_gallery" />
 </navigation>
