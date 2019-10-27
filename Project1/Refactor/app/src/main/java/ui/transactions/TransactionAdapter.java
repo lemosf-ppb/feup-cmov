@@ -27,6 +27,11 @@ public class TransactionAdapter extends BaseExpandableListAdapter {
         this.res = res;
     }
 
+    void setTransactions(ArrayList<Transaction> transactions) {
+        this.transactions = transactions;
+        notifyDataSetChanged();
+    }
+
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         ArrayList<Item> items = (transactions.get(groupPosition)).getItems();

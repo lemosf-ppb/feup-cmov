@@ -15,21 +15,13 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.acmesupermarket.R;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-import models.Item;
 import models.Transaction;
 
 public class TransactionsFragment extends Fragment {
 
-    ArrayList<Transaction> transactions = new ArrayList<>();
     private TransactionsViewModel mViewModel;
-    private TransactionAdapter listAdapter;
-    private ExpandableListView simpleExpandableListView;
-
-    public static TransactionsFragment newInstance() {
-        return new TransactionsFragment();
-    }
+    private TransactionAdapter transactionsAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -40,41 +32,48 @@ public class TransactionsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(TransactionsViewModel.class);
-        // TODO: Use the ViewModel
+        mViewModel = ViewModelProviders.of(requireActivity()).get(TransactionsViewModel.class);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Context context = Objects.requireNonNull(getActivity()).getApplicationContext();
+        mViewModel = ViewModelProviders.of(requireActivity()).get(TransactionsViewModel.class);
 
-        if (savedInstanceState != null) {
-            ArrayList<Transaction> values = savedInstanceState.getParcelableArrayList("transactions");
-            if (values != null) {
-                transactions = values;
+//        checkSavedInstanceState(savedInstanceState);
+
+        setTransactionsAdapter(view);
+
+        setTransactionsObserver();
+    }
+
+
+    private void setTransactionsAdapter(View view) {
+        Context context = requireActivity().getApplicationContext();
+        ArrayList<Transaction> transactions = mViewModel.getTransactions().getValue();
+
+        ExpandableListView transactionExpandableListView = view.findViewById(R.id.simpleExpandableListView);
+        transactionsAdapter = new TransactionAdapter(context, transactions, getResources());
+        transactionExpandableListView.setAdapter(transactionsAdapter);
+    }
+
+    private void setTransactionsObserver() {
+        mViewModel.getTransactions().observe(this, transactions -> transactionsAdapter.setTransactions(transactions));
+    }
+
+//    private void checkSavedInstanceState(Bundle savedInstanceState) {
+//        if (savedInstanceState != null) {
+//            ArrayList<Transaction> values = savedInstanceState.getParcelableArrayList("transactions");
+//            if (values != null) {
+//                transactions = values;
 //                ((ShopActivity) getActivity()).setTab(1);
-            }
-        } else {
-            loadTransactions();
-        }
-
-        simpleExpandableListView = view.findViewById(R.id.simpleExpandableListView);
-        listAdapter = new TransactionAdapter(context, transactions, getResources());
-        simpleExpandableListView.setAdapter(listAdapter);
-    }
-
-    public void onSaveInstanceState(Bundle savedState) {
-
-        super.onSaveInstanceState(savedState);
-        savedState.putParcelableArrayList("transactions", transactions);
-    }
-
-    private void loadTransactions() {
-        ArrayList<Item> items = new ArrayList<>();
-        items.add(new Item("Batata", 10.6, 1));
-        items.add(new Item("Tomate", 8.6, 1));
-
-        Transaction transaction = new Transaction("1", null, "20.0", true, items);
-        transactions.add(transaction);
-    }
+//            }
+//        } else {
+//            loadTransactions();
+//        }
+//    }
+//
+//    public void onSaveInstanceState(@NonNull Bundle savedState) {
+//        super.onSaveInstanceState(savedState);
+//        savedState.putParcelableArrayList("transactions", transactions);
+//    }
 }
