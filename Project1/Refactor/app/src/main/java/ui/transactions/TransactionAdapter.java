@@ -12,8 +12,8 @@ import com.example.acmesupermarket.R;
 
 import java.util.ArrayList;
 
-import models.Item;
 import models.Transaction;
+import models.TransactionItem;
 
 public class TransactionAdapter extends BaseExpandableListAdapter {
 
@@ -34,8 +34,8 @@ public class TransactionAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        ArrayList<Item> items = (transactions.get(groupPosition)).getItems();
-        return items.get(childPosition);
+        ArrayList<TransactionItem> transactionItems = (transactions.get(groupPosition)).getTransactionItems();
+        return transactionItems.get(childPosition);
     }
 
     @Override
@@ -47,13 +47,13 @@ public class TransactionAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
                              View view, ViewGroup parent) {
 
-        Item item = (Item) getChild(groupPosition, childPosition);
+        TransactionItem transactionItem = (TransactionItem) getChild(groupPosition, childPosition);
         if (view == null) {
             LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = infalInflater.inflate(R.layout.child_items, null);
         }
 
-        String item_title = res.getString(R.string.items_row, item.getTitle(), item.getQuantity());
+        String item_title = res.getString(R.string.items_row, transactionItem.getTitle(), transactionItem.getQuantity());
         ((TextView) view.findViewById(R.id.cart_item_details)).setText(item_title.trim());
 
         return view;
@@ -61,8 +61,8 @@ public class TransactionAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        ArrayList<Item> items = transactions.get(groupPosition).getItems();
-        return items.size();
+        ArrayList<TransactionItem> transactionItems = transactions.get(groupPosition).getTransactionItems();
+        return transactionItems.size();
     }
 
     @Override

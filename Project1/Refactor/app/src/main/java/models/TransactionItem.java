@@ -3,30 +3,30 @@ package models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Item implements Parcelable {
+public class TransactionItem implements Parcelable {
 
-    public static final Creator<Item> CREATOR = new Creator<Item>() {
+    public static final Creator<TransactionItem> CREATOR = new Creator<TransactionItem>() {
         @Override
-        public Item createFromParcel(Parcel in) {
-            return new Item(in);
+        public TransactionItem createFromParcel(Parcel in) {
+            return new TransactionItem(in);
         }
 
         @Override
-        public Item[] newArray(int size) {
-            return new Item[size];
+        public TransactionItem[] newArray(int size) {
+            return new TransactionItem[size];
         }
     };
     private String title;
     private double price;
     private int quantity;
 
-    public Item(String title, double price, int quantity) {
+    public TransactionItem(String title, double price, int quantity) {
         this.title = title;
         this.price = price;
         this.quantity = quantity;
     }
 
-    protected Item(Parcel in) {
+    protected TransactionItem(Parcel in) {
         title = in.readString();
         price = in.readDouble();
         quantity = in.readInt();
@@ -69,7 +69,7 @@ public class Item implements Parcelable {
     }
 
     public boolean equals(Object object) {
-        Item other = (Item) object;
+        TransactionItem other = (TransactionItem) object;
         return this.title == other.title && this.price == other.price;
     }
 }

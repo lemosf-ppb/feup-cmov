@@ -1,7 +1,5 @@
 package ui.shop;
 
-import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -28,9 +26,6 @@ public class ShopPagerAdapter extends FragmentStatePagerAdapter {
             default:
                 return new Fragment();
         }
-        Bundle args = new Bundle();
-        args.putInt(CartFragment.ARG_OBJECT, i + 1);
-        fragment.setArguments(args);
         return fragment;
     }
 

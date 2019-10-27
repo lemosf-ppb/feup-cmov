@@ -20,23 +20,23 @@ public class Transaction implements Parcelable {
     };
     private String id, price;
     private Voucher voucher;
-    private ArrayList<Item> items;
+    private ArrayList<TransactionItem> transactionItems;
     private boolean usedDiscounts;
 
 
-    public Transaction(String id, Voucher voucher, String price, boolean usedDiscounts, ArrayList<Item> items) {
+    public Transaction(String id, Voucher voucher, String price, boolean usedDiscounts, ArrayList<TransactionItem> transactionItems) {
         this.id = id;
         this.voucher = voucher;
         this.price = price;
         this.usedDiscounts = usedDiscounts;
-        this.items = items;
+        this.transactionItems = transactionItems;
     }
 
     protected Transaction(Parcel in) {
         id = in.readString();
         price = in.readString();
         voucher = in.readParcelable(Voucher.class.getClassLoader());
-        items = in.createTypedArrayList(Item.CREATOR);
+        transactionItems = in.createTypedArrayList(TransactionItem.CREATOR);
         usedDiscounts = in.readByte() != 0;
     }
 
@@ -56,8 +56,8 @@ public class Transaction implements Parcelable {
         return voucher;
     }
 
-    public ArrayList<Item> getItems() {
-        return items;
+    public ArrayList<TransactionItem> getTransactionItems() {
+        return transactionItems;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class Transaction implements Parcelable {
         dest.writeString(id);
         dest.writeString(price);
         dest.writeParcelable(voucher, flags);
-        dest.writeTypedList(items);
+        dest.writeTypedList(transactionItems);
         dest.writeByte((byte) (usedDiscounts ? 1 : 0));
     }
 }

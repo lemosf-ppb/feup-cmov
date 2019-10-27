@@ -126,7 +126,7 @@
 //                String title = "Batata";
 //                double price = 10.6;
 //                int quantity = 1;
-//                Item item = new Item(title, price, quantity);
+//                TransactionItem item = new TransactionItem(title, price, quantity);
 //
 //                cartFragment.addItem(item);
 //            }
