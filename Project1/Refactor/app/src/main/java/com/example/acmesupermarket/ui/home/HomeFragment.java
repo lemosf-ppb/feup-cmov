@@ -18,7 +18,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.home_fragment, container, false);
 
         final NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
 

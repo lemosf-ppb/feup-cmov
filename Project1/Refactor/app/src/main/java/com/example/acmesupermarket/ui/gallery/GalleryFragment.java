@@ -20,7 +20,7 @@ public class GalleryFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         galleryViewModel =
                 ViewModelProviders.of(requireActivity()).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
+        View root = inflater.inflate(R.layout.gallery_fragment, container, false);
         final TextView textView = root.findViewById(R.id.text_gallery);
         galleryViewModel.getText().observe(this, s -> textView.setText(s));
         return root;

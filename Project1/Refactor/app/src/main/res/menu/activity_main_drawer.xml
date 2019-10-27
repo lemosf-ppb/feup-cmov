@@ -8,6 +8,9 @@
             android:id="@+id/profileFragment"
             android:title="@string/menu_home" />
         <item
+            android:id="@+id/shopFragment"
+            android:title="@string/menu_gallery" />
+        <item
             android:id="@+id/galleryFragment"
             android:title="@string/menu_gallery" />
     </group>

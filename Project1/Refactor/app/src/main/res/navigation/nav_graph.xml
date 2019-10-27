@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.example.acmesupermarket.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home">
+        tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -21,12 +21,12 @@
         android:id="@+id/loginFragment"
         android:name="com.example.acmesupermarket.ui.login.LoginFragment"
         android:label="login_fragment"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/login_fragment" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.acmesupermarket.ui.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/profile_fragment" />
     <navigation
         android:id="@+id/registration_graph"
         app:startDestination="@id/personalDataFragment">
@@ -38,7 +38,7 @@
             android:id="@+id/personalDataFragment"
             android:name="com.example.acmesupermarket.ui.registration.PersonalDataFragment"
             android:label="fragment_registry_personal"
-            tools:layout="@layout/fragment_registry_personal">
+            tools:layout="@layout/registry_personal_fragment">
             <action
                 android:id="@+id/action_personalDataFragment_to_creditCardFragment"
                 app:destination="@id/creditCardFragment" />
@@ -48,5 +48,10 @@
         android:id="@+id/galleryFragment"
         android:name="com.example.acmesupermarket.ui.gallery.GalleryFragment"
         android:label="fragment_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/gallery_fragment" />
+    <fragment
+        android:id="@+id/shopFragment"
+        android:name="com.example.acmesupermarket.ui.shop.ShopFragment"
+        android:label="shop_fragment"
+        tools:layout="@layout/shop_fragment" />
 </navigation>

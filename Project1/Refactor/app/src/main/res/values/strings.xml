@@ -2,6 +2,8 @@
     <string name="app_name">AcmeSupermarket</string>
     <string name="login">Login</string>
     <string name="signup">Sign up</string>
+    <string name="tab_cart">Cart</string>
+    <string name="tab_vouchers">Vouchers</string>
 
 
     <string name="prompt_email">Email</string>
