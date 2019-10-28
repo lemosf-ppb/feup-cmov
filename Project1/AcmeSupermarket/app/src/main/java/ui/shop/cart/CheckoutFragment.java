@@ -35,8 +35,8 @@ import utils.Utils;
 public class CheckoutFragment extends Fragment {
     private ShopViewModel mViewModel;
 
-    ImageView qrCodeImageview;
-    String qr_content = null;
+    private ImageView qrCodeImageview;
+    private String qr_content = null;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -54,7 +54,9 @@ public class CheckoutFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(requireActivity()).get(ShopViewModel.class);
 
+        //TODO: Replace this to Registry/Login
         Cryptography.generateAndStoreKeys(requireActivity().getApplicationContext());
+
         drawQRCode(view);
     }
 
@@ -81,7 +83,7 @@ public class CheckoutFragment extends Fragment {
         try {
             qr_content = new String(messageSigned, Utils.ISO_SET);
             boolean verified = Cryptography.validate(messageSigned);
-            String text = "Message: \"" + Utils.byteArrayToHex(messageSigned) + "\"\nVerified: " + verified + "\nTotal bytes: " + messageSigned.length;
+            String text = "Transaction: \"" + new String(transactionBytes) + "\"\nVerified: " + verified + "\nTotal bytes: " + messageSigned.length;
             titleTv.setText(text);
         } catch (UnsupportedEncodingException e) {
             Log.d("Debug", e.getMessage());

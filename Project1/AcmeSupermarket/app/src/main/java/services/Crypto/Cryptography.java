@@ -23,7 +23,6 @@ import javax.security.auth.x500.X500Principal;
 public class Cryptography {
 
     public static byte[] buildMessage(byte[] message) {
-        ArrayList<byte[]> result = new ArrayList<>();
         ByteBuffer messageSigned = ByteBuffer.allocate(message.length + Constants.KEY_SIZE / 8);
         try {
             KeyStore ks = KeyStore.getInstance(Constants.ANDROID_KEYSTORE);
@@ -36,8 +35,6 @@ public class Cryptography {
             byte[] sign = sg.sign();
             messageSigned.put(message);
             messageSigned.put(sign);
-            result.add(message);
-            result.add(sign);
             Log.d("DEBUG", "Msg size = " + message.length + " bytes.");
             Log.d("DEBUG", "Sign size = " + sign.length + " bytes.");
         } catch (Exception ex) {
@@ -69,8 +66,23 @@ public class Cryptography {
         } catch (Exception ex) {
             Log.d("DEBUG", ex.getMessage());
         }
+
         return verified;
     }
+
+    public static byte[] getMessageFromMessageSigned(byte[] messageSigned) {
+        int sign_size = Constants.KEY_SIZE / 8;
+        int mess_size = messageSigned.length - sign_size;
+
+        ByteBuffer bb = ByteBuffer.wrap(messageSigned);
+        byte[] message = new byte[mess_size];
+        byte[] signature = new byte[sign_size];
+        bb.get(message, 0, mess_size);
+        bb.get(signature, 0, sign_size);
+
+        return message;
+    }
+
 
     public static void generateAndStoreKeys(Context context) {
         try {
