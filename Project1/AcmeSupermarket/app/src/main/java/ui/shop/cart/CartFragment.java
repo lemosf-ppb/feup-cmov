@@ -1,4 +1,4 @@
-package ui.shop;
+package ui.shop.cart;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -21,6 +21,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.acmesupermarket.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -42,6 +44,7 @@ import models.TransactionItem;
 import utils.Constants;
 
 import static android.app.Activity.RESULT_OK;
+import ui.shop.ShopViewModel;
 
 public class CartFragment extends Fragment {
     DecimalFormat df = new DecimalFormat("#.##");
@@ -124,6 +127,12 @@ public class CartFragment extends Fragment {
         CheckBox apply_discount_checkbox = view.findViewById(R.id.apply_discount);
         apply_discount_checkbox.setOnCheckedChangeListener((buttonView, isChecked) ->
                 mViewModel.applyDiscount(isChecked));
+
+        Button checkout_button = view.findViewById(R.id.checkout_btn);
+        checkout_button.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+            navController.navigate(R.id.checkoutFragment);
+        });
 
         FloatingActionButton add_item_btn = view.findViewById(R.id.add_item);
         add_item_btn.setOnClickListener(v -> scanQRCode());
