@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import ui.shop.cart.CartFragment;
+
 public class ShopPagerAdapter extends FragmentStatePagerAdapter {
     private static final String[] TAB_TITLES = new String[]{"Cart", "Vouchers"};
 

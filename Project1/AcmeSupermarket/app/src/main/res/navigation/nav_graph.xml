@@ -48,10 +48,19 @@
         android:id="@+id/shopFragment"
         android:name="ui.shop.ShopFragment"
         android:label="shop_fragment"
-        tools:layout="@layout/shop_fragment" />
+        tools:layout="@layout/shop_fragment" >
+        <action
+            android:id="@+id/action_shopFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
+    </fragment>
     <fragment
         android:id="@+id/transactionsFragment"
         android:name="ui.transactions.TransactionsFragment"
         android:label="transactions_fragment"
         tools:layout="@layout/transactions_fragment" />
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="ui.shop.cart.CheckoutFragment"
+        android:label="fragment_checkout"
+        tools:layout="@layout/fragment_checkout" />
 </navigation>
