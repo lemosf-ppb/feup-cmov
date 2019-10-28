@@ -1,59 +1,18 @@
 package models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.util.UUID;
 
-public class TransactionItem implements Parcelable {
-
-    public static final Creator<TransactionItem> CREATOR = new Creator<TransactionItem>() {
-        @Override
-        public TransactionItem createFromParcel(Parcel in) {
-            return new TransactionItem(in);
-        }
-
-        @Override
-        public TransactionItem[] newArray(int size) {
-            return new TransactionItem[size];
-        }
-    };
-    private String title;
+public class TransactionItem {
+    private UUID id;
+    private String name;
     private double price;
     private int quantity;
 
-    public TransactionItem(String title, double price, int quantity) {
-        this.title = title;
+    public TransactionItem(UUID id, String name, double price, int quantity) {
+        this.id = id;
+        this.name = name;
         this.price = price;
         this.quantity = quantity;
-    }
-
-    protected TransactionItem(Parcel in) {
-        title = in.readString();
-        price = in.readDouble();
-        quantity = in.readInt();
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeDouble(price);
-        dest.writeInt(quantity);
     }
 
     public void increaseQuantity() {
@@ -70,6 +29,22 @@ public class TransactionItem implements Parcelable {
 
     public boolean equals(Object object) {
         TransactionItem other = (TransactionItem) object;
-        return this.title == other.title && this.price == other.price;
+        return this.id == other.id;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 }

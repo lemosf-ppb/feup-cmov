@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import models.Transaction;
 import models.TransactionItem;
@@ -21,10 +22,10 @@ public class TransactionsViewModel extends ViewModel {
 
     private void loadTransactions() {
         ArrayList<TransactionItem> transactionItems = new ArrayList<>();
-        transactionItems.add(new TransactionItem("Batata", 10.6, 1));
-        transactionItems.add(new TransactionItem("Tomate", 8.6, 1));
+        transactionItems.add(new TransactionItem(UUID.randomUUID(), "Batata", 10.6, 1));
+        transactionItems.add(new TransactionItem(UUID.randomUUID(), "Tomate", 8.6, 1));
 
-        Transaction transaction = new Transaction("1", null, "20.0", true, transactionItems);
+        Transaction transaction = new Transaction(String.valueOf(Math.random()), UUID.randomUUID(), transactionItems, null, false, 0.0);
         ArrayList<Transaction> transactionsList = new ArrayList<>();
         transactionsList.add(transaction);
         transactions.setValue(transactionsList);

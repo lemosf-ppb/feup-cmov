@@ -21,6 +21,7 @@ import org.json.JSONException;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import models.Transaction;
 import models.TransactionItem;
@@ -66,7 +67,7 @@ public class CheckoutFragment extends Fragment {
         Voucher currentVoucher = mViewModel.currentVoucher.getValue();
         boolean usedDiscounts = mViewModel.applyDiscount.getValue();
 
-        Transaction transaction = new Transaction("uuidUser", transactionItems, currentVoucher, usedDiscounts);
+        Transaction transaction = new Transaction(String.valueOf(Math.random()), UUID.randomUUID(), transactionItems, currentVoucher, usedDiscounts, 0.9);
         byte[] transactionBytes = new byte[0];
         try {
             transactionBytes = transaction.getAsJSON().toString().getBytes();

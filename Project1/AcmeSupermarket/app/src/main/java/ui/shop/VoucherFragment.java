@@ -61,7 +61,7 @@ public class VoucherFragment extends Fragment {
         ArrayList<Voucher> vouchersList = mViewModel.getVouchers().getValue();
         for (Voucher voucher : vouchersList) {
             RadioButton voucher_btn = new RadioButton(context);
-            String voucher_label = res.getString(R.string.voucher_list_item, voucher.getName(), voucher.getDiscount()) + "%";
+            String voucher_label = res.getString(R.string.voucher_list_item, voucher.getId(), voucher.getDiscount()) + "%";
             voucher_btn.setText(voucher_label);
             radioGroup.addView(voucher_btn);
         }

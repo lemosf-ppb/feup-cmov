@@ -73,7 +73,7 @@ public class CartFragment extends Fragment {
             String voucher_id = "None";
 
             if (currentVoucher != null) {
-                voucher_id = currentVoucher.getName();
+                voucher_id = currentVoucher.getId()+"";
             }
             voucher_id_text_view.setText(voucher_id);
         });

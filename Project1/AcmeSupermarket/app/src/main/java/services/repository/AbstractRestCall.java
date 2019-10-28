@@ -44,15 +44,13 @@ public abstract class AbstractRestCall implements Runnable {
         int responseCode = urlConnection.getResponseCode();
         if (responseCode == 200) {
             String response = readStream(urlConnection.getInputStream());
-            updateUI(response);
+            handleResponse(response);
         } else {
             Log.e("REQUEST ERROR", String.valueOf(responseCode));
         }
     }
 
-    private String createPayload() {
-        return null;
-    }
+    public abstract String createPayload();
 
     private void sendPayload(String payload) throws IOException {
         DataOutputStream outputStream = new DataOutputStream(urlConnection.getOutputStream());
@@ -61,9 +59,7 @@ public abstract class AbstractRestCall implements Runnable {
         outputStream.close();
     }
 
-    private void updateUI(final String text) {
-//        runOnUiThread((Runnable) () -> tv.setText(tv.getText() + "\n" + text));
-    }
+    public abstract void handleResponse(final String response);
 
     private String readStream(InputStream in) {
         BufferedReader reader = null;

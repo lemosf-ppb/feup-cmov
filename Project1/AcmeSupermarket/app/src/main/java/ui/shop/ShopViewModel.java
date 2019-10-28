@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import models.TransactionItem;
 import models.Voucher;
@@ -98,14 +99,14 @@ public class ShopViewModel extends ViewModel {
 
     private void loadVouchers() {
         ArrayList<Voucher> vouchersList = new ArrayList<>();
-        vouchersList.add(new Voucher("Voucher 1", 5));
-        vouchersList.add(new Voucher("Voucher 2", 15));
+        vouchersList.add(new Voucher(UUID.randomUUID(), 5));
+        vouchersList.add(new Voucher(UUID.randomUUID(), 15));
         vouchers.setValue(vouchersList);
     }
 
     private void loadTransactionItems() {
         transactionItems.setValue(new ArrayList<>());
-        addTransactionItem(new TransactionItem("Batata", 10.6, 1));
-        addTransactionItem(new TransactionItem("Tomate", 8.6, 1));
+        addTransactionItem(new TransactionItem(UUID.randomUUID(),"Batata", 10.6, 1));
+        addTransactionItem(new TransactionItem(UUID.randomUUID(),"Tomate", 8.6, 1));
     }
 }
