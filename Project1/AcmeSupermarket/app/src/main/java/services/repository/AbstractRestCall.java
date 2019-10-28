@@ -87,6 +87,4 @@ public abstract class AbstractRestCall implements Runnable {
         }
         return response.toString();
     }
-
-
 }
