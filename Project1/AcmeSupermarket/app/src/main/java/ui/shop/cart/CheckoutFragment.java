@@ -20,16 +20,13 @@ import com.google.zxing.WriterException;
 import org.json.JSONException;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import models.Transaction;
 import models.TransactionItem;
 import models.Voucher;
-import services.Crypto.Constants;
-import services.Crypto.Cryptography;
+import services.crypto.Cryptography;
 import ui.shop.ShopViewModel;
-import ui.transactions.TransactionAdapter;
 import utils.Utils;
 
 public class CheckoutFragment extends Fragment {

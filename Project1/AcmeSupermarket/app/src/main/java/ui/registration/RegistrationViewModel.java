@@ -3,8 +3,6 @@ package ui.registration;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import services.Crypto.Cryptography;
-
 public class RegistrationViewModel extends ViewModel {
 
     private final MutableLiveData<RegistrationState> registrationState

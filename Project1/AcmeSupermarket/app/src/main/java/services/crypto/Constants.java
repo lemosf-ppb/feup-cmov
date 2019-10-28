@@ -1,4 +1,4 @@
-package services.Crypto;
+package services.crypto;
 
 public class Constants {
     public static final int KEY_SIZE = 512;

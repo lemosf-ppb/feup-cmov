@@ -1,4 +1,4 @@
-package services.Crypto;
+package services.crypto;
 
 import android.content.Context;
 import android.security.KeyPairGeneratorSpec;
@@ -14,7 +14,6 @@ import java.security.Signature;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.AlgorithmParameterSpec;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
