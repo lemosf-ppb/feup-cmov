@@ -138,7 +138,7 @@ public class CartFragment extends Fragment {
         add_item_btn.setOnClickListener(v -> scanQRCode());
     }
 
-    public PublicKey readPublicKey(String pubKey) throws NoSuchAlgorithmException, InvalidKeySpecException
+    private PublicKey readPublicKey(String pubKey) throws NoSuchAlgorithmException, InvalidKeySpecException
     {
         String cleanKey = pubKey.replace("\n","");
         cleanKey = cleanKey.replace(Constants.BEGIN_PUBLIC_KEY, "");
@@ -184,7 +184,8 @@ public class CartFragment extends Fragment {
         }
     }
 
-    void decodeAndShow(byte[] encTag) {
+    //TODO: SAVE UUID on the transaction item model
+    private void decodeAndShow(byte[] encTag) {
         byte[] clearTag;
 
         try {
@@ -215,9 +216,13 @@ public class CartFragment extends Fragment {
 
         Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
 
+        double price = euros*1.0 + cents/100.0;
+
+        TransactionItem transactionItem = new TransactionItem(name,price,1);
+        mViewModel.addTransactionItem(transactionItem);
     }
 
-    String byteArrayToHex(byte[] ba) {                              // converter
+    private String byteArrayToHex(byte[] ba) {                              // converter
         StringBuilder sb = new StringBuilder(ba.length * 2);
         for (byte b : ba)
             sb.append(String.format("%02x", b));
