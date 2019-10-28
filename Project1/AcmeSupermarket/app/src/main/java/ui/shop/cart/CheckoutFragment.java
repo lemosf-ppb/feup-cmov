@@ -54,6 +54,7 @@ public class CheckoutFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(requireActivity()).get(ShopViewModel.class);
 
+        Cryptography.generateAndStoreKeys(requireActivity().getApplicationContext());
         drawQRCode(view);
     }
 
@@ -67,25 +68,20 @@ public class CheckoutFragment extends Fragment {
         boolean usedDiscounts = mViewModel.applyDiscount.getValue();
 
         Transaction transaction = new Transaction("uuidUser", transactionItems, currentVoucher, usedDiscounts);
-        byte[] content = new byte[0];
+        byte[] transactionBytes = new byte[0];
         try {
-            content = transaction.getAsJSON().toString().getBytes();
+            transactionBytes = transaction.getAsJSON().toString().getBytes();
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        int sign_size = Constants.KEY_SIZE / 8;
-        int mess_size = content.length - sign_size;
+        byte[] messageSigned = Cryptography.buildMessage(transactionBytes);
 
         try {
-            qr_content = new String(content, Utils.ISO_SET);
-            ByteBuffer bb = ByteBuffer.wrap(content);
-            byte[] mess = new byte[mess_size];
-            byte[] sign = new byte[sign_size];
-            bb.get(mess, 0, mess_size);
-            bb.get(sign, 0, sign_size);
-            boolean verified = Cryptography.validate(mess, sign);
-            String text = "Message: \"" + Utils.byteArrayToHex(mess) + "\"\nVerified: " + verified + "\nTotal bytes: " + content.length;
+            qr_content = new String(messageSigned, Utils.ISO_SET);
+            boolean verified = Cryptography.validate(messageSigned);
+            String text = "Message: \"" + Utils.byteArrayToHex(messageSigned) + "\"\nVerified: " + verified + "\nTotal bytes: " + messageSigned.length;
             titleTv.setText(text);
         } catch (UnsupportedEncodingException e) {
             Log.d("Debug", e.getMessage());

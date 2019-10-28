@@ -5,6 +5,7 @@ import android.security.KeyPairGeneratorSpec;
 import android.util.Log;
 
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.PrivateKey;
@@ -13,6 +14,7 @@ import java.security.Signature;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -20,7 +22,9 @@ import javax.security.auth.x500.X500Principal;
 
 public class Cryptography {
 
-    private byte[] buildMessage(byte[] message) {
+    public static byte[] buildMessage(byte[] message) {
+        ArrayList<byte[]> result = new ArrayList<>();
+        ByteBuffer messageSigned = ByteBuffer.allocate(message.length + Constants.KEY_SIZE / 8);
         try {
             KeyStore ks = KeyStore.getInstance(Constants.ANDROID_KEYSTORE);
             ks.load(null);
@@ -28,16 +32,30 @@ public class Cryptography {
             PrivateKey pri = ((KeyStore.PrivateKeyEntry) entry).getPrivateKey();
             Signature sg = Signature.getInstance(Constants.SIGN_ALGO);
             sg.initSign(pri);
-            sg.update(message, 0, message.length + 1);
-            int sz = sg.sign(message, message.length + 1, Constants.KEY_SIZE/4);
-            Log.d("DEBUG", "Sign size = " + sz + " bytes.");
+            sg.update(message);
+            byte[] sign = sg.sign();
+            messageSigned.put(message);
+            messageSigned.put(sign);
+            result.add(message);
+            result.add(sign);
+            Log.d("DEBUG", "Msg size = " + message.length + " bytes.");
+            Log.d("DEBUG", "Sign size = " + sign.length + " bytes.");
         } catch (Exception ex) {
             Log.d("DEBUG", ex.getMessage());
         }
-        return message;
+        return messageSigned.array();
     }
 
-    public static boolean validate(byte[] message, byte[] signature) {
+    public static boolean validate(byte[] messageSigned) {
+        int sign_size = Constants.KEY_SIZE / 8;
+        int mess_size = messageSigned.length - sign_size;
+
+        ByteBuffer bb = ByteBuffer.wrap(messageSigned);
+        byte[] message = new byte[mess_size];
+        byte[] signature = new byte[sign_size];
+        bb.get(message, 0, mess_size);
+        bb.get(signature, 0, sign_size);
+
         boolean verified = false;
         try {
             KeyStore ks = KeyStore.getInstance(Constants.ANDROID_KEYSTORE);
@@ -54,7 +72,7 @@ public class Cryptography {
         return verified;
     }
 
-    private void generateAndStoreKeys(Context context) {
+    public static void generateAndStoreKeys(Context context) {
         try {
             KeyStore ks = KeyStore.getInstance(Constants.ANDROID_KEYSTORE);
             ks.load(null);
