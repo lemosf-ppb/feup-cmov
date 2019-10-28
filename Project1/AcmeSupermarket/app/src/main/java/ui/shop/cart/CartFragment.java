@@ -1,10 +1,11 @@
-package ui.shop;
+package ui.shop.cart;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.acmesupermarket.R;
 
@@ -20,6 +23,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import models.TransactionItem;
+import ui.shop.ShopViewModel;
 
 public class CartFragment extends Fragment {
     DecimalFormat df = new DecimalFormat("#.##");
@@ -94,6 +98,12 @@ public class CartFragment extends Fragment {
         CheckBox apply_discount_checkbox = view.findViewById(R.id.apply_discount);
         apply_discount_checkbox.setOnCheckedChangeListener((buttonView, isChecked) ->
                 mViewModel.applyDiscount(isChecked));
+
+        Button checkout_button = view.findViewById(R.id.checkout_btn);
+        checkout_button.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+            navController.navigate(R.id.checkoutFragment);
+        });
     }
 
 

@@ -1,4 +1,4 @@
-package ui.shop;
+package ui.shop.cart;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import com.example.acmesupermarket.R;
 import java.util.ArrayList;
 
 import models.TransactionItem;
+import ui.shop.ShopViewModel;
 
 public class CartItemAdapter extends ArrayAdapter<TransactionItem> {
 

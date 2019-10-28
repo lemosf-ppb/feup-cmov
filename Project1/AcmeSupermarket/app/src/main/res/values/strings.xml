@@ -64,4 +64,7 @@
     <string name="menu_shop">Shop</string>
     <string name="menu_transactions">Transactions</string>
     <string name="menu_profile">Profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
