@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/home_fragment">
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_registration_graph"
+            app:destination="@id/registration_graph" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ui.login.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/profile_fragment" />
+    <navigation
+        android:id="@+id/registration_graph"
+        app:startDestination="@id/personalDataFragment">
+        <fragment
+            android:id="@+id/creditCardFragment"
+            android:name="ui.registration.CreditCardFragment"
+            android:label="CreditCardFragment" />
+        <fragment
+            android:id="@+id/personalDataFragment"
+            android:name="ui.registration.PersonalDataFragment"
+            android:label="fragment_registry_personal"
+            tools:layout="@layout/registry_personal_fragment">
+            <action
+                android:id="@+id/action_personalDataFragment_to_creditCardFragment"
+                app:destination="@id/creditCardFragment" />
+        </fragment>
+    </navigation>
+    <fragment
+        android:id="@+id/shopFragment"
+        android:name="ui.shop.ShopFragment"
+        android:label="shop_fragment"
+        tools:layout="@layout/shop_fragment" />
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="ui.transactions.TransactionsFragment"
+        android:label="transactions_fragment"
+        tools:layout="@layout/transactions_fragment" />
+</navigation>
