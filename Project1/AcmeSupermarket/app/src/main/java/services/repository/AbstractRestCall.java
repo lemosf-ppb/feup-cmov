@@ -2,6 +2,8 @@ package services.repository;
 
 import android.util.Log;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -22,7 +24,7 @@ public abstract class AbstractRestCall implements Runnable {
             setupURLConnection();
             sendPayload(createPayload());
             getResponse();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (urlConnection != null)
@@ -50,7 +52,7 @@ public abstract class AbstractRestCall implements Runnable {
         }
     }
 
-    public abstract String createPayload();
+    public abstract String createPayload() throws JSONException;
 
     private void sendPayload(String payload) throws IOException {
         DataOutputStream outputStream = new DataOutputStream(urlConnection.getOutputStream());

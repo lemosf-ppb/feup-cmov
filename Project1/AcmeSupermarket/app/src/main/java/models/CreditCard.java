@@ -1,5 +1,8 @@
 package models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class CreditCard {
     private String holder, number, expiry, cvv;
 
@@ -24,5 +27,14 @@ public class CreditCard {
 
     public String getCvv() {
         return cvv;
+    }
+
+    public JSONObject getAsJSON() throws JSONException {
+        JSONObject creditCardObject = new JSONObject();
+        creditCardObject.put("number", number);
+        creditCardObject.put("validity", expiry);
+        creditCardObject.put("cvv", cvv);
+        creditCardObject.put("holder", holder);
+        return creditCardObject;
     }
 }
