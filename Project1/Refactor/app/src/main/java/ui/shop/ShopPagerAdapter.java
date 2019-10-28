@@ -31,7 +31,7 @@ public class ShopPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return TAB_TITLES.length;
     }
 
     @Override
