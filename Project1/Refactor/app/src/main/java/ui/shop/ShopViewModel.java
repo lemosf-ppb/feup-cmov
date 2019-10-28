@@ -16,6 +16,7 @@ public class ShopViewModel extends ViewModel {
     public final MutableLiveData<Voucher> currentVoucher = new MutableLiveData<>();
     public final MutableLiveData<Boolean> applyDiscount = new MutableLiveData<>(false);
     public final MutableLiveData<Double> discountAvailable = new MutableLiveData<>((double) 2);
+    public final MutableLiveData<ArrayList<Voucher>> vouchers = new MutableLiveData<>();
 
     public void addTransactionItem(TransactionItem transactionItem) {
         ArrayList<TransactionItem> transactionItemsList = transactionItems.getValue();
@@ -67,7 +68,7 @@ public class ShopViewModel extends ViewModel {
         totalPrice.setValue(totalPrice.getValue() + price);
     }
 
-    private void setSelectedVoucher(Voucher voucher) {
+    public void setSelectedVoucher(Voucher voucher) {
         currentVoucher.setValue(voucher);
     }
 
@@ -86,6 +87,20 @@ public class ShopViewModel extends ViewModel {
             loadTransactionItems();
         }
         return transactionItems;
+    }
+
+    public MutableLiveData<ArrayList<Voucher>> getVouchers() {
+        if (vouchers.getValue() == null) {
+            loadVouchers();
+        }
+        return vouchers;
+    }
+
+    private void loadVouchers() {
+        ArrayList<Voucher> vouchersList = new ArrayList<>();
+        vouchersList.add(new Voucher("Voucher 1", 5));
+        vouchersList.add(new Voucher("Voucher 2", 15));
+        vouchers.setValue(vouchersList);
     }
 
     private void loadTransactionItems() {

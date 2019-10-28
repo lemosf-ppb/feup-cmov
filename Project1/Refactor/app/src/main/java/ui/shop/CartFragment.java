@@ -65,7 +65,13 @@ public class CartFragment extends Fragment {
     private void setObservers(View view) {
         mViewModel.transactionItems.observe(this, transactionItemsList -> cartItemsAdapter.setTransactionItems(transactionItemsList));
         mViewModel.currentVoucher.observe(this, currentVoucher -> {
+            TextView voucher_id_text_view = view.findViewById(R.id.voucher_id);
+            String voucher_id = "None";
 
+            if (currentVoucher != null) {
+                voucher_id = currentVoucher.getName();
+            }
+            voucher_id_text_view.setText(voucher_id);
         });
         mViewModel.discountAvailable.observe(this, discountAvailable -> {
             TextView discount_value = view.findViewById(R.id.discount_value);
@@ -85,28 +91,11 @@ public class CartFragment extends Fragment {
             total_price_value.setText(String.format("%s", df.format(totalAfterVoucher)));
         });
 
-//        setSelectedVoucher();
-
         CheckBox apply_discount_checkbox = view.findViewById(R.id.apply_discount);
         apply_discount_checkbox.setOnCheckedChangeListener((buttonView, isChecked) ->
                 mViewModel.applyDiscount(isChecked));
-
     }
 
-
-//    private void setSelectedVoucher() {
-//        TextView voucher_id_text_view = v.findViewById(R.id.voucher_id);
-////        Voucher voucher = ((ShopActivity) getActivity()).getSelectedVoucher();
-//        Voucher voucher = new Voucher("oi", 1);
-//        String voucher_id = "None";
-//        voucherDiscount = 0;
-//        if (voucher != null) {
-//            voucher_id = voucher.getName();
-//            voucherDiscount = voucher.getDiscount();
-//        }
-//        voucher_id_text_view.setText(voucher_id);
-//    }
-//
 
 //    public void onSaveInstanceState(Bundle savedState) {
 //        super.onSaveInstanceState(savedState);
