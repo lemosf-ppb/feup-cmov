@@ -1,54 +1,64 @@
 package ui.registration;
 
+import android.view.View;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import models.Client;
+import models.CreditCard;
+import services.repository.AbstractRestCall;
+import services.repository.AcmeRepository;
 
 public class RegistrationViewModel extends ViewModel {
 
     private final MutableLiveData<RegistrationState> registrationState
             = new MutableLiveData<>(RegistrationState.COLLECT_PROFILE_DATA);
-    // Simulation of real-world scenario, where an auth token may be provided as
-    // an alternate authentication mechanism instead of passing the password
-    // around. This is set at the end of the registration process.
-    private String authToken;
+
+    private Client client;
+
+    private final MutableLiveData<AbstractRestCall.Response> response = new MutableLiveData<>();
 
     public MutableLiveData<RegistrationState> getRegistrationState() {
         return registrationState;
     }
 
-    public String getAuthToken() {
-        return authToken;
+    public Client getClient() {
+        return client;
+    }
+
+    public MutableLiveData<AbstractRestCall.Response> getSignUpResponse() {
+        return response;
     }
 
     public void collectProfileData(String name, String username, String password) {
         // ... validate and store data
+        client = new Client(name, username, password);
+
         // Change State to collecting username and password
         registrationState.setValue(RegistrationState.COLLECT_CREDIT_CARD_DATA);
-
     }
 
     public void createCreditCard(String cardNumber, String cardHolder, String cardExpiry, String cardCvv) {
         // ... create account
-        // ... authenticate
-        this.authToken = "oi";// token
-
-        // Change State to registration completed
-        registrationState.setValue(RegistrationState.REGISTRATION_COMPLETED);
-
+        CreditCard creditCard = new CreditCard(cardHolder, cardNumber, cardExpiry, cardCvv);
+        client.setCreditCard(creditCard);
     }
 
-    public boolean userCancelledRegistration() {
+    public void userCancelledRegistration() {
         // Clear existing registration data
         registrationState.setValue(RegistrationState.COLLECT_PROFILE_DATA);
-        authToken = "";
-        return true;
     }
 
+    public void signUp() {
+        AcmeRepository.SignUp signUp = new AcmeRepository.SignUp(this);
+        new Thread(signUp).start();
+    }
 
-    enum RegistrationState {
+    public enum RegistrationState {
         COLLECT_PROFILE_DATA,
         COLLECT_CREDIT_CARD_DATA,
-        REGISTRATION_COMPLETED
+        REGISTRATION_COMPLETED,
+        REGISTRATION_FAILED
     }
-
 }

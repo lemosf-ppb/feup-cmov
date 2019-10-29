@@ -34,15 +34,11 @@ public class PersonalDataFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         registrationViewModel = ViewModelProviders.of(requireActivity()).get(RegistrationViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-        registrationViewModel = ViewModelProviders
-                .of(requireActivity())
-                .get(RegistrationViewModel.class);
+        registrationViewModel = ViewModelProviders.of(requireActivity()).get(RegistrationViewModel.class);
 
         setupEventListeners(view);
 
@@ -107,7 +103,7 @@ public class PersonalDataFragment extends Fragment {
         });
 
         // If the user presses back, cancel the user registration and pop back
-        // to the login fragment. Since this ViewModel is shared at the activity
+        // to the home fragment. Since this ViewModel is shared at the activity
         // scope, its state must be reset so that it is in the initial state if
         // the user comes back to register later.
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),

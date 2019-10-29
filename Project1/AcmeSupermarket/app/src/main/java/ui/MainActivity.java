@@ -50,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        setupViewModelListeners();
+    }
+
+    private void setupViewModelListeners() {
+        //TODO: Fill this with database things? Like every time that models are updated sync into localStorage
     }
 
     @Override

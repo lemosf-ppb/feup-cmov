@@ -22,9 +22,6 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void authenticate(String username, String password) {
-        Log.e("FUCK YOU", username);
-        Log.e("FUCK YOU", "oi");
-
         if (passwordIsValidForUsername(username, password)) {
             this.username = username;
             authenticationState.setValue(AuthenticationState.AUTHENTICATED);

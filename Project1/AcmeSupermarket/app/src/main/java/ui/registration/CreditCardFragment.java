@@ -1,5 +1,6 @@
 package ui.registration;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,11 +19,13 @@ import androidx.navigation.NavController;
 
 import com.cooltechworks.creditcarddesign.CreditCardView;
 import com.example.acmesupermarket.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import ui.login.LoginViewModel;
 
 import static androidx.navigation.Navigation.findNavController;
 import static ui.registration.RegistrationViewModel.RegistrationState.REGISTRATION_COMPLETED;
+import static ui.registration.RegistrationViewModel.RegistrationState.REGISTRATION_FAILED;
 
 public class CreditCardFragment extends Fragment {
 
@@ -41,13 +44,13 @@ public class CreditCardFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        registrationViewModel = ViewModelProviders.of(requireActivity()).get(RegistrationViewModel.class);
-        // TODO: Use the ViewModel
+        ViewModelProvider provider = ViewModelProviders.of(requireActivity());
+        registrationViewModel = provider.get(RegistrationViewModel.class);
+        loginViewModel = provider.get(LoginViewModel.class);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         ViewModelProvider provider = ViewModelProviders.of(requireActivity());
         registrationViewModel = provider.get(RegistrationViewModel.class);
         loginViewModel = provider.get(LoginViewModel.class);
@@ -77,12 +80,13 @@ public class CreditCardFragment extends Fragment {
                     cardExpiryTextView.getText().toString(),
                     cardCvvTextView.getText().toString()
             );
+
+            registrationViewModel.signUp();
         });
 
     }
 
     private void setupCreditCardEventListeners(CreditCardView creditCardView) {
-        // TODO: Change to LiveData types
         cardNumberTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -191,24 +195,34 @@ public class CreditCardFragment extends Fragment {
         final NavController navController = findNavController(view);
 
         // RegistrationViewModel updates the registrationState to
-        // REGISTRATION_COMPLETED when ready, and for this example, the username
+        // REGISTRATION_COMPLETED when ready, the username
         // is accessed as a read-only property from RegistrationViewModel and is
         // used to directly authenticate with loginViewModel.
         registrationViewModel.getRegistrationState().observe(
                 getViewLifecycleOwner(), state -> {
                     if (state == REGISTRATION_COMPLETED) {
-                        // Here we authenticate with the token provided by the ViewModel
-                        // then pop back to the profile_fragment, where the user authentication
+                        // Here we authenticate with the userId and publicKey provided by the ViewModel
+                        // then pop back to the shop_fragment, where the user authentication
                         // status will be tested and should be authenticated.
-                        String authToken = registrationViewModel.getAuthToken();
-                        loginViewModel.authenticate(authToken);
+//                        String authToken = registrationViewModel.getAuthToken();
+                        loginViewModel.authenticate(""); //TODO: Update this
+                        Snackbar snackbar = Snackbar.make(view.findViewById(R.id.creditCardFragment),
+                                registrationViewModel.getSignUpResponse().getValue().getSuccessMessage()
+                                , Snackbar.LENGTH_SHORT);
+                        snackbar.show();
                         navController.navigate(R.id.shopFragment);
+                    } else if (state == REGISTRATION_FAILED) {
+                        Snackbar snackbar = Snackbar.make(view.findViewById(R.id.creditCardFragment),
+                                registrationViewModel.getSignUpResponse().getValue().getErrorMessage()
+                                , Snackbar.LENGTH_SHORT);
+                        snackbar.getView().setBackgroundColor(Color.RED);
+                        snackbar.show();
                     }
                 }
         );
 
         // If the user presses back, cancel the user registration and pop back
-        // to the login fragment. Since this ViewModel is shared at the activity
+        // to the personal data fragment. Since this ViewModel is shared at the activity
         // scope, its state must be reset so that it will be in the initial
         // state if the user comes back to register later.
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
