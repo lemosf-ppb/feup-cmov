@@ -1,29 +1,30 @@
 package ui.login;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import models.Client;
 
 public class LoginViewModel extends ViewModel {
 
     public final MutableLiveData<AuthenticationState> authenticationState =
             new MutableLiveData<>();
-    String username;
+    private Client client;
 
     public LoginViewModel() {
         // In this example, the user is always unauthenticated when MainActivity is launched
         authenticationState.setValue(AuthenticationState.UNAUTHENTICATED);
-        username = "";
+        this.client = null;
     }
 
-    public void authenticate(String authToken) {
+    public void authenticate(Client client) {
+        this.client = client;
         authenticationState.setValue(AuthenticationState.AUTHENTICATED);
     }
 
     public void authenticate(String username, String password) {
         if (passwordIsValidForUsername(username, password)) {
-            this.username = username;
+//            this.username = username;
             authenticationState.setValue(AuthenticationState.AUTHENTICATED);
         } else {
             authenticationState.setValue(AuthenticationState.INVALID_AUTHENTICATION);
