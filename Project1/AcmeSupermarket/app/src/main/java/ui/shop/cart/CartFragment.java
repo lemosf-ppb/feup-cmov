@@ -19,10 +19,14 @@ import androidx.navigation.Navigation;
 
 import com.example.acmesupermarket.R;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 
 import models.TransactionItem;
+import services.crypto.Cryptography;
 import ui.shop.ShopViewModel;
 
 public class CartFragment extends Fragment {

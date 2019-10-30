@@ -52,9 +52,6 @@ public class CheckoutFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(requireActivity()).get(ShopViewModel.class);
 
-        //TODO: Replace this to Registry/Login
-        Cryptography.generateAndStoreKeys(requireActivity().getApplicationContext());
-
         drawQRCode(view);
     }
 

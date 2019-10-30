@@ -1,5 +1,6 @@
 package ui.registration;
 
+import android.content.Context;
 import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import models.Client;
 import models.CreditCard;
+import services.crypto.Cryptography;
 import services.repository.AbstractRestCall;
 import services.repository.AcmeRepository;
 
@@ -32,7 +34,7 @@ public class RegistrationViewModel extends ViewModel {
     }
 
     public void collectProfileData(String name, String username, String password) {
-        // ... validate and store data
+        // Store profile data
         client = new Client(name, username, password);
 
         // Change State to collecting username and password
@@ -40,7 +42,7 @@ public class RegistrationViewModel extends ViewModel {
     }
 
     public void createCreditCard(String cardNumber, String cardHolder, String cardExpiry, String cardCvv) {
-        // ... create account
+        // Store Credit Card
         CreditCard creditCard = new CreditCard(cardHolder, cardNumber, cardExpiry, cardCvv);
         client.setCreditCard(creditCard);
     }
@@ -50,7 +52,10 @@ public class RegistrationViewModel extends ViewModel {
         registrationState.setValue(RegistrationState.COLLECT_PROFILE_DATA);
     }
 
-    public void signUp() {
+    public void signUp(Context context) {
+        Cryptography.generateAndStoreKeys(context);
+        client.setClientKeys();
+
         AcmeRepository.SignUp signUp = new AcmeRepository.SignUp(this);
         new Thread(signUp).start();
     }

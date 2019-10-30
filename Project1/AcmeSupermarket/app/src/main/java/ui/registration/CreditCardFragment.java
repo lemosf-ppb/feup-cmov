@@ -81,9 +81,8 @@ public class CreditCardFragment extends Fragment {
                     cardCvvTextView.getText().toString()
             );
 
-            registrationViewModel.signUp();
+            registrationViewModel.signUp(requireActivity().getApplicationContext());
         });
-
     }
 
     private void setupCreditCardEventListeners(CreditCardView creditCardView) {

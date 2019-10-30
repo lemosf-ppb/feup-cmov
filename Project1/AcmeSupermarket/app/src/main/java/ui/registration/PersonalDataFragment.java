@@ -55,7 +55,6 @@ public class PersonalDataFragment extends Fragment {
             checkPassword();
         });
 
-
         // When the next button is clicked, collect the current values from the edit texts
         // and pass to the ViewModel to store.
         view.findViewById(R.id.btn_next).setOnClickListener(v -> {
@@ -73,6 +72,7 @@ public class PersonalDataFragment extends Fragment {
             nameEditText.setError("Please fill in this field");
             return false;
         }
+
         if (usernameEditText.getText().toString().equals("")) {
             usernameEditText.setError("Please fill in this field");
             return false;
