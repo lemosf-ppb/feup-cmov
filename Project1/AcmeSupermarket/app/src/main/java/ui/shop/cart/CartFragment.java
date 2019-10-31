@@ -43,6 +43,7 @@ import utils.Constants;
 import utils.Utils;
 
 import static android.app.Activity.RESULT_OK;
+import static services.crypto.Constants.ENC_ALGO;
 
 public class CartFragment extends Fragment {
     private DecimalFormat df = new DecimalFormat("#.##");
@@ -185,7 +186,7 @@ public class CartFragment extends Fragment {
         byte[] clearTag;
 
         try {
-            Cipher cipher = Cipher.getInstance(Constants.ENC_ALGO);
+            Cipher cipher = Cipher.getInstance(ENC_ALGO);
             cipher.init(Cipher.DECRYPT_MODE, loginViewModel.getClient().getAcmePublicKey());
             clearTag = cipher.doFinal(encTag);
         } catch (Exception e) {
