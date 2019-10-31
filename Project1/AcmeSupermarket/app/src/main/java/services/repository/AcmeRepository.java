@@ -84,7 +84,7 @@ public class AcmeRepository {
                 for (int i = 0; i < transactionsArray.length(); i++) {
                     transactions.add(new Transaction(transactionsArray.getJSONObject(i)));
                 }
-                transactionsViewModel.getTransactions().postValue(transactions);
+                transactionsViewModel.transactions.postValue(transactions);
             }
         }
     }
@@ -115,7 +115,7 @@ public class AcmeRepository {
                     Voucher voucher = new Voucher(responseObject.getJSONObject(i));
                     unusedVouchers.add(voucher);
                 }
-                shopViewModel.getVouchers().postValue(unusedVouchers);
+                shopViewModel.vouchers.postValue(unusedVouchers);
             }
         }
     }

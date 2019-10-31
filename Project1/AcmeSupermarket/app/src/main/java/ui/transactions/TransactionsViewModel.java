@@ -13,7 +13,7 @@ import services.repository.AcmeRepository;
 
 public class TransactionsViewModel extends ViewModel {
 
-    private final MutableLiveData<ArrayList<Transaction>> transactions = new MutableLiveData<>(new ArrayList<>());
+    public final MutableLiveData<ArrayList<Transaction>> transactions = new MutableLiveData<>(new ArrayList<>());
 
     public MutableLiveData<ArrayList<Transaction>> getTransactions() {
         if (transactions.getValue() == null) {
