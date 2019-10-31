@@ -92,7 +92,7 @@ public class Transaction {
         }
         transactionObject.put("productsList", productsList);
         transactionObject.put("useDiscounts", useDiscounts);
-        transactionObject.put("voucherId", voucher.getId().toString());
+        transactionObject.put("voucherId", (voucher == null ? null : voucher.getId().toString()));
 
         return transactionObject;
     }
