@@ -20,16 +20,14 @@ import com.google.zxing.WriterException;
 import org.json.JSONException;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import models.Transaction;
 import models.TransactionItem;
 import models.Voucher;
-import services.Crypto.Constants;
-import services.Crypto.Cryptography;
+import services.crypto.Cryptography;
 import ui.shop.ShopViewModel;
-import ui.transactions.TransactionAdapter;
 import utils.Utils;
 
 public class CheckoutFragment extends Fragment {
@@ -54,9 +52,6 @@ public class CheckoutFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(requireActivity()).get(ShopViewModel.class);
 
-        //TODO: Replace this to Registry/Login
-        Cryptography.generateAndStoreKeys(requireActivity().getApplicationContext());
-
         drawQRCode(view);
     }
 
@@ -69,7 +64,7 @@ public class CheckoutFragment extends Fragment {
         Voucher currentVoucher = mViewModel.currentVoucher.getValue();
         boolean usedDiscounts = mViewModel.applyDiscount.getValue();
 
-        Transaction transaction = new Transaction("uuidUser", transactionItems, currentVoucher, usedDiscounts);
+        Transaction transaction = new Transaction(String.valueOf(Math.random()), UUID.randomUUID(), transactionItems, currentVoucher.getId().toString(), usedDiscounts, 0.9);
         byte[] transactionBytes = new byte[0];
         try {
             transactionBytes = transaction.getAsJSON().toString().getBytes();

@@ -33,7 +33,7 @@ router.post('/transactions', async (req, res) => {
   }
 });
 
-router.get('/transactions', async (req, res) => {
+router.post('/transactions/user', async (req, res) => {
   const { userId, signature } = req.body;
 
   const user = await usersController.retrieve(userId);
@@ -41,8 +41,7 @@ router.get('/transactions', async (req, res) => {
     return res.status(400).send('User not found');
   }
 
-  const payload = { userId };
-  const verifyAuth = auth.verifySignature(payload, user.publicKey, signature);
+  const verifyAuth = auth.verifySignature(userId, user.publicKey, signature);
   if (!verifyAuth) {
     return res.status(400).send('Signature invalid');
   }

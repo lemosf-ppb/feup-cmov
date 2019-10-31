@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,13 +40,14 @@ import java.util.UUID;
 import javax.crypto.Cipher;
 
 import models.TransactionItem;
+import models.Voucher;
+import ui.shop.ShopViewModel;
 import utils.Constants;
 
 import static android.app.Activity.RESULT_OK;
-import ui.shop.ShopViewModel;
 
 public class CartFragment extends Fragment {
-    DecimalFormat df = new DecimalFormat("#.##");
+    private DecimalFormat df = new DecimalFormat("#.##");
     private ShopViewModel mViewModel;
     private CartItemAdapter cartItemsAdapter;
     private PublicKey pub;
@@ -88,40 +88,25 @@ public class CartFragment extends Fragment {
     }
 
     private void inflateView(View view) {
-        TextView discount_value = view.findViewById(R.id.discount_value);
-        discount_value.setText(String.format("%s", df.format(mViewModel.discountAvailable.getValue())));
+        updateCurrentVoucherUI(view, mViewModel.currentVoucher.getValue());
 
-        TextView total_price_value = view.findViewById(R.id.total_price_value);
-        total_price_value.setText(String.format("%s", df.format(mViewModel.totalPrice.getValue())));
+        updateDiscountAvailableUI(view, mViewModel.discountAvailable.getValue());
+
+        updateUseDiscountUI(view, mViewModel.applyDiscount.getValue());
+
+        updateTotalPriceUI(view, mViewModel.totalPrice.getValue());
     }
 
     private void setObservers(View view) {
         mViewModel.transactionItems.observe(this, transactionItemsList -> cartItemsAdapter.setTransactionItems(transactionItemsList));
         mViewModel.currentVoucher.observe(this, currentVoucher -> {
-            TextView voucher_id_text_view = view.findViewById(R.id.voucher_id);
-            String voucher_id = "None";
-
-            if (currentVoucher != null) {
-                voucher_id = currentVoucher.getName();
-            }
-            voucher_id_text_view.setText(voucher_id);
+            updateCurrentVoucherUI(view, currentVoucher);
         });
         mViewModel.discountAvailable.observe(this, discountAvailable -> {
-            TextView discount_value = view.findViewById(R.id.discount_value);
-            discount_value.setText(String.format("%s", df.format(discountAvailable)));
-        });
-        mViewModel.applyDiscount.observe(this, applyDiscount -> {
-
+            updateDiscountAvailableUI(view, discountAvailable);
         });
         mViewModel.totalPrice.observe(this, totalPrice -> {
-            TextView total_price_value = view.findViewById(R.id.total_price_value);
-
-            double voucherPercent = 0;
-            if (mViewModel.currentVoucher.getValue() != null)
-                voucherPercent = mViewModel.currentVoucher.getValue().getDiscount() / 100.0;
-
-            double totalAfterVoucher = (1.0 - voucherPercent) * totalPrice;
-            total_price_value.setText(String.format("%s", df.format(totalAfterVoucher)));
+            updateTotalPriceUI(view, totalPrice);
         });
 
         CheckBox apply_discount_checkbox = view.findViewById(R.id.apply_discount);
@@ -138,9 +123,8 @@ public class CartFragment extends Fragment {
         add_item_btn.setOnClickListener(v -> scanQRCode());
     }
 
-    private PublicKey readPublicKey(String pubKey) throws NoSuchAlgorithmException, InvalidKeySpecException
-    {
-        String cleanKey = pubKey.replace("\n","");
+    private PublicKey readPublicKey(String pubKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        String cleanKey = pubKey.replace("\n", "");
         cleanKey = cleanKey.replace(Constants.BEGIN_PUBLIC_KEY, "");
         cleanKey = cleanKey.replace(Constants.END_PUBLIC_KEY, "");
         X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(android.util.Base64.decode(cleanKey, android.util.Base64.DEFAULT));
@@ -151,10 +135,9 @@ public class CartFragment extends Fragment {
     private void scanQRCode() {
         try {
             Intent intent = new Intent(Constants.ACTION_SCAN);
-            intent.putExtra("SCAN_MODE",  "QR_CODE_MODE");
+            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
             startActivityForResult(intent, 0);
-        }
-        catch (ActivityNotFoundException anfe) {
+        } catch (ActivityNotFoundException anfe) {
             showDialog(getActivity(), "No Scanner Found", "Download a scanner code activity?", "Yes", "No").show();
         }
     }
@@ -184,6 +167,37 @@ public class CartFragment extends Fragment {
         }
     }
 
+    private void updateCurrentVoucherUI(View view, Voucher currentVoucher) {
+        TextView voucher_id_text_view = view.findViewById(R.id.voucher_id);
+        String voucher_id = "None";
+
+        if (currentVoucher != null) {
+            voucher_id = (currentVoucher.getId() + "").substring(0, 10);
+        }
+        voucher_id_text_view.setText(voucher_id);
+    }
+
+    private void updateDiscountAvailableUI(View view, Double discountAvailable) {
+        TextView discount_value = view.findViewById(R.id.discount_value);
+        discount_value.setText(String.format("%s", df.format(discountAvailable)));
+    }
+
+    private void updateUseDiscountUI(View view, Boolean useDiscount) {
+        CheckBox apply_discount_checkbox = view.findViewById(R.id.apply_discount);
+        apply_discount_checkbox.setChecked(useDiscount);
+    }
+
+    private void updateTotalPriceUI(View view, Double totalPrice) {
+        TextView total_price_value = view.findViewById(R.id.total_price_value);
+
+        double voucherPercent = 0;
+        if (mViewModel.currentVoucher.getValue() != null)
+            voucherPercent = mViewModel.currentVoucher.getValue().getDiscount() / 100.0;
+
+        double totalAfterVoucher = (1.0 - voucherPercent) * totalPrice;
+        total_price_value.setText(String.format("%s", df.format(totalAfterVoucher)));
+    }
+
     //TODO: SAVE UUID on the transaction item model
     private void decodeAndShow(byte[] encTag) {
         byte[] clearTag;
@@ -192,8 +206,7 @@ public class CartFragment extends Fragment {
             Cipher cipher = Cipher.getInstance(Constants.ENC_ALGO);
             cipher.init(Cipher.DECRYPT_MODE, pub);
             clearTag = cipher.doFinal(encTag);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return;
         }
         ByteBuffer tag = ByteBuffer.wrap(clearTag);
@@ -209,16 +222,16 @@ public class CartFragment extends Fragment {
         String name = new String(bName, StandardCharsets.ISO_8859_1);
 
         String text = "Read Tag (" + clearTag.length + "):\n" + byteArrayToHex(clearTag) + "\n\n" +
-                ((tId==Constants.tagId)?"correct":"wrong") + "\n" +
+                ((tId == Constants.tagId) ? "correct" : "wrong") + "\n" +
                 "ID: " + id.toString() + "\n" +
                 "Name: " + name + "\n" +
                 "Price: €" + euros + "." + cents;
 
         Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
 
-        double price = euros*1.0 + cents/100.0;
+        double price = euros * 1.0 + cents / 100.0;
 
-        TransactionItem transactionItem = new TransactionItem(name,price,1);
+        TransactionItem transactionItem = new TransactionItem(id,name, price, 1);
         mViewModel.addTransactionItem(transactionItem);
     }
 

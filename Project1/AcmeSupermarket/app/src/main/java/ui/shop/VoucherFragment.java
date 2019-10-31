@@ -35,39 +35,33 @@ public class VoucherFragment extends Fragment {
         mViewModel = ViewModelProviders.of(requireActivity()).get(ShopViewModel.class);
         Context context = requireActivity().getApplicationContext();
 
-//        checkSavedInstanceState(savedInstanceState);
+        setVouchersObserver(context, view);
 
         addVouchersToRadioGroup(context, view);
 
         setActiveRadioBtn(view);
     }
 
-//    private void checkSavedInstanceState(Bundle savedInstanceState) {
-//        if (savedInstanceState != null) {
-//            ArrayList<Voucher> values = savedInstanceState.getParcelableArrayList("vouchers");
-//            if (values != null) {
-//                vouchers = values;
-//                ((ShopActivity) getActivity()).setTab(2);
-//            }
-//
-//            active_voucher = savedInstanceState.getParcelable("active_voucher");
-//        }
-//    }
+    private void setVouchersObserver(Context context, View view) {
+        mViewModel.getVouchers().observe(this, vouchers -> addVouchersToRadioGroup(context, view));
+    }
 
     private void addVouchersToRadioGroup(Context context, View view) {
         RadioGroup radioGroup = view.findViewById(R.id.voucher_radio_group);
         Resources res = getResources();
 
+        //Remove all radio buttons except the "None" option
+        radioGroup.removeViews(1, radioGroup.getChildCount()-1);
+
         ArrayList<Voucher> vouchersList = mViewModel.getVouchers().getValue();
         for (Voucher voucher : vouchersList) {
             RadioButton voucher_btn = new RadioButton(context);
-            String voucher_label = res.getString(R.string.voucher_list_item, voucher.getName(), voucher.getDiscount()) + "%";
+            String voucher_label = res.getString(R.string.voucher_list_item, voucher.getId(), voucher.getDiscount()) + "%";
             voucher_btn.setText(voucher_label);
             radioGroup.addView(voucher_btn);
         }
 
         radioGroup.setOnCheckedChangeListener((rGroup, checkedId) -> {
-
             int radioBtnID = rGroup.getCheckedRadioButtonId();
             RadioButton radioB = rGroup.findViewById(radioBtnID);
 
@@ -77,7 +71,6 @@ public class VoucherFragment extends Fragment {
             } else {
                 mViewModel.setSelectedVoucher(vouchersList.get(index - 1));
             }
-
         });
     }
 
@@ -94,10 +87,4 @@ public class VoucherFragment extends Fragment {
         RadioButton radioButton = (RadioButton) radioGroup.getChildAt(index);
         radioButton.setChecked(true);
     }
-
-//    public void onSaveInstanceState(Bundle savedState) {
-//        super.onSaveInstanceState(savedState);
-//        savedState.putParcelableArrayList("vouchers", (ArrayList<? extends Parcelable>) vouchers);
-//        savedState.putParcelable("active_voucher", active_voucher);
-//    }
 }

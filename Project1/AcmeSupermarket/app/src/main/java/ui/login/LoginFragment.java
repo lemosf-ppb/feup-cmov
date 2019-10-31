@@ -20,10 +20,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class LoginFragment extends Fragment {
 
-    private LoginViewModel mViewModel;
+    private EditText usernameEditText, passwordEditText;
 
-    private EditText usernameEditText;
-    private EditText passwordEditText;
+    private LoginViewModel mViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -46,9 +45,7 @@ public class LoginFragment extends Fragment {
         passwordEditText = view.findViewById(R.id.password_edit_text);
 
         Button loginButton = view.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(v -> {
-            mViewModel.authenticate(usernameEditText.getText().toString(), passwordEditText.getText().toString());
-        });
+        loginButton.setOnClickListener(v -> mViewModel.authenticate(usernameEditText.getText().toString(), passwordEditText.getText().toString(), getContext()));
 
         final NavController navController = Navigation.findNavController(view);
 
@@ -76,10 +73,6 @@ public class LoginFragment extends Fragment {
                             break;
                     }
                 });
-
-//        Button goToRegister = root.findViewById(R.id.register_button);
-//        goToRegister.setOnClickListener(v -> navController.navigate(R.id.registration_graph));
     }
-
 }
 

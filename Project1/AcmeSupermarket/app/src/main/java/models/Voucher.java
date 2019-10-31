@@ -1,47 +1,26 @@
 package models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class Voucher implements Parcelable {
+import java.util.UUID;
 
-    public static final Creator<Voucher> CREATOR = new Creator<Voucher>() {
-        @Override
-        public Voucher createFromParcel(Parcel in) {
-            return new Voucher(in);
-        }
-
-        @Override
-        public Voucher[] newArray(int size) {
-            return new Voucher[size];
-        }
-    };
-    private String name;
+public class Voucher {
+    private UUID id;
     private int discount;
 
-    public Voucher(String name, int discount) {
-        this.name = name;
+    public Voucher(UUID id, int discount) {
+        this.id = id;
         this.discount = discount;
     }
 
-    protected Voucher(Parcel in) {
-        name = in.readString();
-        discount = in.readInt();
+    public Voucher(JSONObject voucherObject) throws JSONException {
+        this.id = UUID.fromString(voucherObject.getString("id"));
+        this.discount = voucherObject.getInt("discount");
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeInt(discount);
-    }
-
-    public String getName() {
-        return name;
+    public UUID getId() {
+        return id;
     }
 
     public int getDiscount() {
@@ -50,6 +29,6 @@ public class Voucher implements Parcelable {
 
     public boolean equals(Object object) {
         Voucher other = (Voucher) object;
-        return this.name == other.name && this.discount == other.discount;
+        return this.id == other.id;
     }
 }

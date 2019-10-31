@@ -53,7 +53,7 @@ public class TransactionAdapter extends BaseExpandableListAdapter {
             view = infalInflater.inflate(R.layout.child_items, null);
         }
 
-        String item_title = res.getString(R.string.items_row, transactionItem.getTitle(), transactionItem.getQuantity());
+        String item_title = res.getString(R.string.items_row, transactionItem.getId().toString().substring(0,13), transactionItem.getQuantity());
         ((TextView) view.findViewById(R.id.cart_item_details)).setText(item_title.trim());
 
         return view;
@@ -94,10 +94,10 @@ public class TransactionAdapter extends BaseExpandableListAdapter {
         TextView heading = view.findViewById(R.id.transaction_id);
         heading.setText(transaction.getId().trim());
 
-        String usedDiscounts = res.getString(R.string.used_discounts, transaction.hasUsedDiscounts());
+        String usedDiscounts = res.getString(R.string.used_discounts, transaction.isUseDiscounts());
         ((TextView) view.findViewById(R.id.used_discounts)).setText(usedDiscounts);
 
-        String totalPrice = res.getString(R.string.total_payed_price, transaction.getPrice());
+        String totalPrice = res.getString(R.string.total_payed_price, transaction.getTotalPrice() + "");
         ((TextView) view.findViewById(R.id.transaction_price)).setText(totalPrice);
 
         return view;

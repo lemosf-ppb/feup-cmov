@@ -1,26 +1,50 @@
-package services.Crypto;
+package services.crypto;
 
 import android.content.Context;
 import android.security.KeyPairGeneratorSpec;
+import android.util.Base64;
 import android.util.Log;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
+import java.security.Key;
+import java.security.KeyFactory;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.security.spec.AlgorithmParameterSpec;
-import java.util.ArrayList;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.security.auth.x500.X500Principal;
 
+import static utils.Utils.byteArrayToHex;
+
 public class Cryptography {
+    static final String TAG = "Cryptography";
+
+    public static String signMessageHex(byte[] message) {
+        byte[] sign = new byte[0];
+        try {
+            KeyStore ks = KeyStore.getInstance(Constants.ANDROID_KEYSTORE);
+            ks.load(null);
+            KeyStore.Entry entry = ks.getEntry(Constants.keyname, null);
+            PrivateKey pri = ((KeyStore.PrivateKeyEntry) entry).getPrivateKey();
+            Signature sg = Signature.getInstance(Constants.SIGN_ALGO);
+            sg.initSign(pri);
+            sg.update(message);
+            sign = sg.sign();
+        } catch (Exception ex) {
+            Log.d(TAG, ex.getMessage());
+        }
+        return byteArrayToHex(sign);
+    }
+
 
     public static byte[] buildMessage(byte[] message) {
         ByteBuffer messageSigned = ByteBuffer.allocate(message.length + Constants.KEY_SIZE / 8);
@@ -35,10 +59,10 @@ public class Cryptography {
             byte[] sign = sg.sign();
             messageSigned.put(message);
             messageSigned.put(sign);
-            Log.d("DEBUG", "Msg size = " + message.length + " bytes.");
-            Log.d("DEBUG", "Sign size = " + sign.length + " bytes.");
+            Log.d(TAG, "Msg size = " + message.length + " bytes.");
+            Log.d(TAG, "Sign size = " + sign.length + " bytes.");
         } catch (Exception ex) {
-            Log.d("DEBUG", ex.getMessage());
+            Log.d(TAG, ex.getMessage());
         }
         return messageSigned.array();
     }
@@ -64,7 +88,7 @@ public class Cryptography {
             sg.update(message);
             verified = sg.verify(signature);
         } catch (Exception ex) {
-            Log.d("DEBUG", ex.getMessage());
+            Log.d(TAG, ex.getMessage());
         }
 
         return verified;
@@ -106,44 +130,59 @@ public class Cryptography {
                 kgen.generateKeyPair();
             }
         } catch (Exception ex) {
-            Log.d("DEBUG", ex.getMessage());
+            Log.d(TAG, ex.getMessage());
         }
     }
 
-    PubKey getPubKey() {
-        PubKey pkey = new PubKey();
+    public static PublicKey getPublicKey() {
+        PublicKey pub = null;
         try {
             KeyStore ks = KeyStore.getInstance(Constants.ANDROID_KEYSTORE);
             ks.load(null);
             KeyStore.Entry entry = ks.getEntry(Constants.keyname, null);
-            PublicKey pub = ((KeyStore.PrivateKeyEntry) entry).getCertificate().getPublicKey();
-            pkey.modulus = ((RSAPublicKey) pub).getModulus().toByteArray();
-            pkey.exponent = ((RSAPublicKey) pub).getPublicExponent().toByteArray();
+            pub = ((KeyStore.PrivateKeyEntry) entry).getCertificate().getPublicKey();
         } catch (Exception ex) {
-            Log.d("DEBUG", ex.getMessage());
+            Log.d(TAG, ex.getMessage());
         }
-        return pkey;
+
+        return pub;
     }
 
-    byte[] getPrivExp() {
-        byte[] exp = null;
-
+    public static PrivateKey getPrivateKey() {
+        PrivateKey priv = null;
         try {
             KeyStore ks = KeyStore.getInstance(Constants.ANDROID_KEYSTORE);
             ks.load(null);
             KeyStore.Entry entry = ks.getEntry(Constants.keyname, null);
-            PrivateKey priv = ((KeyStore.PrivateKeyEntry) entry).getPrivateKey();
-            exp = ((RSAPrivateKey) priv).getPrivateExponent().toByteArray();
+            priv = ((KeyStore.PrivateKeyEntry) entry).getPrivateKey();
         } catch (Exception ex) {
-            Log.d("DEBUG", ex.getMessage());
+            Log.d(TAG, ex.getMessage());
         }
-        if (exp == null)
-            exp = new byte[0];
-        return exp;
+
+        return priv;
     }
 
-    class PubKey {
-        byte[] modulus;
-        byte[] exponent;
+    public static PublicKey getPublicKeyFromString(String key) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        String parsedKey = removePublicKeyPEMFormatHeaders(key);
+
+        byte[] encoded = Base64.decode(parsedKey, Base64.DEFAULT);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+
+        return kf.generatePublic(new X509EncodedKeySpec(encoded));
+    }
+
+    private static String removePublicKeyPEMFormatHeaders(String key) {
+        String parsedKey = key.replace("\n", "");
+        parsedKey = parsedKey.replace(Constants.PUBLIC_KEY_BEGIN, "");
+        parsedKey = parsedKey.replace(Constants.PUBLIC_KEY_END, "");
+
+        return parsedKey;
+    }
+
+    public static String convertToPublicKeyPEMFormat(Key key) {
+        byte[] encodedKey = key.getEncoded();
+        return Constants.PUBLIC_KEY_BEGIN + "\n" +
+                Base64.encodeToString(encodedKey, Base64.DEFAULT) +
+                Constants.PUBLIC_KEY_END + "\n";
     }
 }
