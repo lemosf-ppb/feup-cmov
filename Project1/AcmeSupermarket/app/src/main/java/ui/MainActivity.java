@@ -58,13 +58,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //TODO: Check this one on app rotation
         final View rootView = getWindow().getDecorView().getRootView();
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             if (toolbar.getVisibility() == View.VISIBLE)
                 setupViewModelListeners();
         });
-
     }
 
     private void setupViewModelListeners() {
@@ -74,12 +72,13 @@ public class MainActivity extends AppCompatActivity {
         TransactionsViewModel transactionsViewModel = provider.get(TransactionsViewModel.class);
 
         ActionMenuItemView btn_sync = findViewById(R.id.action_sync);
-        btn_sync.setOnClickListener(v -> {
-            Client client = loginViewModel.getClient();
-            loginViewModel.syncDatabase();
-            shopViewModel.syncDatabase(client);
-            transactionsViewModel.syncDatabase(client);
-        });
+        if (btn_sync != null)
+            btn_sync.setOnClickListener(v -> {
+                Client client = loginViewModel.getClient();
+                loginViewModel.syncDatabase();
+                shopViewModel.syncDatabase(client);
+                transactionsViewModel.syncDatabase(client);
+            });
     }
 
     @Override
