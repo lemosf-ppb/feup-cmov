@@ -97,7 +97,7 @@ public class TransactionAdapter extends BaseExpandableListAdapter {
         String usedDiscounts = res.getString(R.string.used_discounts, transaction.isUseDiscounts());
         ((TextView) view.findViewById(R.id.used_discounts)).setText(usedDiscounts);
 
-        String totalPrice = res.getString(R.string.total_payed_price, transaction.getTotalPrice() + "");
+        String totalPrice = res.getString(R.string.total_payed_price, transaction.getTotalPrice().toString());
         ((TextView) view.findViewById(R.id.transaction_price)).setText(totalPrice);
 
         return view;

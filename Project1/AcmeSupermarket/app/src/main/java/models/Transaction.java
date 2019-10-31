@@ -28,6 +28,13 @@ public class Transaction {
         this.totalPrice = totalPrice;
     }
 
+    public Transaction(UUID userId, ArrayList<TransactionItem> transactionItems, Voucher voucher, boolean useDiscounts) {
+        this.userId = userId;
+        this.transactionItems = transactionItems;
+        this.voucher = voucher;
+        this.useDiscounts = useDiscounts;
+    }
+
     public Transaction(JSONObject transactionObject) throws JSONException {
         this.id = transactionObject.getString("id");
         this.userId = UUID.fromString(transactionObject.getString("UserId"));
@@ -41,7 +48,7 @@ public class Transaction {
             transactionItems.add(new TransactionItem(transactionItemsArray.getJSONObject(i)));
         }
 
-        if (transactionObject.has("Voucher"))
+        if (!transactionObject.isNull("Voucher"))
             this.voucher = new Voucher(transactionObject.getJSONObject("Voucher"));
 
         this.transactionItems = transactionItems;

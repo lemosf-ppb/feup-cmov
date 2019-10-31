@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,11 +29,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -41,27 +37,29 @@ import javax.crypto.Cipher;
 
 import models.TransactionItem;
 import models.Voucher;
+import ui.login.LoginViewModel;
 import ui.shop.ShopViewModel;
 import utils.Constants;
+import utils.Utils;
 
 import static android.app.Activity.RESULT_OK;
 
 public class CartFragment extends Fragment {
     private DecimalFormat df = new DecimalFormat("#.##");
-    private ShopViewModel mViewModel;
+    private LoginViewModel loginViewModel;
+    private ShopViewModel shopViewModel;
     private CartItemAdapter cartItemsAdapter;
-    private PublicKey pub;
 
-    private static AlertDialog showDialog(final Activity act, CharSequence title, CharSequence message, CharSequence buttonYes, CharSequence buttonNo) {
+    private static AlertDialog showDialog(final Activity act) {
         AlertDialog.Builder downloadDialog = new AlertDialog.Builder(act);
-        downloadDialog.setTitle(title);
-        downloadDialog.setMessage(message);
-        downloadDialog.setPositiveButton(buttonYes, (d, i) -> {
-            Uri uri = Uri.parse("market://search?q=pname:" + "com.google.zxing.client.android");
+        downloadDialog.setTitle("No Scanner Found");
+        downloadDialog.setMessage("Download a scanner code activity?");
+        downloadDialog.setPositiveButton("Yes", (d, i) -> {
+            Uri uri = Uri.parse(Constants.QR_READER_PLAYSTORE);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             act.startActivity(intent);
         });
-        downloadDialog.setNegativeButton(buttonNo, null);
+        downloadDialog.setNegativeButton("No", null);
         return downloadDialog.show();
     }
 
@@ -73,16 +71,9 @@ public class CartFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mViewModel = ViewModelProviders.of(requireActivity()).get(ShopViewModel.class);
-
-        //        checkSavedInstanceState(savedInstanceState);
-
-
-        try {
-            pub = readPublicKey(Constants.key);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            e.printStackTrace();
-        }
+        ViewModelProvider provider = ViewModelProviders.of(requireActivity());
+        loginViewModel = provider.get(LoginViewModel.class);
+        shopViewModel = provider.get(ShopViewModel.class);
 
         setCartItemAdapter(view);
 
@@ -94,37 +85,37 @@ public class CartFragment extends Fragment {
     private void setCartItemAdapter(View view) {
         ListView list = view.findViewById(R.id.cart_list);
         Context context = requireActivity().getApplicationContext();
-        ArrayList<TransactionItem> transactionItems = mViewModel.getTransactionItems().getValue();
+        ArrayList<TransactionItem> transactionItems = shopViewModel.getTransactionItems().getValue();
 
-        cartItemsAdapter = new CartItemAdapter(context, transactionItems, mViewModel);
+        cartItemsAdapter = new CartItemAdapter(context, transactionItems, shopViewModel);
         list.setAdapter(cartItemsAdapter);
     }
 
     private void inflateView(View view) {
-        updateCurrentVoucherUI(view, mViewModel.currentVoucher.getValue());
+        updateCurrentVoucherUI(view, shopViewModel.currentVoucher.getValue());
 
-        updateDiscountAvailableUI(view, mViewModel.discountAvailable.getValue());
+        updateDiscountAvailableUI(view, shopViewModel.discountAvailable.getValue());
 
-        updateUseDiscountUI(view, mViewModel.applyDiscount.getValue());
+        updateUseDiscountUI(view, shopViewModel.applyDiscount.getValue());
 
-        updateTotalPriceUI(view, mViewModel.totalPrice.getValue());
+        updateTotalPriceUI(view, shopViewModel.totalPrice.getValue());
     }
 
     private void setObservers(View view) {
-        mViewModel.transactionItems.observe(this, transactionItemsList -> cartItemsAdapter.setTransactionItems(transactionItemsList));
-        mViewModel.currentVoucher.observe(this, currentVoucher -> {
+        shopViewModel.transactionItems.observe(this, transactionItemsList -> cartItemsAdapter.setTransactionItems(transactionItemsList));
+        shopViewModel.currentVoucher.observe(this, currentVoucher -> {
             updateCurrentVoucherUI(view, currentVoucher);
         });
-        mViewModel.discountAvailable.observe(this, discountAvailable -> {
+        shopViewModel.discountAvailable.observe(this, discountAvailable -> {
             updateDiscountAvailableUI(view, discountAvailable);
         });
-        mViewModel.totalPrice.observe(this, totalPrice -> {
+        shopViewModel.totalPrice.observe(this, totalPrice -> {
             updateTotalPriceUI(view, totalPrice);
         });
 
         CheckBox apply_discount_checkbox = view.findViewById(R.id.apply_discount);
         apply_discount_checkbox.setOnCheckedChangeListener((buttonView, isChecked) ->
-                mViewModel.applyDiscount(isChecked));
+                shopViewModel.applyDiscount(isChecked));
 
         Button checkout_button = view.findViewById(R.id.checkout_btn);
         checkout_button.setOnClickListener(v -> {
@@ -134,37 +125,6 @@ public class CartFragment extends Fragment {
 
         FloatingActionButton add_item_btn = view.findViewById(R.id.add_item);
         add_item_btn.setOnClickListener(v -> scanQRCode());
-    }
-
-    private PublicKey readPublicKey(String pubKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        String cleanKey = pubKey.replace("\n", "");
-        cleanKey = cleanKey.replace(Constants.BEGIN_PUBLIC_KEY, "");
-        cleanKey = cleanKey.replace(Constants.END_PUBLIC_KEY, "");
-        X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(android.util.Base64.decode(cleanKey, android.util.Base64.DEFAULT));
-        KeyFactory keyFactory = KeyFactory.getInstance(Constants.KEY_ALGO);
-        return keyFactory.generatePublic(publicSpec);
-    }
-
-    private void scanQRCode() {
-        try {
-            Intent intent = new Intent(Constants.ACTION_SCAN);
-            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-            startActivityForResult(intent, 0);
-        } catch (ActivityNotFoundException anfe) {
-            showDialog(getActivity(), "No Scanner Found", "Download a scanner code activity?", "Yes", "No").show();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0) {
-            if (resultCode == RESULT_OK) {
-                String contents = data.getStringExtra("SCAN_RESULT");
-                if (contents != null)
-                    decodeAndShow(contents.getBytes(StandardCharsets.ISO_8859_1));
-            }
-        }
     }
 
     private void updateCurrentVoucherUI(View view, Voucher currentVoucher) {
@@ -191,11 +151,33 @@ public class CartFragment extends Fragment {
         TextView total_price_value = view.findViewById(R.id.total_price_value);
 
         double voucherPercent = 0;
-        if (mViewModel.currentVoucher.getValue() != null)
-            voucherPercent = mViewModel.currentVoucher.getValue().getDiscount() / 100.0;
+        if (shopViewModel.currentVoucher.getValue() != null)
+            voucherPercent = shopViewModel.currentVoucher.getValue().getDiscount() / 100.0;
 
         double totalAfterVoucher = (1.0 - voucherPercent) * totalPrice;
         total_price_value.setText(String.format("%s", df.format(totalAfterVoucher)));
+    }
+
+    private void scanQRCode() {
+        try {
+            Intent intent = new Intent(Constants.ACTION_SCAN);
+            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+            startActivityForResult(intent, 0);
+        } catch (ActivityNotFoundException e) {
+            showDialog(getActivity()).show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                String contents = data.getStringExtra("SCAN_RESULT");
+                if (contents != null)
+                    decodeAndShow(contents.getBytes(StandardCharsets.ISO_8859_1));
+            }
+        }
     }
 
     //TODO: SAVE UUID on the transaction item model
@@ -204,7 +186,7 @@ public class CartFragment extends Fragment {
 
         try {
             Cipher cipher = Cipher.getInstance(Constants.ENC_ALGO);
-            cipher.init(Cipher.DECRYPT_MODE, pub);
+            cipher.init(Cipher.DECRYPT_MODE, loginViewModel.getClient().getAcmePublicKey());
             clearTag = cipher.doFinal(encTag);
         } catch (Exception e) {
             return;
@@ -221,7 +203,7 @@ public class CartFragment extends Fragment {
         tag.get(bName);
         String name = new String(bName, StandardCharsets.ISO_8859_1);
 
-        String text = "Read Tag (" + clearTag.length + "):\n" + byteArrayToHex(clearTag) + "\n\n" +
+        String text = "Read Tag (" + clearTag.length + "):\n" + Utils.byteArrayToHex(clearTag) + "\n\n" +
                 ((tId == Constants.tagId) ? "correct" : "wrong") + "\n" +
                 "ID: " + id.toString() + "\n" +
                 "Name: " + name + "\n" +
@@ -232,14 +214,6 @@ public class CartFragment extends Fragment {
         double price = euros * 1.0 + cents / 100.0;
 
         TransactionItem transactionItem = new TransactionItem(id, name, price, 1);
-        mViewModel.addTransactionItem(transactionItem);
+        shopViewModel.addTransactionItem(transactionItem);
     }
-
-    private String byteArrayToHex(byte[] ba) {                              // converter
-        StringBuilder sb = new StringBuilder(ba.length * 2);
-        for (byte b : ba)
-            sb.append(String.format("%02x", b));
-        return sb.toString();
-    }
-
 }

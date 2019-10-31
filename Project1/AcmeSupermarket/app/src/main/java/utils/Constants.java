@@ -10,6 +10,7 @@ public class Constants {
     public static final int CERT_SERIAL = 12121212;
     public static final String ENC_ALGO = "RSA/NONE/PKCS1Padding";
     public static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+    public static final String QR_READER_PLAYSTORE = "market://search?q=pname:com.google.zxing.client.android";
     public static final String key = "-----BEGIN PUBLIC KEY-----\n" +
             "    MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALlRwQFsg3LevnTUNHArTQK2BMpPuAYT+vxU8o+6ar9U\n" +
             "    5HKO7C4HzrKkLOBch2H3w/cswry/y7Ksfh6D2rZAJQ0CAwEAAQ==\n" +

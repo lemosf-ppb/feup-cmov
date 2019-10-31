@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Date;
+import java.util.UUID;
 
 import services.crypto.CryptoKeysManagement;
 import utils.Utils;
@@ -15,7 +16,7 @@ import utils.Utils;
 public class Client implements Serializable {
     static final long serialVersionUID = 1L;
 
-    private String userId;
+    private UUID userId;
     private String name, username, password;
     private CreditCard creditCard;
     private PrivateKey clientPrivateKey;
@@ -51,11 +52,15 @@ public class Client implements Serializable {
     }
 
     public String getUserId() {
-        return userId;
+        return userId.toString();
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.userId = UUID.fromString(userId);
+    }
+
+    public UUID getUserIdAsUUID() {
+        return userId;
     }
 
     public PublicKey getAcmePublicKey() {
@@ -64,6 +69,10 @@ public class Client implements Serializable {
 
     public void setAcmePublicKey(String acmePublicKey) {
         this.acmePublicKey = CryptoKeysManagement.getPublicKeyFromString(acmePublicKey);
+    }
+
+    public PublicKey getClientPublicKey() {
+        return clientPublicKey;
     }
 
     public PrivateKey getClientPrivateKey() {

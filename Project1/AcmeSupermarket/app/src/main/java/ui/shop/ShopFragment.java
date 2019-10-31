@@ -14,10 +14,6 @@ import com.example.acmesupermarket.R;
 import com.google.android.material.tabs.TabLayout;
 
 public class ShopFragment extends Fragment {
-
-    private ShopPagerAdapter shopPagerAdapter;
-    private ViewPager viewPager;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -28,12 +24,11 @@ public class ShopFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        shopPagerAdapter = new ShopPagerAdapter(getChildFragmentManager());
-        viewPager = view.findViewById(R.id.pager);
+        ShopPagerAdapter shopPagerAdapter = new ShopPagerAdapter(getChildFragmentManager());
+        ViewPager viewPager = view.findViewById(R.id.pager);
         viewPager.setAdapter(shopPagerAdapter);
 
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
     }
-
 }

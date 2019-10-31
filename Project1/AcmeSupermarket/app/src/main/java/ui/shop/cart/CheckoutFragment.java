@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.acmesupermarket.R;
@@ -21,19 +22,21 @@ import org.json.JSONException;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.UUID;
 
+import models.Client;
 import models.Transaction;
 import models.TransactionItem;
 import models.Voucher;
 import services.crypto.CryptoBuilder;
+import ui.login.LoginViewModel;
 import ui.shop.ShopViewModel;
 import utils.Utils;
 
 public class CheckoutFragment extends Fragment {
-    private ShopViewModel mViewModel;
+    private LoginViewModel loginViewModel;
+    private ShopViewModel shopViewModel;
 
-    private ImageView qrCodeImageview;
+    private ImageView qrCodeImageView;
     private String qr_content = null;
 
     @Override
@@ -45,26 +48,31 @@ public class CheckoutFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(requireActivity()).get(ShopViewModel.class);
+        ViewModelProvider provider = ViewModelProviders.of(requireActivity());
+        loginViewModel = provider.get(LoginViewModel.class);
+        shopViewModel = provider.get(ShopViewModel.class);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mViewModel = ViewModelProviders.of(requireActivity()).get(ShopViewModel.class);
+        ViewModelProvider provider = ViewModelProviders.of(requireActivity());
+        loginViewModel = provider.get(LoginViewModel.class);
+        shopViewModel = provider.get(ShopViewModel.class);
 
         drawQRCode(view);
     }
 
     private void drawQRCode(View view) {
         TextView titleTv;
-        qrCodeImageview = view.findViewById(R.id.img_qr_code_image);
+        qrCodeImageView = view.findViewById(R.id.img_qr_code_image);
         titleTv = view.findViewById(R.id.title);
 
-        ArrayList<TransactionItem> transactionItems = mViewModel.transactionItems.getValue();
-        Voucher currentVoucher = mViewModel.currentVoucher.getValue();
-        boolean usedDiscounts = mViewModel.applyDiscount.getValue();
+        ArrayList<TransactionItem> transactionItems = shopViewModel.transactionItems.getValue();
+        Voucher currentVoucher = shopViewModel.currentVoucher.getValue();
+        boolean usedDiscounts = shopViewModel.applyDiscount.getValue();
+        Client client = loginViewModel.getClient();
 
-        Transaction transaction = new Transaction(String.valueOf(Math.random()), UUID.randomUUID(), transactionItems, currentVoucher.getId().toString(), usedDiscounts, 0.9);
+        Transaction transaction = new Transaction(client.getUserIdAsUUID(), transactionItems, currentVoucher, usedDiscounts);
         byte[] transactionBytes = new byte[0];
         try {
             transactionBytes = transaction.getAsJSON().toString().getBytes();
@@ -73,11 +81,11 @@ public class CheckoutFragment extends Fragment {
             e.printStackTrace();
         }
 
-        byte[] messageSigned = CryptoBuilder.buildMessage(transactionBytes);
+        byte[] messageSigned = CryptoBuilder.buildMessageWithSignature(client.getClientPrivateKey(), transactionBytes);
 
         try {
             qr_content = new String(messageSigned, Utils.ISO_SET);
-            boolean verified = CryptoBuilder.validate(messageSigned);
+            boolean verified = CryptoBuilder.validateMessageWithSignature(client.getClientPublicKey(), messageSigned);
             String text = "Transaction: \"" + new String(transactionBytes) + "\"\nVerified: " + verified + "\nTotal bytes: " + messageSigned.length;
             titleTv.setText(text);
         } catch (UnsupportedEncodingException e) {
@@ -90,7 +98,7 @@ public class CheckoutFragment extends Fragment {
             try {
                 bitmap = Utils.encodeAsBitmap(qr_content);
                 // runOnUiThread method used to do UI task in main thread.
-                requireActivity().runOnUiThread(() -> qrCodeImageview.setImageBitmap(bitmap));
+                requireActivity().runOnUiThread(() -> qrCodeImageView.setImageBitmap(bitmap));
             } catch (WriterException e) {
                 Log.d("Debug", e.getMessage());
             }

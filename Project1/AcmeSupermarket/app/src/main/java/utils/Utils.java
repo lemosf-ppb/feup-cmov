@@ -23,8 +23,8 @@ import java.util.Hashtable;
 import java.util.Locale;
 
 public class Utils {
-    private static final String TAG = "Utils";
     public static final String ISO_SET = "ISO-8859-1";
+    private static final String TAG = "Utils";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
     public static Date parseDate(String createdAt) {

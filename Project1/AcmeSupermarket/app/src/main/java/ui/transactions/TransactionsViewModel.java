@@ -6,13 +6,14 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import models.Client;
 import models.Transaction;
 import models.TransactionItem;
 import services.repository.AcmeRepository;
 
 public class TransactionsViewModel extends ViewModel {
 
-    public final MutableLiveData<ArrayList<Transaction>> transactions = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<ArrayList<Transaction>> transactions = new MutableLiveData<>(new ArrayList<>());
 
     public MutableLiveData<ArrayList<Transaction>> getTransactions() {
         if (transactions.getValue() == null) {
@@ -32,8 +33,8 @@ public class TransactionsViewModel extends ViewModel {
         transactions.postValue(transactionsList);
     }
 
-    public void syncDatabase(String userId) {
-        AcmeRepository.getTransactions getTransactions = new AcmeRepository.getTransactions(userId, this);
+    public void syncDatabase(Client client) {
+        AcmeRepository.getTransactions getTransactions = new AcmeRepository.getTransactions(client, this);
         new Thread(getTransactions).start();
     }
 }
