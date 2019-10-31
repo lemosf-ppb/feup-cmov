@@ -141,6 +141,7 @@ public class AcmeRepository {
             if (response.getCode() == 200) {
                 JSONObject responseObject = new JSONObject(response.getMessage());
                 loginViewModel.getClient().updateDatabaseData(responseObject);
+                loginViewModel.client.postValue(loginViewModel.getClient());
             }
         }
     }

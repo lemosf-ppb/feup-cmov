@@ -16,16 +16,16 @@ public class LoginViewModel extends ViewModel {
     public final MutableLiveData<AuthenticationState> authenticationState =
             new MutableLiveData<>();
 
-    private Client client;
+    public final MutableLiveData<Client> client = new MutableLiveData<>();
 
     public LoginViewModel() {
         // The user is always unauthenticated when MainActivity is launched
         authenticationState.setValue(AuthenticationState.UNAUTHENTICATED);
-        this.client = null;
+        this.client.setValue(null);
     }
 
     public void authenticate(Client client, Context context) {
-        this.client = client;
+        this.client.setValue(client);
         saveClient(client, context);
         authenticationState.setValue(AuthenticationState.AUTHENTICATED);
     }
@@ -33,7 +33,7 @@ public class LoginViewModel extends ViewModel {
     public void authenticate(String username, String password, Context context) {
         Client client = loadClient(context);
         if (client != null && passwordIsValidForUsername(username, password, client)) {
-            this.client = client;
+            this.client.setValue(client);
             authenticationState.setValue(AuthenticationState.AUTHENTICATED);
         } else {
             authenticationState.setValue(AuthenticationState.INVALID_AUTHENTICATION);
@@ -57,7 +57,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     public Client getClient() {
-        return client;
+        return client.getValue();
     }
 
     public void syncDatabase() {

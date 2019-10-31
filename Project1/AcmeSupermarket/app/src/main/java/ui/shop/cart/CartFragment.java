@@ -98,7 +98,7 @@ public class CartFragment extends Fragment {
     private void inflateView(View view) {
         updateCurrentVoucherUI(view, shopViewModel.currentVoucher.getValue());
 
-        updateDiscountAvailableUI(view, shopViewModel.discountAvailable.getValue());
+        updateDiscountAvailableUI(view, loginViewModel.getClient().getDiscountValueAvailable());
 
         updateUseDiscountUI(view, shopViewModel.applyDiscount.getValue());
 
@@ -107,15 +107,9 @@ public class CartFragment extends Fragment {
 
     private void setObservers(View view) {
         shopViewModel.transactionItems.observe(this, transactionItemsList -> cartItemsAdapter.setTransactionItems(transactionItemsList));
-        shopViewModel.currentVoucher.observe(this, currentVoucher -> {
-            updateCurrentVoucherUI(view, currentVoucher);
-        });
-        shopViewModel.discountAvailable.observe(this, discountAvailable -> {
-            updateDiscountAvailableUI(view, discountAvailable);
-        });
-        shopViewModel.totalPrice.observe(this, totalPrice -> {
-            updateTotalPriceUI(view, totalPrice);
-        });
+        shopViewModel.currentVoucher.observe(this, currentVoucher -> updateCurrentVoucherUI(view, currentVoucher));
+        loginViewModel.client.observe(this, client -> updateDiscountAvailableUI(view, client.getDiscountValueAvailable()));
+        shopViewModel.totalPrice.observe(this, totalPrice -> updateTotalPriceUI(view, totalPrice));
 
         CheckBox apply_discount_checkbox = view.findViewById(R.id.apply_discount);
         apply_discount_checkbox.setOnCheckedChangeListener((buttonView, isChecked) ->
@@ -144,9 +138,10 @@ public class CartFragment extends Fragment {
     }
 
     private void updateDiscountAvailableUI(View view, Double discountAvailable) {
+        shopViewModel.discountAvailable = (discountAvailable != null ? discountAvailable : 0);
         TextView discount_value = view.findViewById(R.id.discount_label);
 
-        String discount_value_string = res.getString(R.string.discount_label, String.format("%s", df.format(discountAvailable)));
+        String discount_value_string = res.getString(R.string.discount_label, String.format("%s", df.format(shopViewModel.discountAvailable)));
         discount_value.setText(discount_value_string);
     }
 

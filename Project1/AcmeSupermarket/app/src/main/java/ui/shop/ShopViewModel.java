@@ -18,8 +18,8 @@ public class ShopViewModel extends ViewModel {
     public final MutableLiveData<Double> totalPrice = new MutableLiveData<>((double) 0);
     public final MutableLiveData<Voucher> currentVoucher = new MutableLiveData<>();
     public final MutableLiveData<Boolean> applyDiscount = new MutableLiveData<>(false);
-    public final MutableLiveData<Double> discountAvailable = new MutableLiveData<>((double) 2);
     public final MutableLiveData<ArrayList<Voucher>> vouchers = new MutableLiveData<>();
+    public Double discountAvailable;
 
     public void addTransactionItem(TransactionItem transactionItem) {
         ArrayList<TransactionItem> transactionItemsList = transactionItems.getValue();
@@ -81,10 +81,10 @@ public class ShopViewModel extends ViewModel {
 
     public void applyDiscount(boolean applyDiscountIsChecked) {
         if (applyDiscountIsChecked && !applyDiscount.getValue()) {
-            updateTotalPrice(-discountAvailable.getValue());
+            updateTotalPrice(-discountAvailable);
             applyDiscount.setValue(true);
         } else if (!applyDiscountIsChecked && applyDiscount.getValue()) {
-            updateTotalPrice(discountAvailable.getValue());
+            updateTotalPrice(discountAvailable);
             applyDiscount.setValue(false);
         }
     }
