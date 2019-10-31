@@ -75,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
         //TODO: Fill this with database things? Like every time that models are updated sync into localStorage
         ActionMenuItemView btn_sync = findViewById(R.id.action_sync);
         btn_sync.setOnClickListener(v -> {
-            //TODO: Call databases :D
-//                String userId = loginViewModel.getClient().getUserId();
-            String userId = "3f000641-e6f0-47ea-bd1f-8d17ec8a4da5";
+            String userId = loginViewModel.getClient().getUserId();
             shopViewModel.syncDatabase(userId);
+            transactionsViewModel.syncDatabase(userId);
+            loginViewModel.syncDatabase(shopViewModel); //TODO: Change this
         });
     }
 

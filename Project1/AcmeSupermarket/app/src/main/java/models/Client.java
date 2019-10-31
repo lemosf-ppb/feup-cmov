@@ -1,5 +1,8 @@
 package models;
 
+
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -7,6 +10,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import services.crypto.Cryptography;
 
@@ -20,6 +27,8 @@ public class Client {
     private PrivateKey clientPrivateKey;
     private PublicKey clientPublicKey;
     private PublicKey acmePublicKey;
+    private Double totalValueSpent, discountValueAvailable;
+    private Date createdAt;
 
     public Client(String name, String username, String password) {
         this.name = name;
@@ -65,6 +74,18 @@ public class Client {
         return acmePublicKey;
     }
 
+    public Double getTotalValueSpent() {
+        return totalValueSpent;
+    }
+
+    public Double getDiscountValueAvailable() {
+        return discountValueAvailable;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
     public void setAcmePublicKey(String acmePublicKey) {
         try {
             this.acmePublicKey = getPublicKeyFromString(acmePublicKey);
@@ -86,6 +107,12 @@ public class Client {
     public void setClientKeys() {
         this.clientPublicKey = Cryptography.getPublicKey();
         this.clientPrivateKey = Cryptography.getPrivateKey();
+    }
+
+    public void updateDatabaseData(JSONObject clientObject) throws JSONException, ParseException {
+        totalValueSpent = clientObject.getDouble("totalValueSpent");
+        discountValueAvailable = clientObject.getDouble("discountValueAvailable");
+        createdAt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(clientObject.getString("createdAt"));
     }
 }
 

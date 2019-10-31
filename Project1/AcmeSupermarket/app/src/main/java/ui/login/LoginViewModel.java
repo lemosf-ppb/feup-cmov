@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import models.Client;
+import services.repository.AcmeRepository;
+import ui.shop.ShopViewModel;
 
 public class LoginViewModel extends ViewModel {
 
@@ -42,6 +44,11 @@ public class LoginViewModel extends ViewModel {
 
     public Client getClient() {
         return client;
+    }
+
+    public void syncDatabase(ShopViewModel shopViewModel) {
+        AcmeRepository.getUserInfo getUserInfo = new AcmeRepository.getUserInfo(this, shopViewModel);
+        new Thread(getUserInfo).start();
     }
 
     public enum AuthenticationState {

@@ -25,7 +25,7 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="ui.profile.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="Profile"
         tools:layout="@layout/profile_fragment" />
     <navigation
         android:id="@+id/registration_graph"
@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/shopFragment"
         android:name="ui.shop.ShopFragment"
-        android:label="shop_fragment"
+        android:label="Shop"
         tools:layout="@layout/shop_fragment">
         <action
             android:id="@+id/action_shopFragment_to_checkoutFragment"
@@ -56,11 +56,11 @@
     <fragment
         android:id="@+id/transactionsFragment"
         android:name="ui.transactions.TransactionsFragment"
-        android:label="transactions_fragment"
+        android:label="Transactions"
         tools:layout="@layout/transactions_fragment" />
     <fragment
         android:id="@+id/checkoutFragment"
         android:name="ui.shop.cart.CheckoutFragment"
-        android:label="fragment_checkout"
+        android:label="Checkout"
         tools:layout="@layout/fragment_checkout" />
 </navigation>

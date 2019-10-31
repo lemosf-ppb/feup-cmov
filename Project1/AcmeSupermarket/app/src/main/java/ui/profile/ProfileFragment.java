@@ -66,8 +66,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void showWelcomeMessage() {
-//        welcomeTextView.setText("Ola pussy boy");
-        Log.e("lol", "pussy");
+//        welcomeTextView.setText("Welcome");
     }
 
 

@@ -1,5 +1,8 @@
 package models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.UUID;
 
 public class TransactionItem {
@@ -13,6 +16,11 @@ public class TransactionItem {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+    }
+    public TransactionItem(JSONObject transactionItemObject) throws JSONException {
+        this.id = UUID.fromString(transactionItemObject.getString("uuid"));
+        this.price = transactionItemObject.getDouble("price");
+        this.quantity =     transactionItemObject.getInt("quantity");
     }
 
     public void increaseQuantity() {

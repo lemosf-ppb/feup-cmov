@@ -13,17 +13,34 @@ public class Transaction {
     private String id;
     private UUID userId;
     private ArrayList<TransactionItem> transactionItems;
-    private Voucher voucher;
+    private String voucherId;
     private boolean useDiscounts;
     private Double totalPrice;
 
-    public Transaction(String id, UUID userId, ArrayList<TransactionItem> transactionItems, Voucher voucher, boolean useDiscounts, Double totalPrice) {
+    public Transaction(String id, UUID userId, ArrayList<TransactionItem> transactionItems, String voucherId, boolean useDiscounts, Double totalPrice) {
         this.id = id;
         this.userId = userId;
         this.transactionItems = transactionItems;
-        this.voucher = voucher;
+        this.voucherId = voucherId;
         this.useDiscounts = useDiscounts;
         this.totalPrice = totalPrice;
+    }
+
+    public Transaction(JSONObject transactionObject) throws JSONException {
+        this.id = transactionObject.getString("id");
+        this.userId = UUID.fromString(transactionObject.getString("UserId"));
+        this.useDiscounts = transactionObject.getBoolean("useDiscounts");
+        this.totalPrice = transactionObject.getDouble("totalPrice");
+
+        ArrayList<TransactionItem> transactionItems = new ArrayList<>();
+        JSONArray transactionItemsArray = transactionObject.getJSONArray("TransactionItems");
+        for (int i = 0; i < transactionItemsArray.length(); i++) {
+            transactionItems.add(new TransactionItem(transactionItemsArray.getJSONObject(i)));
+        }
+
+        this.voucherId = null; //TODO: Update this later
+
+        this.transactionItems = transactionItems;
     }
 
     public String getId() {
@@ -38,8 +55,8 @@ public class Transaction {
         return transactionItems;
     }
 
-    public Voucher getVoucher() {
-        return voucher;
+    public String getVoucherId() {
+        return voucherId;
     }
 
     public boolean isUseDiscounts() {
@@ -64,7 +81,7 @@ public class Transaction {
         }
         transactionObject.put("productsList", productsList);
         transactionObject.put("useDiscounts", useDiscounts);
-        transactionObject.put("voucherId", (voucher == null ? null : voucher.getId()));
+        transactionObject.put("voucherId", voucherId);
 
         Log.e("transaction", transactionObject.toString());
         return transactionObject;

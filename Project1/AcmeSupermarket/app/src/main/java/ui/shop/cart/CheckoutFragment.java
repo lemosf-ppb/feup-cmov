@@ -64,7 +64,7 @@ public class CheckoutFragment extends Fragment {
         Voucher currentVoucher = mViewModel.currentVoucher.getValue();
         boolean usedDiscounts = mViewModel.applyDiscount.getValue();
 
-        Transaction transaction = new Transaction(String.valueOf(Math.random()), UUID.randomUUID(), transactionItems, currentVoucher, usedDiscounts, 0.9);
+        Transaction transaction = new Transaction(String.valueOf(Math.random()), UUID.randomUUID(), transactionItems, currentVoucher.getId().toString(), usedDiscounts, 0.9);
         byte[] transactionBytes = new byte[0];
         try {
             transactionBytes = transaction.getAsJSON().toString().getBytes();

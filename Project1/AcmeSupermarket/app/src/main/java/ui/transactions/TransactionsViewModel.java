@@ -8,10 +8,11 @@ import java.util.UUID;
 
 import models.Transaction;
 import models.TransactionItem;
+import services.repository.AcmeRepository;
 
 public class TransactionsViewModel extends ViewModel {
 
-    public final MutableLiveData<ArrayList<Transaction>> transactions = new MutableLiveData<>();
+    public final MutableLiveData<ArrayList<Transaction>> transactions = new MutableLiveData<>(new ArrayList<>());
 
     public MutableLiveData<ArrayList<Transaction>> getTransactions() {
         if (transactions.getValue() == null) {
@@ -28,6 +29,11 @@ public class TransactionsViewModel extends ViewModel {
         Transaction transaction = new Transaction(String.valueOf(Math.random()), UUID.randomUUID(), transactionItems, null, false, 0.0);
         ArrayList<Transaction> transactionsList = new ArrayList<>();
         transactionsList.add(transaction);
-        transactions.setValue(transactionsList);
+        transactions.postValue(transactionsList);
+    }
+
+    public void syncDatabase(String userId) {
+        AcmeRepository.getTransactions getTransactions = new AcmeRepository.getTransactions(userId, this);
+        new Thread(getTransactions).start();
     }
 }
