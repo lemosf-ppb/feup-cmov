@@ -57,32 +57,6 @@ public class AcmeRepository {
         }
     }
 
-    public class LogIn extends AbstractRestCall {
-        private Client client;
-        private String password;
-
-        public LogIn(Client client, String password) {
-            this.requestURL = Constants.ACME_REPOSITORY_URL + Constants.LOGIN;
-            this.requestType = Constants.POST;
-            this.client = client;
-            this.password = password;
-        }
-
-        @Override
-        public String createPayload() throws JSONException {
-            JSONObject payload = new JSONObject();
-            payload.put("username", client.getUsername());
-            payload.put("password", password);
-            return payload.toString();
-        }
-
-        @Override
-        public void handleResponse(Response response) throws JSONException {
-            Log.e("login", response.code + response.message);
-
-        }
-    }
-
     public static class getTransactions extends AbstractRestCall {
         private String userId;
         private TransactionsViewModel transactionsViewModel;
@@ -173,6 +147,32 @@ public class AcmeRepository {
                     e.printStackTrace();
                 }
             }
+
+        }
+    }
+
+    public class LogIn extends AbstractRestCall {
+        private Client client;
+        private String password;
+
+        public LogIn(Client client, String password) {
+            this.requestURL = Constants.ACME_REPOSITORY_URL + Constants.LOGIN;
+            this.requestType = Constants.POST;
+            this.client = client;
+            this.password = password;
+        }
+
+        @Override
+        public String createPayload() throws JSONException {
+            JSONObject payload = new JSONObject();
+            payload.put("username", client.getUsername());
+            payload.put("password", password);
+            return payload.toString();
+        }
+
+        @Override
+        public void handleResponse(Response response) throws JSONException {
+            Log.e("login", response.code + response.message);
 
         }
     }

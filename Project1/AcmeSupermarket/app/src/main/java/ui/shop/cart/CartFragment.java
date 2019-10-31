@@ -52,6 +52,19 @@ public class CartFragment extends Fragment {
     private CartItemAdapter cartItemsAdapter;
     private PublicKey pub;
 
+    private static AlertDialog showDialog(final Activity act, CharSequence title, CharSequence message, CharSequence buttonYes, CharSequence buttonNo) {
+        AlertDialog.Builder downloadDialog = new AlertDialog.Builder(act);
+        downloadDialog.setTitle(title);
+        downloadDialog.setMessage(message);
+        downloadDialog.setPositiveButton(buttonYes, (d, i) -> {
+            Uri uri = Uri.parse("market://search?q=pname:" + "com.google.zxing.client.android");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            act.startActivity(intent);
+        });
+        downloadDialog.setNegativeButton(buttonNo, null);
+        return downloadDialog.show();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -142,19 +155,6 @@ public class CartFragment extends Fragment {
         }
     }
 
-    private static AlertDialog showDialog(final Activity act, CharSequence title, CharSequence message, CharSequence buttonYes, CharSequence buttonNo) {
-        AlertDialog.Builder downloadDialog = new AlertDialog.Builder(act);
-        downloadDialog.setTitle(title);
-        downloadDialog.setMessage(message);
-        downloadDialog.setPositiveButton(buttonYes, (d, i) -> {
-            Uri uri = Uri.parse("market://search?q=pname:" + "com.google.zxing.client.android");
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            act.startActivity(intent);
-        });
-        downloadDialog.setNegativeButton(buttonNo, null);
-        return downloadDialog.show();
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -231,7 +231,7 @@ public class CartFragment extends Fragment {
 
         double price = euros * 1.0 + cents / 100.0;
 
-        TransactionItem transactionItem = new TransactionItem(id,name, price, 1);
+        TransactionItem transactionItem = new TransactionItem(id, name, price, 1);
         mViewModel.addTransactionItem(transactionItem);
     }
 

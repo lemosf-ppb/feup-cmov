@@ -1,8 +1,6 @@
 package models;
 
 
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,7 +9,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -81,6 +78,14 @@ public class Client implements Serializable {
         return acmePublicKey;
     }
 
+    public void setAcmePublicKey(String acmePublicKey) {
+        try {
+            this.acmePublicKey = getPublicKeyFromString(acmePublicKey);
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Double getTotalValueSpent() {
         return totalValueSpent;
     }
@@ -91,14 +96,6 @@ public class Client implements Serializable {
 
     public Date getCreatedAt() {
         return createdAt;
-    }
-
-    public void setAcmePublicKey(String acmePublicKey) {
-        try {
-            this.acmePublicKey = getPublicKeyFromString(acmePublicKey);
-        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
     }
 
     public JSONObject getAsJSON() throws JSONException {

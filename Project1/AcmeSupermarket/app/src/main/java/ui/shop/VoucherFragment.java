@@ -51,7 +51,7 @@ public class VoucherFragment extends Fragment {
         Resources res = getResources();
 
         //Remove all radio buttons except the "None" option
-        radioGroup.removeViews(1, radioGroup.getChildCount()-1);
+        radioGroup.removeViews(1, radioGroup.getChildCount() - 1);
 
         ArrayList<Voucher> vouchersList = mViewModel.getVouchers().getValue();
         for (Voucher voucher : vouchersList) {

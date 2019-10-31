@@ -17,10 +17,11 @@ public class TransactionItem {
         this.price = price;
         this.quantity = quantity;
     }
+
     public TransactionItem(JSONObject transactionItemObject) throws JSONException {
         this.id = UUID.fromString(transactionItemObject.getString("uuid"));
         this.price = transactionItemObject.getDouble("price");
-        this.quantity =     transactionItemObject.getInt("quantity");
+        this.quantity = transactionItemObject.getInt("quantity");
     }
 
     public void increaseQuantity() {

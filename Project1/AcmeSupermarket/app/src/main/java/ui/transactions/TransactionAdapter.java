@@ -53,7 +53,7 @@ public class TransactionAdapter extends BaseExpandableListAdapter {
             view = infalInflater.inflate(R.layout.child_items, null);
         }
 
-        String item_title = res.getString(R.string.items_row, transactionItem.getId().toString().substring(0,13), transactionItem.getQuantity());
+        String item_title = res.getString(R.string.items_row, transactionItem.getId().toString().substring(0, 13), transactionItem.getQuantity());
         ((TextView) view.findViewById(R.id.cart_item_details)).setText(item_title.trim());
 
         return view;
