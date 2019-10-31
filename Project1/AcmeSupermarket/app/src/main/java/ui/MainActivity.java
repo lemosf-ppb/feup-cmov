@@ -59,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //TODO: Check this one on app rotation
-        final View rootView = getWindow().getDecorView().getRootView();
-        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            if (toolbar.getVisibility() == View.VISIBLE)
-                setupViewModelListeners();
-        });
+        // final View rootView = getWindow().getDecorView().getRootView();
+        // rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+        //     if (toolbar.getVisibility() == View.VISIBLE)
+        //         setupViewModelListeners();
+        // });
 
     }
 

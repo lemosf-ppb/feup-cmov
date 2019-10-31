@@ -50,17 +50,16 @@
     <string name="title_activity_credit_card">CreditCardActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
 
-    <string name="total_price">Total(€)=</string>
     <string name="action_checkout">CHECKOUT</string>
-    <string name="discount_label">Discount available(€)=</string>
+    <string name="discount_label">Discount available: %1$s€</string>
     <string name="apply">Apply</string>
-    <string name="use_voucher">Voucher selected =</string>
+    <string name="use_voucher">Voucher selected: %1$s</string>
 
     <string name="none_voucher">None</string>
     <string name="voucher_list_item">%1$s - %2$d</string>
 
     <string name="used_discounts">Used discounts: %1$b</string>
-    <string name="total_payed_price">Total price: %1$s</string>
+    <string name="total_payed_price">Total price: %1$s€</string>
     <string name="items_row">%1$s - %2$d unit(s)</string>
     <string name="menu_shop">Shop</string>
     <string name="menu_transactions">Transactions</string>

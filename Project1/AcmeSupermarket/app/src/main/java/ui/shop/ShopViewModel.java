@@ -68,7 +68,11 @@ public class ShopViewModel extends ViewModel {
     }
 
     private void updateTotalPrice(double price) {
-        totalPrice.setValue(totalPrice.getValue() + price);
+        double newPrice = totalPrice.getValue() + price;
+        if (newPrice <= 0) {
+            newPrice = 0;
+        }
+        totalPrice.setValue(newPrice);
     }
 
     public void setSelectedVoucher(Voucher voucher) {
