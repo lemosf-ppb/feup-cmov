@@ -1,27 +1,29 @@
 package models;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
+
+import utils.Utils;
 
 public class Transaction {
     private String id;
     private UUID userId;
     private ArrayList<TransactionItem> transactionItems;
-    private String voucherId;
+    private Voucher voucher;
     private boolean useDiscounts;
     private Double totalPrice;
+    private Date createdAt;
 
-    public Transaction(String id, UUID userId, ArrayList<TransactionItem> transactionItems, String voucherId, boolean useDiscounts, Double totalPrice) {
+    public Transaction(String id, UUID userId, ArrayList<TransactionItem> transactionItems, Voucher voucher, boolean useDiscounts, Double totalPrice) {
         this.id = id;
         this.userId = userId;
         this.transactionItems = transactionItems;
-        this.voucherId = voucherId;
+        this.voucher = voucher;
         this.useDiscounts = useDiscounts;
         this.totalPrice = totalPrice;
     }
@@ -31,6 +33,7 @@ public class Transaction {
         this.userId = UUID.fromString(transactionObject.getString("UserId"));
         this.useDiscounts = transactionObject.getBoolean("useDiscounts");
         this.totalPrice = transactionObject.getDouble("totalPrice");
+        this.createdAt = Utils.parseDate(transactionObject.getString("createdAt"));
 
         ArrayList<TransactionItem> transactionItems = new ArrayList<>();
         JSONArray transactionItemsArray = transactionObject.getJSONArray("TransactionItems");
@@ -38,7 +41,8 @@ public class Transaction {
             transactionItems.add(new TransactionItem(transactionItemsArray.getJSONObject(i)));
         }
 
-        this.voucherId = null; //TODO: Update this later
+        if (transactionObject.has("Voucher"))
+            this.voucher = new Voucher(transactionObject.getJSONObject("Voucher"));
 
         this.transactionItems = transactionItems;
     }
@@ -47,16 +51,12 @@ public class Transaction {
         return id;
     }
 
-    public UUID getUserId() {
-        return userId;
-    }
-
     public ArrayList<TransactionItem> getTransactionItems() {
         return transactionItems;
     }
 
-    public String getVoucherId() {
-        return voucherId;
+    public Voucher getVoucher() {
+        return voucher;
     }
 
     public boolean isUseDiscounts() {
@@ -65,6 +65,10 @@ public class Transaction {
 
     public Double getTotalPrice() {
         return totalPrice;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
     public JSONObject getAsJSON() throws JSONException {
@@ -81,9 +85,8 @@ public class Transaction {
         }
         transactionObject.put("productsList", productsList);
         transactionObject.put("useDiscounts", useDiscounts);
-        transactionObject.put("voucherId", voucherId);
+        transactionObject.put("voucherId", voucher.getId().toString());
 
-        Log.e("transaction", transactionObject.toString());
         return transactionObject;
     }
 

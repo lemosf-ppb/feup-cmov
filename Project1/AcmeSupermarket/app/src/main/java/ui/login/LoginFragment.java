@@ -45,7 +45,10 @@ public class LoginFragment extends Fragment {
         passwordEditText = view.findViewById(R.id.password_edit_text);
 
         Button loginButton = view.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(v -> mViewModel.authenticate(usernameEditText.getText().toString(), passwordEditText.getText().toString(), getContext()));
+        loginButton.setOnClickListener(v ->
+                mViewModel.authenticate(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString(),
+                        requireActivity().getApplicationContext()));
 
         final NavController navController = Navigation.findNavController(view);
 

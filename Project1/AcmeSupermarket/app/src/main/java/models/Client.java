@@ -5,22 +5,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import services.crypto.Cryptography;
-
-import static services.crypto.Cryptography.getPublicKeyFromString;
+import services.crypto.CryptoKeysManagement;
+import utils.Utils;
 
 public class Client implements Serializable {
     static final long serialVersionUID = 1L;
 
-    //TODO: Save password and keys here?
     private String userId;
     private String name, username, password;
     private CreditCard creditCard;
@@ -34,12 +28,6 @@ public class Client implements Serializable {
         this.name = name;
         this.username = username;
         this.password = password;
-    }
-
-    public Client(String name, String username, CreditCard creditCard) {
-        this.name = name;
-        this.username = username;
-        this.creditCard = creditCard;
     }
 
     public String getName() {
@@ -70,20 +58,16 @@ public class Client implements Serializable {
         this.userId = userId;
     }
 
-    public PublicKey getClientPublicKey() {
-        return clientPublicKey;
-    }
-
     public PublicKey getAcmePublicKey() {
         return acmePublicKey;
     }
 
     public void setAcmePublicKey(String acmePublicKey) {
-        try {
-            this.acmePublicKey = getPublicKeyFromString(acmePublicKey);
-        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        this.acmePublicKey = CryptoKeysManagement.getPublicKeyFromString(acmePublicKey);
+    }
+
+    public PrivateKey getClientPrivateKey() {
+        return clientPrivateKey;
     }
 
     public Double getTotalValueSpent() {
@@ -104,19 +88,18 @@ public class Client implements Serializable {
         clientObject.put("name", name);
         clientObject.put("creditCard", creditCard.getAsJSON());
         clientObject.put("password", password);
-        clientObject.put("publicKey", Cryptography.convertToPublicKeyPEMFormat(clientPublicKey));
+        clientObject.put("publicKey", CryptoKeysManagement.convertToPublicKeyPEMFormat(clientPublicKey));
         return clientObject;
     }
 
     public void setClientKeys() {
-        this.clientPublicKey = Cryptography.getPublicKey();
-        this.clientPrivateKey = Cryptography.getPrivateKey();
+        this.clientPublicKey = CryptoKeysManagement.getPublicKey();
+        this.clientPrivateKey = CryptoKeysManagement.getPrivateKey();
     }
 
-    public void updateDatabaseData(JSONObject clientObject) throws JSONException, ParseException {
+    public void updateDatabaseData(JSONObject clientObject) throws JSONException {
         totalValueSpent = clientObject.getDouble("totalValueSpent");
         discountValueAvailable = clientObject.getDouble("discountValueAvailable");
-        createdAt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(clientObject.getString("createdAt"));
+        createdAt = Utils.parseDate(clientObject.getString("createdAt"));
     }
 }
-

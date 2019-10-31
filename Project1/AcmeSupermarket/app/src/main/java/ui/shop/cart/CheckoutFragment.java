@@ -26,7 +26,7 @@ import java.util.UUID;
 import models.Transaction;
 import models.TransactionItem;
 import models.Voucher;
-import services.crypto.Cryptography;
+import services.crypto.CryptoBuilder;
 import ui.shop.ShopViewModel;
 import utils.Utils;
 
@@ -73,11 +73,11 @@ public class CheckoutFragment extends Fragment {
             e.printStackTrace();
         }
 
-        byte[] messageSigned = Cryptography.buildMessage(transactionBytes);
+        byte[] messageSigned = CryptoBuilder.buildMessage(transactionBytes);
 
         try {
             qr_content = new String(messageSigned, Utils.ISO_SET);
-            boolean verified = Cryptography.validate(messageSigned);
+            boolean verified = CryptoBuilder.validate(messageSigned);
             String text = "Transaction: \"" + new String(transactionBytes) + "\"\nVerified: " + verified + "\nTotal bytes: " + messageSigned.length;
             titleTv.setText(text);
         } catch (UnsupportedEncodingException e) {

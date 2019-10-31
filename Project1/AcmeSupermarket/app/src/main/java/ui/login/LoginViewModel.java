@@ -5,26 +5,21 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import models.Client;
 import services.repository.AcmeRepository;
-import ui.shop.ShopViewModel;
+import utils.Utils;
 
 public class LoginViewModel extends ViewModel {
+    private static final String CLIENT_FILENAME = "clientData";
+    private static final String TAG = "LoginViewModel";
 
     public final MutableLiveData<AuthenticationState> authenticationState =
             new MutableLiveData<>();
-    private final String fileName = "clientData";
 
     private Client client;
 
     public LoginViewModel() {
-        // In this example, the user is always unauthenticated when MainActivity is launched
+        // The user is always unauthenticated when MainActivity is launched
         authenticationState.setValue(AuthenticationState.UNAUTHENTICATED);
         this.client = null;
     }
@@ -54,42 +49,19 @@ public class LoginViewModel extends ViewModel {
     }
 
     private void saveClient(Client client, Context context) {
-        try {
-            FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-            ObjectOutputStream os = new ObjectOutputStream(fos);
-
-            os.writeObject(client);
-
-            os.close();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Utils.saveObject(CLIENT_FILENAME, client, context);
     }
 
     private Client loadClient(Context context) {
-        Client client = null;
-        try {
-            FileInputStream fis = context.openFileInput(fileName);
-            ObjectInputStream is = new ObjectInputStream(fis);
-
-            client = (Client) is.readObject();
-
-            is.close();
-            fis.close();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return client;
+        return (Client) Utils.loadObject(CLIENT_FILENAME, context);
     }
 
     public Client getClient() {
         return client;
     }
 
-    public void syncDatabase(ShopViewModel shopViewModel) {
-        AcmeRepository.getUserInfo getUserInfo = new AcmeRepository.getUserInfo(this, shopViewModel);
+    public void syncDatabase() {
+        AcmeRepository.getUserInfo getUserInfo = new AcmeRepository.getUserInfo(this);
         new Thread(getUserInfo).start();
     }
 

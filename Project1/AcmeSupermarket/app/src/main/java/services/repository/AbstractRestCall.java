@@ -19,7 +19,7 @@ public abstract class AbstractRestCall implements Runnable {
     protected String requestURL;
     protected String requestType;
     protected View view; // Only necessary to show error/success messages
-    HttpURLConnection urlConnection;
+    private HttpURLConnection urlConnection;
 
     @Override
     public void run() {
@@ -28,7 +28,7 @@ public abstract class AbstractRestCall implements Runnable {
             sendPayload(createPayload());
             getResponse();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(Constants.TAG, e.getMessage());
         } finally {
             if (urlConnection != null)
                 urlConnection.disconnect();
@@ -43,12 +43,10 @@ public abstract class AbstractRestCall implements Runnable {
         urlConnection.setRequestMethod(requestType);
         urlConnection.setRequestProperty("Content-Type", "application/json");
         urlConnection.setUseCaches(false);
-        Log.e("DEBUG", url.getPath());
     }
 
     private void getResponse() throws IOException, JSONException {
         int responseCode = urlConnection.getResponseCode();
-        Log.e("DEBUG", String.valueOf(responseCode));
         String response;
         if (responseCode == 200) {
             response = readStream(urlConnection.getInputStream());
@@ -79,13 +77,13 @@ public abstract class AbstractRestCall implements Runnable {
                 response.append(line);
             }
         } catch (IOException e) {
-            return e.getMessage();
+            Log.e(Constants.TAG, e.getMessage());
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    return e.getMessage();
+                    Log.e(Constants.TAG, e.getMessage());
                 }
             }
         }
@@ -93,25 +91,33 @@ public abstract class AbstractRestCall implements Runnable {
     }
 
     public class Response {
-        int code;
-        String message;
+        private int code;
+        private String message;
 
-        public Response(int code, String message) {
+        Response(int code, String message) {
             this.code = code;
             this.message = message;
         }
 
         public String getErrorMessage() {
-            return "Error:" + code + " - " + message;
+            return code + " - " + message;
         }
 
         public String getSuccessMessage() {
             try {
                 return new JSONObject(message).getString("message");
             } catch (JSONException e) {
-                e.printStackTrace();
+                Log.e(Constants.TAG, e.getMessage());
             }
             return "";
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public String getMessage() {
+            return message;
         }
     }
 }
