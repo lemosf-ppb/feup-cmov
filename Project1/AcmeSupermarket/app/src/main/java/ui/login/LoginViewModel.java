@@ -9,6 +9,7 @@ public class LoginViewModel extends ViewModel {
 
     public final MutableLiveData<AuthenticationState> authenticationState =
             new MutableLiveData<>();
+
     private Client client;
 
     public LoginViewModel() {
@@ -37,6 +38,10 @@ public class LoginViewModel extends ViewModel {
 
     private boolean passwordIsValidForUsername(String username, String password) {
         return true;
+    }
+
+    public Client getClient() {
+        return client;
     }
 
     public enum AuthenticationState {

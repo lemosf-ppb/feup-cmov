@@ -23,8 +23,28 @@ import java.util.GregorianCalendar;
 
 import javax.security.auth.x500.X500Principal;
 
+import static utils.Utils.byteArrayToHex;
+
 public class Cryptography {
     static final String TAG = "Cryptography";
+
+    public static String signMessageHex(byte[] message) {
+        byte[] sign = new byte[0];
+        try {
+            KeyStore ks = KeyStore.getInstance(Constants.ANDROID_KEYSTORE);
+            ks.load(null);
+            KeyStore.Entry entry = ks.getEntry(Constants.keyname, null);
+            PrivateKey pri = ((KeyStore.PrivateKeyEntry) entry).getPrivateKey();
+            Signature sg = Signature.getInstance(Constants.SIGN_ALGO);
+            sg.initSign(pri);
+            sg.update(message);
+            sign = sg.sign();
+        } catch (Exception ex) {
+            Log.d(TAG, ex.getMessage());
+        }
+        return byteArrayToHex(sign);
+    }
+
 
     public static byte[] buildMessage(byte[] message) {
         ByteBuffer messageSigned = ByteBuffer.allocate(message.length + Constants.KEY_SIZE / 8);

@@ -16,7 +16,7 @@ const generateKeys = () => crypto.generateKeyPairSync('rsa', {
 
 const createSignature = (object) => {
   const signerObject = crypto.createSign(CRYPTO_ALGORITHM);
-  signerObject.update(JSON.stringify(object));
+  signerObject.update(object);
   const signature = signerObject.sign(PRIVATE_KEY, 'hex');
   console.info('signature: %s', signature);
   return signature;
@@ -24,7 +24,7 @@ const createSignature = (object) => {
 
 const verifySignature = (object, publicKey, signature) => {
   const verifierObject = crypto.createVerify(CRYPTO_ALGORITHM);
-  verifierObject.update(JSON.stringify(object));
+  verifierObject.update(object);
   const verified = verifierObject.verify(publicKey, signature, 'hex');
   console.info('is signature ok?: %s', verified);
   return verified;

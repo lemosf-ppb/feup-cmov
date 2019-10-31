@@ -2,21 +2,25 @@ package services.repository;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import models.Client;
+import models.Voucher;
 import services.crypto.Cryptography;
 import ui.registration.RegistrationViewModel;
+import ui.shop.ShopViewModel;
 
 public class AcmeRepository {
 
-    private String getUserIdAndSignature(UUID userId) throws JSONException {
+    private static String getUserIdAndSignature(String userId) throws JSONException {
         JSONObject payload = new JSONObject();
-        payload.put("userId", userId.toString());
-        payload.put("signature", Cryptography.buildMessage(userId.toString().getBytes())); //TODO: Check Signature
+        payload.put("userId", userId);
+        payload.put("signature", Cryptography.signMessageHex(userId.getBytes()));
         return payload.toString();
     }
 
@@ -77,11 +81,11 @@ public class AcmeRepository {
     }
 
     public class getTransactions extends AbstractRestCall {
-        private UUID userId;
+        private String userId;
 
-        public getTransactions(UUID userId) {
-            this.requestURL = Constants.ACME_REPOSITORY_URL + Constants.TRANSACTIONS;
-            this.requestType = Constants.GET;
+        public getTransactions(String userId) {
+            this.requestURL = Constants.ACME_REPOSITORY_URL + Constants.TRANSACTIONS + "/" + Constants.USER;
+            this.requestType = Constants.POST;
             this.userId = userId;
         }
 
@@ -97,13 +101,14 @@ public class AcmeRepository {
         }
     }
 
-    public class getUnusedVouchers extends AbstractRestCall {
-        private UUID userId;
-
-        public getUnusedVouchers(UUID userId) {
-            this.requestURL = Constants.ACME_REPOSITORY_URL + Constants.VOUCHERS_UNUSED;
-            this.requestType = Constants.GET;
+    public static class getUnusedVouchers extends AbstractRestCall {
+        private String userId;
+        private ShopViewModel shopViewModel;
+        public getUnusedVouchers(String userId, ShopViewModel shopViewModel) {
+            this.requestURL = Constants.ACME_REPOSITORY_URL + Constants.VOUCHERS_UNUSED + "/" + Constants.USER;
+            this.requestType = Constants.POST;
             this.userId = userId;
+            this.shopViewModel = shopViewModel;
         }
 
         @Override
@@ -114,16 +119,27 @@ public class AcmeRepository {
         @Override
         public void handleResponse(Response response) throws JSONException {
             Log.e("vouchers", response.code + response.message);
-
+            if (response.code == 200) {
+                JSONArray responseObject = new JSONArray(response.message);
+                ArrayList<Voucher> unusedVouchers = new ArrayList<>();
+                for(int i=0; i<responseObject.length(); i++) {
+                    JSONObject voucherObject = responseObject.getJSONObject(i);
+                    Voucher voucher = new Voucher(
+                            UUID.fromString(voucherObject.getString("id")),
+                            voucherObject.getInt("discount"));
+                    unusedVouchers.add(voucher);
+                }
+                shopViewModel.getVouchers().postValue(unusedVouchers);
+            }
         }
     }
 
     public class getUserInfo extends AbstractRestCall {
-        private UUID userId;
+        private String userId;
 
-        public getUserInfo(UUID userId) {
-            this.requestURL = Constants.ACME_REPOSITORY_URL + Constants.USERS;
-            this.requestType = Constants.GET;
+        public getUserInfo(String userId) {
+            this.requestURL = Constants.ACME_REPOSITORY_URL + Constants.USERS + "/" + Constants.USER;
+            this.requestType = Constants.POST;
             this.userId = userId;
         }
 

@@ -48,7 +48,7 @@
         android:id="@+id/shopFragment"
         android:name="ui.shop.ShopFragment"
         android:label="shop_fragment"
-        tools:layout="@layout/shop_fragment" >
+        tools:layout="@layout/shop_fragment">
         <action
             android:id="@+id/action_shopFragment_to_checkoutFragment"
             app:destination="@id/checkoutFragment" />

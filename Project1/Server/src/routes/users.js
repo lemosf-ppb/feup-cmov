@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { usersController } = require('../controllers');
 const { auth } = require('../services/auth');
 
-router.get('/users/', async (req, res) => {
+router.post('/users/user', async (req, res) => {
   const { userId, signature } = req.body;
   try {
     const user = await usersController.retrieve(userId);
@@ -10,8 +10,7 @@ router.get('/users/', async (req, res) => {
       return res.status(400).send('User not found');
     }
 
-    const payload = { userId };
-    const verifyAuth = auth.verifySignature(payload, user.publicKey, signature);
+    const verifyAuth = auth.verifySignature(userId, user.publicKey, signature);
     if (!verifyAuth) {
       return res.status(400).send('Signature invalid');
     }

@@ -45,8 +45,16 @@ public class Client {
         return creditCard;
     }
 
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
     public String getUserId() {
         return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public PublicKey getClientPublicKey() {
@@ -57,20 +65,12 @@ public class Client {
         return acmePublicKey;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public void setAcmePublicKey(String acmePublicKey) {
         try {
             this.acmePublicKey = getPublicKeyFromString(acmePublicKey);
         } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-    }
-
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
     }
 
     public JSONObject getAsJSON() throws JSONException {

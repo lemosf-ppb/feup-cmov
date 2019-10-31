@@ -5,8 +5,11 @@ import android.view.Menu;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -14,6 +17,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.acmesupermarket.R;
 import com.google.android.material.navigation.NavigationView;
+
+import ui.login.LoginViewModel;
+import ui.shop.ShopViewModel;
+import ui.transactions.TransactionsViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,14 +55,31 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 toolbar.setVisibility(View.VISIBLE);
             }
-
         });
 
-        setupViewModelListeners();
+        final View rootView = getWindow().getDecorView().getRootView();
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            if (toolbar.getVisibility() == View.VISIBLE)
+                setupViewModelListeners();
+        });
+
     }
 
     private void setupViewModelListeners() {
+        ViewModelProvider provider = ViewModelProviders.of(this);
+        LoginViewModel loginViewModel = provider.get(LoginViewModel.class); //TODO: Update this one later total discount and cenas
+        ShopViewModel shopViewModel = provider.get(ShopViewModel.class);
+        TransactionsViewModel transactionsViewModel = provider.get(TransactionsViewModel.class);
+
+
         //TODO: Fill this with database things? Like every time that models are updated sync into localStorage
+        ActionMenuItemView btn_sync = findViewById(R.id.action_sync);
+        btn_sync.setOnClickListener(v -> {
+            //TODO: Call databases :D
+//                String userId = loginViewModel.getClient().getUserId();
+            String userId = "3f000641-e6f0-47ea-bd1f-8d17ec8a4da5";
+            shopViewModel.syncDatabase(userId);
+        });
     }
 
     @Override

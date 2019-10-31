@@ -8,6 +8,7 @@ public class Constants {
     static final String TRANSACTIONS = "transactions";
     static final String USERS = "users";
     static final String VOUCHERS_UNUSED = "vouchers/unused";
+    static final String USER = "user";
 
     //TODO: Convert to ENUM
     static final String GET = "GET";

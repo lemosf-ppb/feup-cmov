@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import models.TransactionItem;
 import models.Voucher;
+import services.repository.AcmeRepository;
 
 public class ShopViewModel extends ViewModel {
     private static final int MAX_CART_ITEMS = 10;
@@ -97,6 +98,11 @@ public class ShopViewModel extends ViewModel {
         return vouchers;
     }
 
+    public void syncDatabase(String userId) {
+        AcmeRepository.getUnusedVouchers getUnusedVouchers = new AcmeRepository.getUnusedVouchers(userId, this);
+        new Thread(getUnusedVouchers).start();
+    }
+
     private void loadVouchers() {
         ArrayList<Voucher> vouchersList = new ArrayList<>();
         vouchersList.add(new Voucher(UUID.randomUUID(), 5));
@@ -106,7 +112,7 @@ public class ShopViewModel extends ViewModel {
 
     private void loadTransactionItems() {
         transactionItems.setValue(new ArrayList<>());
-        addTransactionItem(new TransactionItem(UUID.randomUUID(),"Batata", 10.6, 1));
-        addTransactionItem(new TransactionItem(UUID.randomUUID(),"Tomate", 8.6, 1));
+        addTransactionItem(new TransactionItem(UUID.randomUUID(), "Batata", 10.6, 1));
+        addTransactionItem(new TransactionItem(UUID.randomUUID(), "Tomate", 8.6, 1));
     }
 }
