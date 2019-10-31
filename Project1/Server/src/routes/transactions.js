@@ -15,7 +15,7 @@ router.post('/transactions', async (req, res) => {
   const payload = {
     userId, productsList, useDiscounts, voucherId,
   };
-  const verifyAuth = auth.verifySignature(payload, user.publicKey, signature);
+  const verifyAuth = auth.verifySignature(JSON.stringify(payload), user.publicKey, signature);
   if (!verifyAuth) {
     return res.status(400).send('Signature invalid');
   }

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import models.Client;
 import models.CreditCard;
-import services.crypto.Cryptography;
+import services.crypto.CryptoKeysManagement;
 import services.repository.AbstractRestCall;
 import services.repository.AcmeRepository;
 
@@ -50,7 +50,7 @@ public class RegistrationViewModel extends ViewModel {
     }
 
     public void signUp(Context context) {
-        Cryptography.generateAndStoreKeys(context);
+        CryptoKeysManagement.generateAndStoreKeys(context);
         client.setClientKeys();
 
         AcmeRepository.SignUp signUp = new AcmeRepository.SignUp(this);

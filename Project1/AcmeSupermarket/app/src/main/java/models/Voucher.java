@@ -3,6 +3,7 @@ package models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Voucher {
@@ -27,8 +28,16 @@ public class Voucher {
         return discount;
     }
 
-    public boolean equals(Object object) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Voucher voucher = (Voucher) o;
+        return Objects.equals(id, voucher.id);
+    }
+
+ /*   public boolean equals(Object object) {
         Voucher other = (Voucher) object;
         return this.id == other.id;
-    }
+    }*/
 }

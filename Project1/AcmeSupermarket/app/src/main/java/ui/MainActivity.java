@@ -18,6 +18,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.acmesupermarket.R;
 import com.google.android.material.navigation.NavigationView;
 
+import models.Client;
 import ui.login.LoginViewModel;
 import ui.shop.ShopViewModel;
 import ui.transactions.TransactionsViewModel;
@@ -57,28 +58,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        final View rootView = getWindow().getDecorView().getRootView();
-//        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-//            if (toolbar.getVisibility() == View.VISIBLE)
-//                setupViewModelListeners();
-//        });
+        //TODO: Check this one on app rotation
+        final View rootView = getWindow().getDecorView().getRootView();
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            if (toolbar.getVisibility() == View.VISIBLE)
+                setupViewModelListeners();
+        });
 
     }
 
     private void setupViewModelListeners() {
         ViewModelProvider provider = ViewModelProviders.of(this);
-        LoginViewModel loginViewModel = provider.get(LoginViewModel.class); //TODO: Update this one later total discount and cenas
+        LoginViewModel loginViewModel = provider.get(LoginViewModel.class);
         ShopViewModel shopViewModel = provider.get(ShopViewModel.class);
         TransactionsViewModel transactionsViewModel = provider.get(TransactionsViewModel.class);
 
-
-        //TODO: Fill this with database things? Like every time that models are updated sync into localStorage
         ActionMenuItemView btn_sync = findViewById(R.id.action_sync);
         btn_sync.setOnClickListener(v -> {
-            String userId = loginViewModel.getClient().getUserId();
-            shopViewModel.syncDatabase(userId);
-            transactionsViewModel.syncDatabase(userId);
-            loginViewModel.syncDatabase(shopViewModel); //TODO: Change this
+            Client client = loginViewModel.getClient();
+            loginViewModel.syncDatabase();
+            shopViewModel.syncDatabase(client);
+            transactionsViewModel.syncDatabase(client);
         });
     }
 

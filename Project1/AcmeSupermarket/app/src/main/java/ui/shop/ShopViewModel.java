@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import models.Client;
 import models.TransactionItem;
 import models.Voucher;
 import services.repository.AcmeRepository;
@@ -102,8 +103,8 @@ public class ShopViewModel extends ViewModel {
         return vouchers;
     }
 
-    public void syncDatabase(String userId) {
-        AcmeRepository.getUnusedVouchers getUnusedVouchers = new AcmeRepository.getUnusedVouchers(userId, this);
+    public void syncDatabase(Client client) {
+        AcmeRepository.getUnusedVouchers getUnusedVouchers = new AcmeRepository.getUnusedVouchers(client, this);
         new Thread(getUnusedVouchers).start();
     }
 

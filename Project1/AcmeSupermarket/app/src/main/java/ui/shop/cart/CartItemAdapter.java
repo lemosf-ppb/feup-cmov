@@ -35,6 +35,7 @@ public class CartItemAdapter extends ArrayAdapter<TransactionItem> {
         notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
@@ -68,6 +69,4 @@ public class CartItemAdapter extends ArrayAdapter<TransactionItem> {
 
         return convertView;
     }
-
-
 }

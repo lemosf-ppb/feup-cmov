@@ -3,6 +3,7 @@ package models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class TransactionItem {
@@ -36,10 +37,18 @@ public class TransactionItem {
         return quantity * price;
     }
 
-    public boolean equals(Object object) {
-        TransactionItem other = (TransactionItem) object;
-        return this.id == other.id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TransactionItem that = (TransactionItem) o;
+        return Objects.equals(id, that.id);
     }
+
+//    public boolean equals(Object object) {
+//        TransactionItem other = (TransactionItem) object;
+//        return this.id == other.id;
+//    }
 
     public UUID getId() {
         return id;

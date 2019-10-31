@@ -24,9 +24,7 @@ const retrieveByUser = async (userId) => Transaction.findAll({
   where: {
     UserId: userId,
   },
-  include: [{
-    model: TransactionItem,
-  }],
+  include: [TransactionItem, Voucher],
 });
 
 const createTransactionItems = async (productsList, transactionId) => {

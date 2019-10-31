@@ -39,8 +39,6 @@ public class TransactionsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(requireActivity()).get(TransactionsViewModel.class);
 
-//        checkSavedInstanceState(savedInstanceState);
-
         setTransactionsAdapter(view);
 
         setTransactionsObserver();
@@ -59,21 +57,4 @@ public class TransactionsFragment extends Fragment {
     private void setTransactionsObserver() {
         mViewModel.getTransactions().observe(this, transactions -> transactionsAdapter.setTransactions(transactions));
     }
-
-//    private void checkSavedInstanceState(Bundle savedInstanceState) {
-//        if (savedInstanceState != null) {
-//            ArrayList<Transaction> values = savedInstanceState.getParcelableArrayList("transactions");
-//            if (values != null) {
-//                transactions = values;
-//                ((ShopActivity) getActivity()).setTab(1);
-//            }
-//        } else {
-//            loadTransactions();
-//        }
-//    }
-//
-//    public void onSaveInstanceState(@NonNull Bundle savedState) {
-//        super.onSaveInstanceState(savedState);
-//        savedState.putParcelableArrayList("transactions", transactions);
-//    }
 }
