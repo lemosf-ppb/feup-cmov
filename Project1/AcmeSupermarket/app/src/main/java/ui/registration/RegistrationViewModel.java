@@ -1,7 +1,6 @@
 package ui.registration;
 
 import android.content.Context;
-import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -16,10 +15,8 @@ public class RegistrationViewModel extends ViewModel {
 
     private final MutableLiveData<RegistrationState> registrationState
             = new MutableLiveData<>(RegistrationState.COLLECT_PROFILE_DATA);
-
-    private Client client;
-
     private final MutableLiveData<AbstractRestCall.Response> response = new MutableLiveData<>();
+    private Client client;
 
     public MutableLiveData<RegistrationState> getRegistrationState() {
         return registrationState;

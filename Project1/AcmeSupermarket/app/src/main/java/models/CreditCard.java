@@ -3,7 +3,10 @@ package models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CreditCard {
+import java.io.Serializable;
+
+public class CreditCard implements Serializable {
+    static final long serialVersionUID = 1L;
     private String holder, number, expiry, cvv;
 
     public CreditCard(String holder, String number, String expiry, String cvv) {

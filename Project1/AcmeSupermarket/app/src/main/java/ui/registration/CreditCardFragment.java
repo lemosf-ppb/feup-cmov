@@ -203,7 +203,7 @@ public class CreditCardFragment extends Fragment {
                         // Here we authenticate with the userId and publicKey provided by the ViewModel
                         // then pop back to the shop_fragment, where the user authentication
                         // status will be tested and should be authenticated.
-                        loginViewModel.authenticate(registrationViewModel.getClient());
+                        loginViewModel.authenticate(registrationViewModel.getClient(), getContext());
                         Snackbar snackbar = Snackbar.make(view.findViewById(R.id.creditCardFragment),
                                 registrationViewModel.getSignUpResponse().getValue().getSuccessMessage()
                                 , Snackbar.LENGTH_SHORT);

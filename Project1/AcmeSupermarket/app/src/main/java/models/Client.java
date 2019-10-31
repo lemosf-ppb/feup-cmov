@@ -6,6 +6,7 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -19,7 +20,9 @@ import services.crypto.Cryptography;
 
 import static services.crypto.Cryptography.getPublicKeyFromString;
 
-public class Client {
+public class Client implements Serializable {
+    static final long serialVersionUID = 1L;
+
     //TODO: Save password and keys here?
     private String userId;
     private String name, username, password;
@@ -48,6 +51,10 @@ public class Client {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public CreditCard getCreditCard() {

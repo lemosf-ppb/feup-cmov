@@ -1,7 +1,15 @@
 package ui.login;
 
+import android.content.Context;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import models.Client;
 import services.repository.AcmeRepository;
@@ -11,6 +19,7 @@ public class LoginViewModel extends ViewModel {
 
     public final MutableLiveData<AuthenticationState> authenticationState =
             new MutableLiveData<>();
+    private final String fileName = "clientData";
 
     private Client client;
 
@@ -20,14 +29,16 @@ public class LoginViewModel extends ViewModel {
         this.client = null;
     }
 
-    public void authenticate(Client client) {
+    public void authenticate(Client client, Context context) {
         this.client = client;
+        saveClient(client, context);
         authenticationState.setValue(AuthenticationState.AUTHENTICATED);
     }
 
-    public void authenticate(String username, String password) {
-        if (passwordIsValidForUsername(username, password)) {
-//            this.username = username;
+    public void authenticate(String username, String password, Context context) {
+        Client client = loadClient(context);
+        if (client != null && passwordIsValidForUsername(username, password, client)) {
+            this.client = client;
             authenticationState.setValue(AuthenticationState.AUTHENTICATED);
         } else {
             authenticationState.setValue(AuthenticationState.INVALID_AUTHENTICATION);
@@ -38,8 +49,39 @@ public class LoginViewModel extends ViewModel {
         authenticationState.setValue(AuthenticationState.UNAUTHENTICATED);
     }
 
-    private boolean passwordIsValidForUsername(String username, String password) {
-        return true;
+    private boolean passwordIsValidForUsername(String username, String password, Client client) {
+        return client.getUsername().equals(username) && client.getPassword().equals(password);
+    }
+
+    private void saveClient(Client client, Context context) {
+        try {
+            FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+
+            os.writeObject(client);
+
+            os.close();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Client loadClient(Context context) {
+        Client client = null;
+        try {
+            FileInputStream fis = context.openFileInput(fileName);
+            ObjectInputStream is = new ObjectInputStream(fis);
+
+            client = (Client) is.readObject();
+
+            is.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return client;
     }
 
     public Client getClient() {

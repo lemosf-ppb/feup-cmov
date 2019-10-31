@@ -16,33 +16,10 @@ import java.net.URL;
 
 public abstract class AbstractRestCall implements Runnable {
 
-    public class Response {
-        int code;
-        String message;
-
-        public Response(int code, String message) {
-            this.code = code;
-            this.message = message;
-        }
-
-        public String getErrorMessage() {
-            return "Error:" + code + " - " + message;
-        }
-
-        public String getSuccessMessage() {
-            try {
-                return new JSONObject(message).getString("message");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return "";
-        }
-    }
-
     protected String requestURL;
     protected String requestType;
-    HttpURLConnection urlConnection;
     protected View view; // Only necessary to show error/success messages
+    HttpURLConnection urlConnection;
 
     @Override
     public void run() {
@@ -73,7 +50,7 @@ public abstract class AbstractRestCall implements Runnable {
         int responseCode = urlConnection.getResponseCode();
         Log.e("DEBUG", String.valueOf(responseCode));
         String response;
-        if(responseCode == 200) {
+        if (responseCode == 200) {
             response = readStream(urlConnection.getInputStream());
         } else {
             response = readStream(urlConnection.getErrorStream());
@@ -113,5 +90,28 @@ public abstract class AbstractRestCall implements Runnable {
             }
         }
         return response.toString();
+    }
+
+    public class Response {
+        int code;
+        String message;
+
+        public Response(int code, String message) {
+            this.code = code;
+            this.message = message;
+        }
+
+        public String getErrorMessage() {
+            return "Error:" + code + " - " + message;
+        }
+
+        public String getSuccessMessage() {
+            try {
+                return new JSONObject(message).getString("message");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return "";
+        }
     }
 }
