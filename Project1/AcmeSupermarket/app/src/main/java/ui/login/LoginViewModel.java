@@ -93,6 +93,10 @@ public class LoginViewModel extends ViewModel {
         new Thread(getUserInfo).start();
     }
 
+    public boolean isAuthenticated() {
+        return authenticationState.getValue().equals(AuthenticationState.AUTHENTICATED);
+    }
+
     public enum AuthenticationState {
         UNAUTHENTICATED,        // Initial state, the user needs to authenticate
         AUTHENTICATED,          // The user has authenticated successfully

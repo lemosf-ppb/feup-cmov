@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -51,6 +52,7 @@ public class CartFragment extends Fragment {
     private ShopViewModel mViewModel;
     private CartItemAdapter cartItemsAdapter;
     private PublicKey pub;
+    private Resources res;
 
     private static AlertDialog showDialog(final Activity act, CharSequence title, CharSequence message, CharSequence buttonYes, CharSequence buttonNo) {
         AlertDialog.Builder downloadDialog = new AlertDialog.Builder(act);
@@ -76,7 +78,7 @@ public class CartFragment extends Fragment {
         mViewModel = ViewModelProviders.of(requireActivity()).get(ShopViewModel.class);
 
         //        checkSavedInstanceState(savedInstanceState);
-
+        res = getContext().getResources();
 
         try {
             pub = readPublicKey(Constants.key);
@@ -168,18 +170,22 @@ public class CartFragment extends Fragment {
     }
 
     private void updateCurrentVoucherUI(View view, Voucher currentVoucher) {
-        TextView voucher_id_text_view = view.findViewById(R.id.voucher_id);
+        TextView voucher_id_text_view = view.findViewById(R.id.voucher_label);
         String voucher_id = "None";
 
         if (currentVoucher != null) {
             voucher_id = (currentVoucher.getId() + "").substring(0, 10);
         }
-        voucher_id_text_view.setText(voucher_id);
+
+        String selected_voucher_string = res.getString(R.string.use_voucher, voucher_id);
+        voucher_id_text_view.setText(selected_voucher_string);
     }
 
     private void updateDiscountAvailableUI(View view, Double discountAvailable) {
-        TextView discount_value = view.findViewById(R.id.discount_value);
-        discount_value.setText(String.format("%s", df.format(discountAvailable)));
+        TextView discount_value = view.findViewById(R.id.discount_label);
+
+        String discount_value_string = res.getString(R.string.discount_label, String.format("%s", df.format(discountAvailable)));
+        discount_value.setText(discount_value_string);
     }
 
     private void updateUseDiscountUI(View view, Boolean useDiscount) {
@@ -188,14 +194,16 @@ public class CartFragment extends Fragment {
     }
 
     private void updateTotalPriceUI(View view, Double totalPrice) {
-        TextView total_price_value = view.findViewById(R.id.total_price_value);
+        TextView total_price_value = view.findViewById(R.id.total_price_text);
 
         double voucherPercent = 0;
         if (mViewModel.currentVoucher.getValue() != null)
             voucherPercent = mViewModel.currentVoucher.getValue().getDiscount() / 100.0;
 
         double totalAfterVoucher = (1.0 - voucherPercent) * totalPrice;
-        total_price_value.setText(String.format("%s", df.format(totalAfterVoucher)));
+
+        String total_price_string = res.getString(R.string.total_payed_price, String.format("%s", df.format(totalAfterVoucher)));
+        total_price_value.setText(total_price_string);
     }
 
     //TODO: SAVE UUID on the transaction item model

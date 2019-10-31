@@ -57,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final View rootView = getWindow().getDecorView().getRootView();
-        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            if (toolbar.getVisibility() == View.VISIBLE)
-                setupViewModelListeners();
-        });
+//        final View rootView = getWindow().getDecorView().getRootView();
+//        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+//            if (toolbar.getVisibility() == View.VISIBLE)
+//                setupViewModelListeners();
+//        });
 
     }
 
@@ -93,5 +93,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        ViewModelProvider provider = ViewModelProviders.of(this);
+        LoginViewModel loginViewModel = provider.get(LoginViewModel.class);
+        if (!loginViewModel.isAuthenticated()) {
+            super.onBackPressed();
+        }
     }
 }
