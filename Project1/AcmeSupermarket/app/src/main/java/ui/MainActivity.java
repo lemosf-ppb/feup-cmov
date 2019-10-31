@@ -94,13 +94,4 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-    @Override
-    public void onBackPressed() {
-        ViewModelProvider provider = ViewModelProviders.of(this);
-        LoginViewModel loginViewModel = provider.get(LoginViewModel.class);
-        if (!loginViewModel.isAuthenticated()) {
-            super.onBackPressed();
-        }
-    }
 }
