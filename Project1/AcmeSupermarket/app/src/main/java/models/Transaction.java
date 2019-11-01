@@ -4,13 +4,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
 import utils.Utils;
 
-public class Transaction {
+public class Transaction implements Serializable {
+    static final long serialVersionUID = 1L;
+
     private String id;
     private UUID userId;
     private ArrayList<TransactionItem> transactionItems;

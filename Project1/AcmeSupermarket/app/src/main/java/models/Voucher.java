@@ -3,10 +3,13 @@ package models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Voucher {
+public class Voucher implements Serializable {
+    static final long serialVersionUID = 1L;
+
     private UUID id;
     private int discount;
 

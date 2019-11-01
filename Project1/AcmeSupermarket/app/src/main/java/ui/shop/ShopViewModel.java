@@ -1,5 +1,7 @@
 package ui.shop;
 
+import android.content.Context;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -10,9 +12,11 @@ import models.Client;
 import models.TransactionItem;
 import models.Voucher;
 import services.repository.AcmeRepository;
+import utils.Utils;
 
 public class ShopViewModel extends ViewModel {
     private static final int MAX_CART_ITEMS = 10;
+    private static final String VOUCHERS_FILENAME = "vouchersData";
 
     public final MutableLiveData<ArrayList<TransactionItem>> transactionItems = new MutableLiveData<>();
     public final MutableLiveData<Double> totalPrice = new MutableLiveData<>((double) 0);
@@ -96,9 +100,10 @@ public class ShopViewModel extends ViewModel {
         return transactionItems;
     }
 
-    public MutableLiveData<ArrayList<Voucher>> getVouchers() {
+    public MutableLiveData<ArrayList<Voucher>> getVouchers(Context context) {
         if (vouchers.getValue() == null) {
-            loadVouchers();
+            ArrayList<Voucher> vouchersLoaded = loadVouchers(context);
+            this.vouchers.setValue(vouchersLoaded == null ? new ArrayList<>() : vouchersLoaded);
         }
         return vouchers;
     }
@@ -106,6 +111,14 @@ public class ShopViewModel extends ViewModel {
     public void syncDatabase(Client client) {
         AcmeRepository.getUnusedVouchers getUnusedVouchers = new AcmeRepository.getUnusedVouchers(client, this);
         new Thread(getUnusedVouchers).start();
+    }
+
+    public void saveVouchers(ArrayList<Voucher> vouchers, Context context) {
+        Utils.saveObject(VOUCHERS_FILENAME, vouchers, context);
+    }
+
+    private ArrayList<Voucher> loadVouchers(Context context) {
+        return (ArrayList<Voucher>) Utils.loadObject(VOUCHERS_FILENAME, context);
     }
 
     private void loadVouchers() {

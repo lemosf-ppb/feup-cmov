@@ -43,7 +43,7 @@ public class VoucherFragment extends Fragment {
     }
 
     private void setVouchersObserver(Context context, View view) {
-        mViewModel.getVouchers().observe(this, vouchers -> addVouchersToRadioGroup(context, view));
+        mViewModel.vouchers.observe(this, vouchers -> addVouchersToRadioGroup(context, view));
     }
 
     private void addVouchersToRadioGroup(Context context, View view) {
@@ -53,7 +53,7 @@ public class VoucherFragment extends Fragment {
         //Remove all radio buttons except the "None" option
         radioGroup.removeViews(1, radioGroup.getChildCount() - 1);
 
-        ArrayList<Voucher> vouchersList = mViewModel.getVouchers().getValue();
+        ArrayList<Voucher> vouchersList = mViewModel.getVouchers(requireActivity().getApplicationContext()).getValue();
         for (Voucher voucher : vouchersList) {
             RadioButton voucher_btn = new RadioButton(context);
             String voucher_label = res.getString(R.string.voucher_list_item, voucher.getId(), voucher.getDiscount()) + "%";
@@ -76,7 +76,7 @@ public class VoucherFragment extends Fragment {
 
     private void setActiveRadioBtn(View view) {
         RadioGroup radioGroup = view.findViewById(R.id.voucher_radio_group);
-        ArrayList<Voucher> vouchersList = mViewModel.getVouchers().getValue();
+        ArrayList<Voucher> vouchersList = mViewModel.getVouchers(requireActivity().getApplicationContext()).getValue();
 
         int index = 0;
         Voucher currentVoucher = mViewModel.currentVoucher.getValue();

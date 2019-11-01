@@ -77,7 +77,7 @@ public class CartFragment extends Fragment {
         ViewModelProvider provider = ViewModelProviders.of(requireActivity());
         loginViewModel = provider.get(LoginViewModel.class);
         shopViewModel = provider.get(ShopViewModel.class);
-        res = getContext().getResources();
+        res = requireActivity().getApplicationContext().getResources();
 
         setCartItemAdapter(view);
 

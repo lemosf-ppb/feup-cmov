@@ -48,7 +48,7 @@ public class LoginViewModel extends ViewModel {
         return client.getUsername().equals(username) && client.getPassword().equals(password);
     }
 
-    private void saveClient(Client client, Context context) {
+    public void saveClient(Client client, Context context) {
         Utils.saveObject(CLIENT_FILENAME, client, context);
     }
 

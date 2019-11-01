@@ -72,13 +72,19 @@ public class MainActivity extends AppCompatActivity {
         TransactionsViewModel transactionsViewModel = provider.get(TransactionsViewModel.class);
 
         ActionMenuItemView btn_sync = findViewById(R.id.action_sync);
-        if (btn_sync != null)
+        if (btn_sync != null) {
             btn_sync.setOnClickListener(v -> {
                 Client client = loginViewModel.getClient();
                 loginViewModel.syncDatabase();
                 shopViewModel.syncDatabase(client);
                 transactionsViewModel.syncDatabase(client);
             });
+
+            loginViewModel.client.observe(this, client -> loginViewModel.saveClient(client, getApplicationContext()));
+            shopViewModel.vouchers.observe(this, vouchers -> shopViewModel.saveVouchers(vouchers, getApplicationContext()));
+            transactionsViewModel.transactions.observe(this, transactions -> transactionsViewModel.saveTransactions(transactions, getApplicationContext()));
+        }
+
     }
 
     @Override
