@@ -47,7 +47,7 @@ public class TransactionsFragment extends Fragment {
 
     private void setTransactionsAdapter(View view) {
         Context context = requireActivity().getApplicationContext();
-        ArrayList<Transaction> transactions = mViewModel.getTransactions().getValue();
+        ArrayList<Transaction> transactions = mViewModel.getTransactions(context).getValue();
 
         ExpandableListView transactionExpandableListView = view.findViewById(R.id.simpleExpandableListView);
         transactionsAdapter = new TransactionAdapter(context, transactions, getResources());
@@ -55,6 +55,6 @@ public class TransactionsFragment extends Fragment {
     }
 
     private void setTransactionsObserver() {
-        mViewModel.getTransactions().observe(this, transactions -> transactionsAdapter.setTransactions(transactions));
+        mViewModel.transactions.observe(this, transactions -> transactionsAdapter.setTransactions(transactions));
     }
 }
