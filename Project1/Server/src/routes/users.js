@@ -1,12 +1,23 @@
 const router = require('express').Router();
 const { usersController } = require('../controllers');
+const { auth } = require('../services/auth');
 
-router.get('/users/me', async (req, res) => {
+router.post('/users/user', async (req, res) => {
+  const { userId, signature } = req.body;
   try {
-    const userInfo = await usersController.retrieve(req.user.id);
-    res.status(200).send(userInfo);
+    const user = await usersController.retrieve(userId);
+    if (!user) {
+      return res.status(400).send('User not found');
+    }
+
+    const verifyAuth = auth.verifySignature(userId, user.publicKey, signature);
+    if (!verifyAuth) {
+      return res.status(400).send('Signature invalid');
+    }
+
+    return res.status(200).send(user);
   } catch (error) {
-    res.status(400).send(error.message);
+    return res.status(400).send(error.message);
   }
 });
 

@@ -28,7 +28,19 @@
         android:text="3" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/increase_btn"
+        android:layout_width="51dp"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/arrow_up_float" />
+
+    <Button
+        android:id="@+id/decrease_btn"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/arrow_down_float" />
+
+    <Button
+        android:id="@+id/remove_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"

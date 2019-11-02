@@ -1,14 +1,17 @@
 <resources>
     <string name="app_name">AcmeSupermarket</string>
-    <string name="title_activity_login">Sign in</string>
-    <string name="prompt_email">Email</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign up</string>
+    <string name="tab_cart">Cart</string>
+    <string name="tab_vouchers">Vouchers</string>
 
+
+    <string name="prompt_email">Email</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_name">Full Name</string>
     <string name="prompt_password">Password</string>
-    <string name="prompt_confirm_password">Confirm Password</string>
-    <string name="btn_next">NEXT</string>
-
+    <string name="prompt_confirmPassword">Confirm Password</string>
+    <string name="btn_next">Next</string>
 
     <string name="prompt_credit_card_details">Credit Card Details</string>
     <string name="credit_card_type_visa">Visa</string>
@@ -16,14 +19,27 @@
     <string name="prompt_credit_card_number">Credit Card Number</string>
     <string name="prompt_credit_card_validity">Expiration Date (mm/yy)</string>
     <string name="action_register">Register</string>
-    <string name="card_vcc">CVV</string>
-    <string name="submit_registry">SUBMIT</string>
+    <string name="card_vcc">cvv</string>
+    <string name="btn_submit">Submit</string>
 
-    <string name="action_sign_in_short">SIGN IN</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="invalid_credentials">Invalid Credentials</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_sync">Sync</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+
+    <string name="action_sign_in_short">SIGN IN</string>
     <string name="quote">"IF YOU CAN'T STOP THINKING ABOUT IT… BUY IT."</string>
     <string name="slogan">"Slogan"</string>
     <string name="signUp">Sign Up</string>
@@ -32,6 +48,23 @@
     <string name="cart">Cart</string>
     <string name="vouchers">Vouchers</string>
     <string name="title_activity_credit_card">CreditCardActivity</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_register">RegisterActivity</string>
+
+    <string name="action_checkout">CHECKOUT</string>
+    <string name="discount_label">Discount available: %1$s€</string>
+    <string name="apply">Apply</string>
+    <string name="use_voucher">Voucher selected: %1$s</string>
+
+    <string name="none_voucher">None</string>
+    <string name="voucher_list_item">%1$s - %2$d</string>
+
+    <string name="used_discounts">Used discounts: %1$b</string>
+    <string name="total_payed_price">Total price: %1$s€</string>
+    <string name="items_row">%1$s - %2$d unit(s)</string>
+    <string name="menu_shop">Shop</string>
+    <string name="menu_transactions">Transactions</string>
+    <string name="menu_profile">Profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
