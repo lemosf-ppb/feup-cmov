@@ -11,8 +11,6 @@ router.post('/vouchers/unused/user', async (req, res) => {
     return res.status(400).send('User not found');
   }
 
-  console.log(userId);
-  console.log(signature);
   const verifyAuth = auth.verifySignature(userId, user.publicKey, signature);
   if (!verifyAuth) {
     return res.status(400).send('Signature invalid');
