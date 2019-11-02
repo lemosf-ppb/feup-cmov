@@ -17,6 +17,7 @@ import ui.login.LoginViewModel;
 import ui.registration.RegistrationViewModel;
 import ui.shop.ShopViewModel;
 import ui.transactions.TransactionsViewModel;
+import utils.Utils;
 
 public class AcmeRepository {
 
@@ -25,6 +26,10 @@ public class AcmeRepository {
         payload.put("userId", userId);
         payload.put("signature", CryptoBuilder.signMessageHex(userPrivateKey, userId.getBytes()));
         return payload.toString();
+    }
+
+    private static boolean validateSignature(Client client, byte[] message, String signature) {
+        return CryptoBuilder.validateMessage(client.getAcmePublicKey(), message, Utils.hexStringToByteArray(signature));
     }
 
     public static class SignUp extends AbstractRestCall {
@@ -80,6 +85,13 @@ public class AcmeRepository {
             if (response.getCode() == 200) {
                 JSONObject responseObject = new JSONObject(response.getMessage());
                 JSONArray transactionsArray = responseObject.getJSONArray("transactions");
+
+                String signature = (String) responseObject.remove("signature");
+                if (!validateSignature(client, responseObject.toString().getBytes(), signature)) {
+                    Log.e(Constants.TAG, "Signature Invalid!");
+                    return;
+                }
+
                 ArrayList<Transaction> transactions = new ArrayList<>();
                 for (int i = 0; i < transactionsArray.length(); i++) {
                     transactions.add(new Transaction(transactionsArray.getJSONObject(i)));
@@ -109,10 +121,18 @@ public class AcmeRepository {
         public void handleResponse(Response response) throws JSONException {
             Log.e("vouchers", response.getCode() + response.getMessage());
             if (response.getCode() == 200) {
-                JSONArray responseObject = new JSONArray(response.getMessage());
+                JSONObject responseObject = new JSONObject(response.getMessage());
+                JSONArray vouchers = responseObject.getJSONArray("vouchers");
+
+                String signature = (String) responseObject.remove("signature");
+                if (!validateSignature(client, responseObject.toString().getBytes(), signature)) {
+                    Log.e(Constants.TAG, "Signature Invalid!");
+                    return;
+                }
+
                 ArrayList<Voucher> unusedVouchers = new ArrayList<>();
-                for (int i = 0; i < responseObject.length(); i++) {
-                    Voucher voucher = new Voucher(responseObject.getJSONObject(i));
+                for (int i = 0; i < vouchers.length(); i++) {
+                    Voucher voucher = new Voucher(vouchers.getJSONObject(i));
                     unusedVouchers.add(voucher);
                 }
                 shopViewModel.vouchers.postValue(unusedVouchers);
@@ -140,35 +160,43 @@ public class AcmeRepository {
             Log.e("userInfo", response.getCode() + response.getMessage());
             if (response.getCode() == 200) {
                 JSONObject responseObject = new JSONObject(response.getMessage());
-                loginViewModel.getClient().updateDatabaseData(responseObject);
+                Client client = loginViewModel.getClient();
+                JSONObject user = responseObject.getJSONObject("user");
+                String signature = (String) responseObject.remove("signature");
+                if (!validateSignature(client, user.toString().replace("\\/", "/").getBytes(), signature)) {
+                    Log.e(Constants.TAG, "Signature Invalid!");
+                    return;
+                }
+
+                client.updateDatabaseData(user);
                 loginViewModel.client.postValue(loginViewModel.getClient());
             }
         }
     }
 
-    public class LogIn extends AbstractRestCall {
-        private Client client;
-        private String password;
+    public static class LogIn extends AbstractRestCall {
+        private LoginViewModel loginViewModel;
 
-        public LogIn(Client client, String password) {
+        public LogIn(LoginViewModel loginViewModel) {
             this.requestURL = Constants.ACME_REPOSITORY_URL + Constants.LOGIN;
             this.requestType = Constants.POST;
-            this.client = client;
-            this.password = password;
+            this.loginViewModel = loginViewModel;
         }
 
         @Override
         public String createPayload() throws JSONException {
-            JSONObject payload = new JSONObject();
-            payload.put("username", client.getUsername());
-            payload.put("password", password);
-            return payload.toString();
+            return loginViewModel.getClient().getAsJSON().toString();
         }
 
         @Override
-        public void handleResponse(Response response) throws JSONException {
-            Log.e("login", response.getCode() + response.getMessage());
-
+        public void handleResponse(final Response response) throws JSONException {
+            Log.e("Login", response.getCode() + response.getMessage());
+            if (response.getCode() == 200) {
+                JSONObject responseObject = new JSONObject(response.getMessage());
+                Client client = loginViewModel.getClient();
+                client.setAcmePublicKey(responseObject.getString("supermarketPublicKey"));
+                client.setUserId(responseObject.getString("userId"));
+            }
         }
     }
 }

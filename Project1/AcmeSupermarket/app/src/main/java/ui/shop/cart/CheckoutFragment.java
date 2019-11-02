@@ -21,7 +21,6 @@ import com.google.zxing.WriterException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import models.Client;
@@ -64,7 +63,7 @@ public class CheckoutFragment extends Fragment {
     }
 
     private void drawQRCode(View view) {
-        TextView titleTv = view.findViewById(R.id.title);;
+        TextView titleTv = view.findViewById(R.id.title);
         qrCodeImageView = view.findViewById(R.id.img_qr_code_image);
 
         ArrayList<TransactionItem> transactionItems = shopViewModel.transactionItems.getValue();
