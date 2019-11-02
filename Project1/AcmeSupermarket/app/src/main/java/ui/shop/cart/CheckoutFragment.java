@@ -19,6 +19,7 @@ import com.example.acmesupermarket.R;
 import com.google.zxing.WriterException;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -81,16 +82,20 @@ public class CheckoutFragment extends Fragment {
             e.printStackTrace();
         }
 
-        byte[] messageSigned = CryptoBuilder.buildMessageWithSignature(client.getClientPrivateKey(), transactionBytes);
+        String signInHex = CryptoBuilder.signMessageHex(client.getClientPrivateKey(), transactionBytes);
 
+        JSONObject payload = null;
         try {
-            qr_content = new String(messageSigned, Utils.ISO_SET);
-            boolean verified = CryptoBuilder.validateMessageWithSignature(client.getClientPublicKey(), messageSigned);
-            String text = "Transaction: \"" + new String(transactionBytes) + "\"\nVerified: " + verified + "\nTotal bytes: " + messageSigned.length;
-            titleTv.setText(text);
-        } catch (UnsupportedEncodingException e) {
-            Log.d("Debug", e.getMessage());
+            payload = new JSONObject(new String(transactionBytes));
+            payload.put("signature", signInHex);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+        qr_content = payload.toString();
+//        boolean verified = CryptoBuilder.validateMessageWithSignature(client.getClientPublicKey(), messageSigned);
+//        String text = "Transaction: \"" + new String(transactionBytes) + "\"\nVerified: " + verified + "\nTotal bytes: " + messageSigned.length;
+//        titleTv.setText(text);
 
         // do the creation in a new thread to avoid ANR Exception
         Thread t = new Thread(() -> {
