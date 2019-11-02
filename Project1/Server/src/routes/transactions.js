@@ -27,7 +27,7 @@ router.post('/transactions', async (req, res) => {
       userId,
       voucherId,
     );
-    return res.status(201).send(transaction);
+    return res.status(200).send(transaction);
   } catch (error) {
     return res.status(400).send(error.message);
   }
