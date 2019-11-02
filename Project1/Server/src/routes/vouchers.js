@@ -6,19 +6,13 @@ const { auth } = require('../services/auth');
 router.post('/vouchers/unused/user', async (req, res) => {
   const { userId, signature } = req.body;
 
-  const user = await usersController.retrieve(userId);
-  if (!user) {
-    return res.status(400).send('User not found');
-  }
-
-  const verifyAuth = auth.verifySignature(userId, user.publicKey, signature);
-  if (!verifyAuth) {
-    return res.status(400).send('Signature invalid');
-  }
-
   try {
+    await usersController.verifyAuth(userId, userId, signature);
     const vouchersUnused = await vouchersController.retrieveUnusedByUser(userId);
-    return res.status(200).send(vouchersUnused);
+
+    const payload = { vouchers: vouchersUnused };
+    const signedSupermarket = auth.createSignature(JSON.stringify(payload));
+    return res.status(200).send({ ...payload, signature: signedSupermarket });
   } catch (error) {
     return res.status(400).send(error.message);
   }

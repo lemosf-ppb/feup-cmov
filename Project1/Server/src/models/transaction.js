@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
   Transaction.associate = (models) => {
     Transaction.hasMany(models.TransactionItem);
     Transaction.belongsTo(models.User);
-    // TODO: Check this if allow null or not
     Transaction.hasOne(models.Voucher, {
       foreignKey: 'TransactionId',
     });

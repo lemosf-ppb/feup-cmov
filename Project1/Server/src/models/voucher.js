@@ -18,12 +18,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Voucher.associate = (models) => {
-    Voucher.belongsTo(models.User, {
-      // foreignKey: 'userUuid',
-    });
-    Voucher.belongsTo(models.Transaction, {
-      // foreignKey: 'transactionId',
-    });
+    Voucher.belongsTo(models.User);
+    Voucher.belongsTo(models.Transaction);
   };
 
   return Voucher;

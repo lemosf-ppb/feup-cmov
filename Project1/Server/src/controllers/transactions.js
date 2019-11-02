@@ -9,9 +9,8 @@ const create = async (productsList, useDiscounts, userId, voucherId) => {
   const user = await User.findByPk(userId);
   if (!user) throw new Error('User not found');
   let voucher = null;
-  if (voucherId) {
-    voucher = await getVoucher(voucherId, user);
-  }
+  if (voucherId) voucher = await getVoucher(voucherId, user);
+
   const totalPrice = await createTransactionItems(productsList, transaction.id);
 
   await newVoucher(user, totalPrice);
