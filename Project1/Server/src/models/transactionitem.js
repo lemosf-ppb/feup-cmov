@@ -16,9 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   TransactionItem.associate = (models) => {
-    TransactionItem.belongsTo(models.Transaction, {
-      // foreignKey: 'transactionId',
-    });
+    TransactionItem.belongsTo(models.Transaction);
   };
 
   return TransactionItem;

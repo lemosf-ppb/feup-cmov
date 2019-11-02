@@ -18,7 +18,6 @@ const createSignature = (object) => {
   const signerObject = crypto.createSign(CRYPTO_ALGORITHM);
   signerObject.update(object);
   const signature = signerObject.sign(PRIVATE_KEY, 'hex');
-  console.info('signature: %s', signature);
   return signature;
 };
 
@@ -26,7 +25,6 @@ const verifySignature = (object, publicKey, signature) => {
   const verifierObject = crypto.createVerify(CRYPTO_ALGORITHM);
   verifierObject.update(object);
   const verified = verifierObject.verify(publicKey, signature, 'hex');
-  console.info('is signature ok?: %s', verified);
   return verified;
 };
 

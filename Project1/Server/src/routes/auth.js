@@ -22,10 +22,10 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, publicKey } = req.body;
 
   try {
-    const newUser = await usersController.login(username, password);
+    const newUser = await usersController.login(username, password, publicKey);
     return res.status(200).send({
       message: 'Login successful',
       userId: newUser.id,
