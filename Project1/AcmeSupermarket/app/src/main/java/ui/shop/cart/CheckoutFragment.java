@@ -64,9 +64,8 @@ public class CheckoutFragment extends Fragment {
     }
 
     private void drawQRCode(View view) {
-        TextView titleTv;
+        TextView titleTv = view.findViewById(R.id.title);;
         qrCodeImageView = view.findViewById(R.id.img_qr_code_image);
-        titleTv = view.findViewById(R.id.title);
 
         ArrayList<TransactionItem> transactionItems = shopViewModel.transactionItems.getValue();
         Voucher currentVoucher = shopViewModel.currentVoucher.getValue();
