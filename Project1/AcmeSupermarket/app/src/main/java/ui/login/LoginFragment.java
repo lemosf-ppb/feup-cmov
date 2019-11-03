@@ -19,6 +19,8 @@ import androidx.navigation.Navigation;
 import com.example.acmesupermarket.R;
 import com.google.android.material.snackbar.Snackbar;
 
+import ui.MainActivity;
+
 public class LoginFragment extends Fragment {
 
     private EditText usernameEditText, passwordEditText;
@@ -69,6 +71,7 @@ public class LoginFragment extends Fragment {
                         case AUTHENTICATED:
                             hideKeyboard(view);
                             navController.navigate(R.id.shopFragment);
+                            ((MainActivity) getActivity()).setMenu();
                             break;
                         case INVALID_AUTHENTICATION:
                             Snackbar.make(root,

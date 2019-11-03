@@ -21,6 +21,7 @@ import com.cooltechworks.creditcarddesign.CreditCardView;
 import com.example.acmesupermarket.R;
 import com.google.android.material.snackbar.Snackbar;
 
+import ui.MainActivity;
 import ui.login.LoginViewModel;
 
 import static androidx.navigation.Navigation.findNavController;
@@ -209,6 +210,7 @@ public class CreditCardFragment extends Fragment {
                                 , Snackbar.LENGTH_SHORT);
                         snackbar.show();
                         navController.navigate(R.id.shopFragment);
+                        ((MainActivity) getActivity()).setMenu();
                     } else if (state == REGISTRATION_FAILED) {
                         Snackbar snackbar = Snackbar.make(view.findViewById(R.id.creditCardFragment),
                                 registrationViewModel.getSignUpResponse().getValue().getErrorMessage()

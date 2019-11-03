@@ -3,6 +3,7 @@ package ui;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ActionMenuItemView;
@@ -85,6 +86,19 @@ public class MainActivity extends AppCompatActivity {
             transactionsViewModel.transactions.observe(this, transactions -> transactionsViewModel.saveTransactions(transactions, getApplicationContext()));
         }
 
+    }
+
+    public void setMenu(){
+        ViewModelProvider provider = ViewModelProviders.of(this);
+        LoginViewModel loginViewModel = provider.get(LoginViewModel.class);
+
+        Client client = loginViewModel.getClient();
+
+        TextView username = findViewById(R.id.username);
+        username.setText(client.getUsername());
+
+        TextView full_name = findViewById(R.id.user_full_name);
+        full_name.setText(client.getName());
     }
 
     @Override
