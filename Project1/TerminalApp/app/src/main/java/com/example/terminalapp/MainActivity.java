@@ -82,17 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void decodeAndShow(byte[] encTag) {
         String transactionPayload = new String(encTag);
-
-        try {
-            JSONObject transactionJSON = new JSONObject(transactionPayload);
-            double totalPrice = transactionJSON.getDouble("totalPrice");
-            String total_price_string = getResources().getString(R.string.total_price, String.format("%s", df.format(totalPrice)));
-            TextView total_price = findViewById(R.id.total_price);
-            total_price.setText(total_price_string);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
         Log.e("app", transactionPayload);
         mViewModel.postTransaction(transactionPayload);
     }
@@ -102,6 +91,11 @@ public class MainActivity extends AppCompatActivity {
 
         if(response.getCode() == 200){
             screen.setBackgroundColor(getResources().getColor(R.color.green));
+            try {
+                updateTotalPrice(response);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             Toast.makeText(getApplicationContext(), "Transaction successfully complete!", Toast.LENGTH_SHORT).show();
         }
         else{
@@ -110,7 +104,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Handler handler = new Handler();
-        handler.postDelayed(() -> screen.setBackgroundColor(getResources().getColor(R.color.white)), 5000); // 5000ms delay
+        handler.postDelayed(() -> {
+            screen.setBackgroundColor(getResources().getColor(R.color.white));
+            TextView total_price = findViewById(R.id.total_price);
+            total_price.setText("");
+        }, 5000); // 5000ms delay
+    }
+
+    private void updateTotalPrice(RestCall.Response response) throws JSONException {
+        JSONObject transactionJSON = new JSONObject(response.getMessage());
+        double totalPrice = transactionJSON.getDouble("totalPrice");
+        String total_price_string = getResources().getString(R.string.total_price, String.format("%s", df.format(totalPrice)));
+        TextView total_price = findViewById(R.id.total_price);
+        total_price.setText(total_price_string);
     }
 
 }
