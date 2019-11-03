@@ -153,13 +153,7 @@ public class CartFragment extends Fragment {
     private void updateTotalPriceUI(View view, Double totalPrice) {
         TextView total_price_value = view.findViewById(R.id.total_price_text);
 
-        double voucherPercent = 0;
-        if (shopViewModel.currentVoucher.getValue() != null)
-            voucherPercent = shopViewModel.currentVoucher.getValue().getDiscount() / 100.0;
-
-        double totalAfterVoucher = (1.0 - voucherPercent) * totalPrice;
-
-        String total_price_string = res.getString(R.string.total_payed_price, String.format("%s", df.format(totalAfterVoucher)));
+        String total_price_string = res.getString(R.string.total_payed_price, String.format("%s", df.format(totalPrice)));
         total_price_value.setText(total_price_string);
     }
 

@@ -62,7 +62,7 @@ public class Utils {
             is.close();
             fis.close();
         } catch (IOException | ClassNotFoundException e) {
-            Log.e(TAG, e.getMessage());
+            Log.e(TAG, e.toString());
         }
 
         return object;
