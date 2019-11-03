@@ -14,14 +14,21 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 
 
 public class MainActivity extends AppCompatActivity {
 
     TerminalViewModel mViewModel;
+    private DecimalFormat df = new DecimalFormat("#.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +82,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void decodeAndShow(byte[] encTag) {
         String transactionPayload = new String(encTag);
+
+        try {
+            JSONObject transactionJSON = new JSONObject(transactionPayload);
+            double totalPrice = transactionJSON.getDouble("totalPrice");
+            String total_price_string = getResources().getString(R.string.total_price, String.format("%s", df.format(totalPrice)));
+            TextView total_price = findViewById(R.id.total_price);
+            total_price.setText(total_price_string);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         Log.e("app", transactionPayload);
         mViewModel.postTransaction(transactionPayload);
     }
@@ -84,9 +102,11 @@ public class MainActivity extends AppCompatActivity {
 
         if(response.getCode() == 200){
             screen.setBackgroundColor(getResources().getColor(R.color.green));
+            Toast.makeText(getApplicationContext(), "Transaction successfully complete!", Toast.LENGTH_SHORT).show();
         }
         else{
             screen.setBackgroundColor(getResources().getColor(R.color.red));
+            Toast.makeText(getApplicationContext(), response.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         Handler handler = new Handler();
