@@ -52,7 +52,7 @@
 
     <string name="action_checkout">CHECKOUT</string>
     <string name="discount_label">Discount available: %1$s€</string>
-    <string name="apply">Apply</string>
+    <string name="apply">Apply discount</string>
     <string name="use_voucher">Voucher selected: %1$s</string>
 
     <string name="none_voucher">None</string>

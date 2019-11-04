@@ -22,7 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/margin_small">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,55 +32,66 @@
             android:layout_gravity="center|center_horizontal"
             android:layout_marginStart="@dimen/center_image_width"
             android:layout_marginEnd="@dimen/center_image_width"
+            android:layout_marginBottom="@dimen/margin_small"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/voucher_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/voucher_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_shadow_white"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/discount_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_shadow_white"
+                android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/apply_discount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/apply" />
+                android:buttonTint="@color/text_shadow_white"
+                android:text="@string/apply"
+                android:textColor="@color/text_shadow_white"
+                android:textColorHighlight="@color/text_shadow_white"
+                android:textColorHint="@color/text_shadow_white"
+                android:textColorLink="@color/text_shadow_white"
+                android:textCursorDrawable="@color/text_shadow_white"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/total_price_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_shadow_white"
+                android:textSize="18sp" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
 
                 <Button
                     android:id="@+id/checkout_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/action_checkout" />
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@color/text_shadow_white"
+                    android:text="@string/action_checkout"
+                    android:textColor="@color/colorPrimaryDark" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_margin="@dimen/fab_margin"
-                    app:srcCompat="@android:drawable/ic_input_add" />
-            </LinearLayout>
+                    android:layout_alignParentTop="false"
+                    android:layout_alignParentRight="true"
+                    android:foreground="@mipmap/cart_icon_foreground"
+                    android:src="@mipmap/cart_icon_foreground"
+                    app:backgroundTint="@color/text_shadow_white" />
+            </RelativeLayout>
 
         </LinearLayout>
 

@@ -11,21 +11,24 @@
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_weight="0.4"
         android:gravity="center_vertical"
-        android:text="Item 1" />
+        android:text="Item 1"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/priceUnit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.3"
-        android:text="X€/unit" />
+        android:text="X€/unit"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/quantityItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.2"
-        android:text="3" />
+        android:text="3"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/increase_btn"
