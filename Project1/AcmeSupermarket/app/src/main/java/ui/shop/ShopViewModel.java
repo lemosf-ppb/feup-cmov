@@ -88,7 +88,12 @@ public class ShopViewModel extends ViewModel {
             updateTotalPrice(-discountAvailable);
             applyDiscount.setValue(true);
         } else if (!applyDiscountIsChecked && applyDiscount.getValue()) {
-            updateTotalPrice(discountAvailable);
+            ArrayList<TransactionItem> transactionItemsArray = transactionItems.getValue();
+            double totalValue = 0;
+            for(int i=0; i < transactionItemsArray.size(); i++){
+                totalValue += transactionItemsArray.get(i).getTotalPrice();
+            }
+            updateTotalPrice(totalValue);
             applyDiscount.setValue(false);
         }
     }
