@@ -21,7 +21,7 @@ public class RestCall implements Runnable {
     private String payload;
     private TerminalViewModel terminalViewModel;
 
-    RestCall(TerminalViewModel terminalViewModel, String transactionPayload){
+    RestCall(TerminalViewModel terminalViewModel, String transactionPayload) {
         this.requestURL = Constants.ACME_REPOSITORY_URL + Constants.TRANSACTIONS;
         this.requestType = Constants.POST;
         this.payload = transactionPayload;
@@ -70,7 +70,7 @@ public class RestCall implements Runnable {
         outputStream.close();
     }
 
-    private void handleResponse(final Response response) throws JSONException{
+    private void handleResponse(final Response response) throws JSONException {
         Log.e("transactions", response.getCode() + response.getMessage());
         terminalViewModel.response.postValue(response);
     }

@@ -19,8 +19,6 @@ import androidx.navigation.Navigation;
 import com.example.acmesupermarket.R;
 import com.google.android.material.snackbar.Snackbar;
 
-import ui.MainActivity;
-
 public class LoginFragment extends Fragment {
 
     private EditText usernameEditText, passwordEditText;

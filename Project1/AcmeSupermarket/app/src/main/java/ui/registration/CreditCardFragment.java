@@ -21,7 +21,6 @@ import com.cooltechworks.creditcarddesign.CreditCardView;
 import com.example.acmesupermarket.R;
 import com.google.android.material.snackbar.Snackbar;
 
-import ui.MainActivity;
 import ui.login.LoginViewModel;
 
 import static androidx.navigation.Navigation.findNavController;

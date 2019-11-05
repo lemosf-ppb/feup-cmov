@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import models.Client;
 import models.TransactionItem;
@@ -90,7 +89,7 @@ public class ShopViewModel extends ViewModel {
         } else if (!applyDiscountIsChecked && applyDiscount.getValue()) {
             ArrayList<TransactionItem> transactionItemsArray = transactionItems.getValue();
             double totalValue = 0;
-            for(int i=0; i < transactionItemsArray.size(); i++){
+            for (int i = 0; i < transactionItemsArray.size(); i++) {
                 totalValue += transactionItemsArray.get(i).getTotalPrice();
             }
             totalPrice.setValue(totalValue);
