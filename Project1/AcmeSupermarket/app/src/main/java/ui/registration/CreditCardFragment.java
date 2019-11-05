@@ -210,7 +210,6 @@ public class CreditCardFragment extends Fragment {
                                 , Snackbar.LENGTH_SHORT);
                         snackbar.show();
                         navController.navigate(R.id.shopFragment);
-                        ((MainActivity) getActivity()).setMenu();
                     } else if (state == REGISTRATION_FAILED) {
                         Snackbar snackbar = Snackbar.make(view.findViewById(R.id.creditCardFragment),
                                 registrationViewModel.getSignUpResponse().getValue().getErrorMessage()

@@ -71,7 +71,6 @@ public class LoginFragment extends Fragment {
                         case AUTHENTICATED:
                             hideKeyboard(view);
                             navController.navigate(R.id.shopFragment);
-                            ((MainActivity) getActivity()).setMenu();
                             break;
                         case INVALID_AUTHENTICATION:
                             Snackbar.make(root,
