@@ -100,7 +100,7 @@ public class ShopViewModel extends ViewModel {
 
     public MutableLiveData<ArrayList<TransactionItem>> getTransactionItems() {
         if (transactionItems.getValue() == null) {
-            loadTransactionItems();
+            transactionItems.setValue(new ArrayList<>()); //TODO: Save this one?
         }
         return transactionItems;
     }
@@ -124,18 +124,5 @@ public class ShopViewModel extends ViewModel {
 
     private ArrayList<Voucher> loadVouchers(Context context) {
         return (ArrayList<Voucher>) Utils.loadObject(VOUCHERS_FILENAME, context);
-    }
-
-    private void loadVouchers() {
-        ArrayList<Voucher> vouchersList = new ArrayList<>();
-        vouchersList.add(new Voucher(UUID.randomUUID(), 5));
-        vouchersList.add(new Voucher(UUID.randomUUID(), 15));
-        vouchers.setValue(vouchersList);
-    }
-
-    private void loadTransactionItems() {
-        transactionItems.setValue(new ArrayList<>());
-        addTransactionItem(new TransactionItem(UUID.randomUUID(), "Batata", 10.6, 1));
-        addTransactionItem(new TransactionItem(UUID.randomUUID(), "Tomate", 8.6, 1));
     }
 }
