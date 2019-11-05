@@ -93,7 +93,7 @@ public class ShopViewModel extends ViewModel {
             for(int i=0; i < transactionItemsArray.size(); i++){
                 totalValue += transactionItemsArray.get(i).getTotalPrice();
             }
-            updateTotalPrice(totalValue);
+            totalPrice.setValue(totalValue);
             applyDiscount.setValue(false);
         }
     }
