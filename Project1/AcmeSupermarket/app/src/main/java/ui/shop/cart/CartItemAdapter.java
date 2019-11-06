@@ -44,8 +44,8 @@ public class CartItemAdapter extends ArrayAdapter<TransactionItem> {
 
         TransactionItem transactionItem = transactionItems.get(position);
         ((TextView) convertView.findViewById(R.id.itemTitle)).setText(transactionItem.getName());
-        ((TextView) convertView.findViewById(R.id.priceUnit)).setText(transactionItem.getPrice() + "");
-        ((TextView) convertView.findViewById(R.id.quantityItem)).setText(transactionItem.getQuantity() + "");
+        ((TextView) convertView.findViewById(R.id.priceUnit)).setText(String.format("%s€", transactionItem.getPrice()));
+        ((TextView) convertView.findViewById(R.id.quantityItem)).setText(transactionItem.getQuantity());
 
         convertView.findViewById(R.id.increase_btn).setOnClickListener(view -> {
             if (mViewModel.isCartFull()) {
