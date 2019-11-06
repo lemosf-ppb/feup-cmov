@@ -121,6 +121,9 @@ public class CartFragment extends Fragment {
             navController.navigate(R.id.checkoutFragment);
         });
 
+        Button clearCart_btn = view.findViewById(R.id.clear_btn);
+        clearCart_btn.setOnClickListener(v -> shopViewModel.resetTransactionItems());
+
         FloatingActionButton add_item_btn = view.findViewById(R.id.add_item);
         add_item_btn.setOnClickListener(v -> scanQRCode());
     }

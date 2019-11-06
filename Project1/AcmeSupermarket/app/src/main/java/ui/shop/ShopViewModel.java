@@ -124,4 +124,8 @@ public class ShopViewModel extends ViewModel {
     private ArrayList<Voucher> loadVouchers(Context context) {
         return (ArrayList<Voucher>) Utils.loadObject(VOUCHERS_FILENAME, context);
     }
+
+    public void resetTransactionItems(){
+        transactionItems.setValue(new ArrayList<>());
+    }
 }

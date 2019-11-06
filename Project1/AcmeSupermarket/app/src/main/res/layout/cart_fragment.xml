@@ -81,6 +81,16 @@
                     android:text="@string/action_checkout"
                     android:textColor="@color/colorPrimaryDark" />
 
+                <Button
+                    android:id="@+id/clear_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="95dp"
+                    android:backgroundTint="@color/text_shadow_white"
+                    android:text="@string/clear_cart"
+                    android:textColor="@color/colorPrimaryDark" />
+
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_item"
                     android:layout_width="wrap_content"
