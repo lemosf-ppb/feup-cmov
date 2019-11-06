@@ -36,7 +36,6 @@ import java.util.UUID;
 
 import javax.crypto.Cipher;
 
-import models.Client;
 import models.TransactionItem;
 import models.Voucher;
 import ui.login.LoginViewModel;

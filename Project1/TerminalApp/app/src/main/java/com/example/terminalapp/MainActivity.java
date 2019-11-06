@@ -1,10 +1,5 @@
 package com.example.terminalapp;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.lifecycle.ViewModelProviders;
-
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -17,6 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +27,19 @@ public class MainActivity extends AppCompatActivity {
 
     TerminalViewModel mViewModel;
     private DecimalFormat df = new DecimalFormat("#.##");
+
+    private static AlertDialog showDialog(final Activity act) {
+        AlertDialog.Builder downloadDialog = new AlertDialog.Builder(act);
+        downloadDialog.setTitle("No Scanner Found");
+        downloadDialog.setMessage("Download a scanner code activity?");
+        downloadDialog.setPositiveButton("Yes", (d, i) -> {
+            Uri uri = Uri.parse(Constants.QR_READER_PLAYSTORE);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            act.startActivity(intent);
+        });
+        downloadDialog.setNegativeButton("No", null);
+        return downloadDialog.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +54,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mViewModel.response.observe(this, response -> setColor(response));
-    }
-
-    private static AlertDialog showDialog(final Activity act) {
-        AlertDialog.Builder downloadDialog = new AlertDialog.Builder(act);
-        downloadDialog.setTitle("No Scanner Found");
-        downloadDialog.setMessage("Download a scanner code activity?");
-        downloadDialog.setPositiveButton("Yes", (d, i) -> {
-            Uri uri = Uri.parse(Constants.QR_READER_PLAYSTORE);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            act.startActivity(intent);
-        });
-        downloadDialog.setNegativeButton("No", null);
-        return downloadDialog.show();
     }
 
     private void scanQRCode() {
@@ -86,10 +84,10 @@ public class MainActivity extends AppCompatActivity {
         mViewModel.postTransaction(transactionPayload);
     }
 
-    public void setColor(RestCall.Response response){
+    public void setColor(RestCall.Response response) {
         RelativeLayout screen = findViewById(R.id.screen);
 
-        if(response.getCode() == 200){
+        if (response.getCode() == 200) {
             screen.setBackgroundColor(getResources().getColor(R.color.green));
             try {
                 updateTotalPrice(response);
@@ -97,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             Toast.makeText(getApplicationContext(), "Transaction successfully complete!", Toast.LENGTH_SHORT).show();
-        }
-        else{
+        } else {
             screen.setBackgroundColor(getResources().getColor(R.color.red));
             Toast.makeText(getApplicationContext(), response.getMessage(), Toast.LENGTH_SHORT).show();
         }

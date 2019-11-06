@@ -61,8 +61,10 @@ public class MainActivity extends AppCompatActivity {
 
         final View rootView = getWindow().getDecorView().getRootView();
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            if (toolbar.getVisibility() == View.VISIBLE)
+            if (toolbar.getVisibility() == View.VISIBLE) {
+                setMenu();
                 setupViewModelListeners();
+            }
         });
     }
 
@@ -88,17 +90,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void setMenu(){
+    private void setMenu() {
         ViewModelProvider provider = ViewModelProviders.of(this);
         LoginViewModel loginViewModel = provider.get(LoginViewModel.class);
 
         Client client = loginViewModel.getClient();
 
         TextView username = findViewById(R.id.username);
-        username.setText(client.getUsername());
-
         TextView full_name = findViewById(R.id.user_full_name);
-        full_name.setText(client.getName());
+        if (username != null && full_name != null) {
+            username.setText(client.getUsername());
+            full_name.setText(client.getName());
+        }
     }
 
     @Override

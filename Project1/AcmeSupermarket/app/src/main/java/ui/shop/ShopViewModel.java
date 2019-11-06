@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import models.Client;
 import models.TransactionItem;
@@ -88,14 +87,19 @@ public class ShopViewModel extends ViewModel {
             updateTotalPrice(-discountAvailable);
             applyDiscount.setValue(true);
         } else if (!applyDiscountIsChecked && applyDiscount.getValue()) {
-            updateTotalPrice(discountAvailable);
+            ArrayList<TransactionItem> transactionItemsArray = transactionItems.getValue();
+            double totalValue = 0;
+            for (int i = 0; i < transactionItemsArray.size(); i++) {
+                totalValue += transactionItemsArray.get(i).getTotalPrice();
+            }
+            totalPrice.setValue(totalValue);
             applyDiscount.setValue(false);
         }
     }
 
     public MutableLiveData<ArrayList<TransactionItem>> getTransactionItems() {
         if (transactionItems.getValue() == null) {
-            loadTransactionItems();
+            transactionItems.setValue(new ArrayList<>()); //TODO: Save this one?
         }
         return transactionItems;
     }
@@ -119,18 +123,5 @@ public class ShopViewModel extends ViewModel {
 
     private ArrayList<Voucher> loadVouchers(Context context) {
         return (ArrayList<Voucher>) Utils.loadObject(VOUCHERS_FILENAME, context);
-    }
-
-    private void loadVouchers() {
-        ArrayList<Voucher> vouchersList = new ArrayList<>();
-        vouchersList.add(new Voucher(UUID.randomUUID(), 5));
-        vouchersList.add(new Voucher(UUID.randomUUID(), 15));
-        vouchers.setValue(vouchersList);
-    }
-
-    private void loadTransactionItems() {
-        transactionItems.setValue(new ArrayList<>());
-        addTransactionItem(new TransactionItem(UUID.randomUUID(), "Batata", 10.6, 1));
-        addTransactionItem(new TransactionItem(UUID.randomUUID(), "Tomate", 8.6, 1));
     }
 }
