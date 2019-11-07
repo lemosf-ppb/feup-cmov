@@ -22,13 +22,14 @@ public class Transaction implements Serializable {
     private Double totalPrice;
     private Date createdAt;
 
-    public Transaction(String id, UUID userId, ArrayList<TransactionItem> transactionItems, Voucher voucher, boolean useDiscounts, Double totalPrice) {
+    public Transaction(String id, UUID userId, ArrayList<TransactionItem> transactionItems, Voucher voucher, boolean useDiscounts, Double totalPrice, Date createdAt) {
         this.id = id;
         this.userId = userId;
         this.transactionItems = transactionItems;
         this.voucher = voucher;
         this.useDiscounts = useDiscounts;
         this.totalPrice = totalPrice;
+        this.createdAt = createdAt;
     }
 
     public Transaction(UUID userId, ArrayList<TransactionItem> transactionItems, Voucher voucher, boolean useDiscounts) {

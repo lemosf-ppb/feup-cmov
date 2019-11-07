@@ -8,22 +8,36 @@
         android:id="@+id/transaction_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="35sp"
+        android:paddingStart="35sp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/chip_height_normal"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/used_voucher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/chip_height_normal"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/used_discounts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/chip_height_normal"
-        android:text="TextView" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/transaction_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/chip_height_normal"
-        android:text="X€" />
+        android:textSize="18sp" />
 
 </LinearLayout>

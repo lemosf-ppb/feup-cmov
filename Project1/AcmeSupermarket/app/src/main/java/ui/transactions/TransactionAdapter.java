@@ -92,7 +92,20 @@ public class TransactionAdapter extends BaseExpandableListAdapter {
 
 
         TextView heading = view.findViewById(R.id.transaction_id);
-        heading.setText(transaction.getId().trim());
+        heading.setText(String.format("Transaction ID: %s", transaction.getId().trim()));
+
+        TextView date = view.findViewById(R.id.date);
+        date.setText(String.format("Created at: %s", transaction.getCreatedAt()));
+
+        TextView voucher_id_text_view = view.findViewById(R.id.used_voucher);
+        String voucher_id;
+        if(transaction.getVoucher() != null){
+            voucher_id = ("Voucher: "+ (transaction.getVoucher().getId() + "").substring(0, 10));
+        }
+        else{
+            voucher_id = "Voucher: None";
+        }
+        voucher_id_text_view.setText(voucher_id);
 
         String usedDiscounts = res.getString(R.string.used_discounts, transaction.isUseDiscounts());
         ((TextView) view.findViewById(R.id.used_discounts)).setText(usedDiscounts);

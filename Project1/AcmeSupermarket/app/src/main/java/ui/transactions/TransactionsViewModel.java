@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 import models.Client;
@@ -32,7 +33,7 @@ public class TransactionsViewModel extends ViewModel {
         transactionItems.add(new TransactionItem(UUID.randomUUID(), "Batata", 10.6, 1));
         transactionItems.add(new TransactionItem(UUID.randomUUID(), "Tomate", 8.6, 1));
 
-        Transaction transaction = new Transaction(String.valueOf(Math.random()), UUID.randomUUID(), transactionItems, null, false, 0.0);
+        Transaction transaction = new Transaction(String.valueOf(Math.random()), UUID.randomUUID(), transactionItems, null, false, 0.0, new Date());
         ArrayList<Transaction> transactionsList = new ArrayList<>();
         transactionsList.add(transaction);
         transactions.postValue(transactionsList);
