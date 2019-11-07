@@ -5,11 +5,12 @@ const {
 const VOUCHER_FACTOR = 100;
 
 const create = async (productsList, useDiscounts, userId, voucherId) => {
-  const transaction = await Transaction.create({ useDiscounts, UserId: userId, voucherId });
   const user = await User.findByPk(userId);
   if (!user) throw new Error('User not found');
   let voucher = null;
   if (voucherId) voucher = await getVoucher(voucherId, user);
+
+  const transaction = await Transaction.create({ useDiscounts, UserId: userId, voucherId });
 
   const totalPrice = await createTransactionItems(productsList, transaction.id);
 
