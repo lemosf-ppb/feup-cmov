@@ -36,7 +36,8 @@ public class LoginViewModel extends ViewModel {
             this.client.setValue(client);
             authenticationState.setValue(AuthenticationState.AUTHENTICATED);
         } else {
-            authenticationState.setValue(AuthenticationState.INVALID_AUTHENTICATION);
+            AcmeRepository.LogIn logIn = new AcmeRepository.LogIn(this);
+            new Thread(logIn).start();
         }
     }
 

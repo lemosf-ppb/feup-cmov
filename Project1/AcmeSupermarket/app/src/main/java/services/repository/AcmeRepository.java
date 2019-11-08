@@ -196,6 +196,10 @@ public class AcmeRepository {
                 Client client = loginViewModel.getClient();
                 client.setAcmePublicKey(responseObject.getString("supermarketPublicKey"));
                 client.setUserId(responseObject.getString("userId"));
+                loginViewModel.authenticationState.postValue(LoginViewModel.AuthenticationState.AUTHENTICATED);
+            }
+            else{
+                loginViewModel.authenticationState.postValue(LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION);
             }
         }
     }
