@@ -29,6 +29,8 @@ public class Client implements Serializable {
         this.name = name;
         this.username = username;
         this.password = password;
+        this.totalValueSpent = 0.0;
+        this.discountValueAvailable = 0.0;
     }
 
     public String getName() {
