@@ -31,7 +31,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void authenticate(String username, String password, Context context) {
-        Client client = loadClient(context);
+        Client client = loadClient(username, context);
         if (client != null && passwordIsValidForUsername(username, password, client)) {
             this.client.setValue(client);
             authenticationState.setValue(AuthenticationState.AUTHENTICATED);
@@ -49,11 +49,13 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void saveClient(Client client, Context context) {
-        Utils.saveObject(CLIENT_FILENAME, client, context);
+        String dir = client.getUsername() + "/" + CLIENT_FILENAME;
+        Utils.saveObject(dir, client, context);
     }
 
-    private Client loadClient(Context context) {
-        return (Client) Utils.loadObject(CLIENT_FILENAME, context);
+    private Client loadClient(String username, Context context) {
+        String dir = username + "/" + CLIENT_FILENAME;
+        return (Client) Utils.loadObject(dir, context);
     }
 
     public Client getClient() {
