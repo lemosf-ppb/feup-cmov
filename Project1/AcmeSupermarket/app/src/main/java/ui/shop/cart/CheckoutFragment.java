@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,7 +62,6 @@ public class CheckoutFragment extends Fragment {
     }
 
     private void drawQRCode(View view) {
-        TextView titleTv = view.findViewById(R.id.title);
         qrCodeImageView = view.findViewById(R.id.img_qr_code_image);
 
         ArrayList<TransactionItem> transactionItems = shopViewModel.transactionItems.getValue();
@@ -75,7 +73,6 @@ public class CheckoutFragment extends Fragment {
         byte[] transactionBytes = new byte[0];
         try {
             transactionBytes = transaction.getAsJSON().toString().getBytes();
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -91,9 +88,6 @@ public class CheckoutFragment extends Fragment {
         }
 
         qr_content = payload.toString();
-//        boolean verified = CryptoBuilder.validateMessageWithSignature(client.getClientPublicKey(), messageSigned);
-//        String text = "Transaction: \"" + new String(transactionBytes) + "\"\nVerified: " + verified + "\nTotal bytes: " + messageSigned.length;
-//        titleTv.setText(text);
 
         // do the creation in a new thread to avoid ANR Exception
         Thread t = new Thread(() -> {

@@ -69,8 +69,6 @@ public class ProfileFragment extends Fragment {
         creditCardView.setCardExpiry(creditCard.getExpiry());
         creditCardView.setCardHolderName(creditCard.getHolder());
         creditCardView.setCVV(creditCard.getCvv());
-
     }
-
 
 }

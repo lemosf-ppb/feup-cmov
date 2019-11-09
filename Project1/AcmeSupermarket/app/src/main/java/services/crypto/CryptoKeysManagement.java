@@ -28,7 +28,7 @@ import javax.security.auth.x500.X500Principal;
 
 public class CryptoKeysManagement {
 
-    public static KeyStore.Entry getKeyStoreEntry() throws KeyStoreException, CertificateException, IOException, NoSuchAlgorithmException, UnrecoverableEntryException {
+    private static KeyStore.Entry getKeyStoreEntry() throws KeyStoreException, CertificateException, IOException, NoSuchAlgorithmException, UnrecoverableEntryException {
         KeyStore ks = KeyStore.getInstance(Constants.ANDROID_KEYSTORE);
         ks.load(null);
         return ks.getEntry(Constants.keyname, null);

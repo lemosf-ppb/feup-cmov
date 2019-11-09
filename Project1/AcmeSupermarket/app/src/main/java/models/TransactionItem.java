@@ -48,11 +48,6 @@ public class TransactionItem implements Serializable {
         return Objects.equals(id, that.id);
     }
 
-//    public boolean equals(Object object) {
-//        TransactionItem other = (TransactionItem) object;
-//        return this.id == other.id;
-//    }
-
     public UUID getId() {
         return id;
     }

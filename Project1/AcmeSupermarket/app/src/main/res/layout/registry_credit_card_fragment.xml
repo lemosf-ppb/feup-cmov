@@ -88,7 +88,7 @@
                 android:layout_marginEnd="24dp"
 
                 android:ems="10"
-                android:hint="@string/card_vcc"
+                android:hint="@string/card_cvv"
                 android:inputType="number"
                 android:maxLength="3"
                 app:layout_constraintEnd_toEndOf="parent"

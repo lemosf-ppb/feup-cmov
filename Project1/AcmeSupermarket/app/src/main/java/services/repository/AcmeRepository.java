@@ -51,7 +51,7 @@ public class AcmeRepository {
 
         @Override
         public void handleResponse(final Response response) throws JSONException {
-            Log.e("Signup", response.getCode() + response.getMessage());
+            Log.i("Signup", response.getCode() + response.getMessage());
             registrationViewModel.getSignUpResponse().postValue(response);
 
             if (response.getCode() == 200) {
@@ -84,7 +84,7 @@ public class AcmeRepository {
 
         @Override
         public void handleResponse(Response response) throws JSONException {
-            Log.e("transactions", response.getCode() + response.getMessage());
+            Log.i("transactions", response.getCode() + response.getMessage());
             if (response.getCode() == 200) {
                 JSONObject responseObject = new JSONObject(response.getMessage());
                 JSONArray transactionsArray = responseObject.getJSONArray("transactions");
@@ -122,7 +122,7 @@ public class AcmeRepository {
 
         @Override
         public void handleResponse(Response response) throws JSONException {
-            Log.e("vouchers", response.getCode() + response.getMessage());
+            Log.i("vouchers", response.getCode() + response.getMessage());
             if (response.getCode() == 200) {
                 JSONObject responseObject = new JSONObject(response.getMessage());
                 JSONArray vouchers = responseObject.getJSONArray("vouchers");
@@ -160,7 +160,7 @@ public class AcmeRepository {
 
         @Override
         public void handleResponse(Response response) throws JSONException {
-            Log.e("userInfo", response.getCode() + response.getMessage());
+            Log.i("userInfo", response.getCode() + response.getMessage());
             if (response.getCode() == 200) {
                 JSONObject responseObject = new JSONObject(response.getMessage());
                 Client client = loginViewModel.getClient();
@@ -205,7 +205,7 @@ public class AcmeRepository {
 
         @Override
         public void handleResponse(final Response response) throws JSONException {
-            Log.e("Login", response.getCode() + response.getMessage());
+            Log.i("Login", response.getCode() + response.getMessage());
             if (response.getCode() == 200) {
                 JSONObject responseObject = new JSONObject(response.getMessage());
                 Client client = new Client(UUID.fromString(responseObject.getString("userId")),

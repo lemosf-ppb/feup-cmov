@@ -127,7 +127,6 @@ public class Client implements Serializable {
         discountValueAvailable = clientObject.getDouble("discountValueAvailable");
         createdAt = Utils.parseDate(clientObject.getString("createdAt"));
         name = clientObject.getString("name");
-        CreditCard creditCard = new CreditCard(clientObject.getJSONObject("CreditCard"));
-        this.creditCard = creditCard;
+        this.creditCard = new CreditCard(clientObject.getJSONObject("CreditCard"));
     }
 }

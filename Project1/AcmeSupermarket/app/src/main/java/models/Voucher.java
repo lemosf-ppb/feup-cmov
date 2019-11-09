@@ -13,11 +13,6 @@ public class Voucher implements Serializable {
     private UUID id;
     private int discount;
 
-    public Voucher(UUID id, int discount) {
-        this.id = id;
-        this.discount = discount;
-    }
-
     public Voucher(JSONObject voucherObject) throws JSONException {
         this.id = UUID.fromString(voucherObject.getString("id"));
         this.discount = voucherObject.getInt("discount");
@@ -38,9 +33,4 @@ public class Voucher implements Serializable {
         Voucher voucher = (Voucher) o;
         return Objects.equals(id, voucher.id);
     }
-
- /*   public boolean equals(Object object) {
-        Voucher other = (Voucher) object;
-        return this.id == other.id;
-    }*/
 }
