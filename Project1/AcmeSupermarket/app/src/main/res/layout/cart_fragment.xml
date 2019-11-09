@@ -48,9 +48,9 @@
                 android:textColor="@color/text_shadow_white"
                 android:textSize="18sp" />
 
-            <CheckBox
+            <Switch
                 android:id="@+id/apply_discount"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/text_shadow_white"
                 android:text="@string/apply"
@@ -59,7 +59,8 @@
                 android:textColorHint="@color/text_shadow_white"
                 android:textColorLink="@color/text_shadow_white"
                 android:textCursorDrawable="@color/text_shadow_white"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:thumbTint="@color/text_shadow_white" />
 
             <TextView
                 android:id="@+id/total_price_text"

@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -111,7 +111,7 @@ public class CartFragment extends Fragment {
         loginViewModel.client.observe(this, client -> updateDiscountAvailableUI(view, client.getDiscountValueAvailable()));
         shopViewModel.totalPrice.observe(this, totalPrice -> updateTotalPriceUI(view, totalPrice));
 
-        CheckBox apply_discount_checkbox = view.findViewById(R.id.apply_discount);
+        Switch apply_discount_checkbox = view.findViewById(R.id.apply_discount);
         apply_discount_checkbox.setOnCheckedChangeListener((buttonView, isChecked) ->
                 shopViewModel.applyDiscount(isChecked));
 
@@ -149,7 +149,7 @@ public class CartFragment extends Fragment {
     }
 
     private void updateUseDiscountUI(View view, Boolean useDiscount) {
-        CheckBox apply_discount_checkbox = view.findViewById(R.id.apply_discount);
+        Switch apply_discount_checkbox = view.findViewById(R.id.apply_discount);
         apply_discount_checkbox.setChecked(useDiscount);
     }
 
