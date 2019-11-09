@@ -126,6 +126,8 @@ public class ShopViewModel extends ViewModel {
     }
 
     public void resetTransactionItems() {
-        transactionItems.setValue(new ArrayList<>());
+        ArrayList<TransactionItem> clearCart = transactionItems.getValue();
+        clearCart.clear();
+        transactionItems.setValue(clearCart);
     }
 }
