@@ -16,22 +16,38 @@
 
     </ListView>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/price_discounts_checkout_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
-        android:orientation="vertical"
         android:paddingTop="@dimen/margin_small">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="5dp"
+            android:cropToPadding="false"
+            android:duplicateParentState="false"
+            android:elevation="20dp"
+            android:fitsSystemWindows="false"
+            android:foreground="@mipmap/cart_icon_foreground"
+            android:src="@mipmap/cart_icon_foreground"
+            app:backgroundTint="@color/text_shadow_white"
+            app:fabSize="normal"
+            app:useCompatPadding="false" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center|center_horizontal"
-            android:layout_marginStart="@dimen/center_image_width"
-            android:layout_marginEnd="@dimen/center_image_width"
-            android:layout_marginBottom="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_large"
+
             android:orientation="vertical">
 
             <TextView
@@ -50,9 +66,10 @@
 
             <Switch
                 android:id="@+id/apply_discount"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/text_shadow_white"
+                android:switchPadding="15dp"
                 android:text="@string/apply"
                 android:textColor="@color/text_shadow_white"
                 android:textColorHighlight="@color/text_shadow_white"
@@ -92,20 +109,11 @@
                     android:text="@string/clear_cart"
                     android:textColor="@color/colorPrimaryDark" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/add_item"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="false"
-                    android:layout_alignParentRight="true"
-                    android:foreground="@mipmap/cart_icon_foreground"
-                    android:src="@mipmap/cart_icon_foreground"
-                    app:backgroundTint="@color/text_shadow_white" />
             </RelativeLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </FrameLayout>
 
 
 </RelativeLayout>
