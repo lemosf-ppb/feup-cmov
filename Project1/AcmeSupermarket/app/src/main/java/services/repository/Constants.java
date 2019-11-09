@@ -4,7 +4,7 @@ package services.repository;
 public class Constants {
     static final String TAG = "Repository";
 
-    static final String ACME_REPOSITORY_URL = "http://10.227.154.250:3000/"; //TODO: Change this to your ip
+    static final String ACME_REPOSITORY_URL = "http://192.168.1.73:3000/"; //TODO: Change this to your ip
     static final String LOGIN = "login";
     static final String SIGNUP = "signup";
     static final String TRANSACTIONS = "transactions";

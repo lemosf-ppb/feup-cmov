@@ -71,7 +71,7 @@ public class RestCall implements Runnable {
     }
 
     private void handleResponse(final Response response) throws JSONException {
-        Log.e("transactions", response.getCode() + response.getMessage());
+        Log.i("transactions", response.getCode() + response.getMessage());
         terminalViewModel.response.postValue(response);
     }
 

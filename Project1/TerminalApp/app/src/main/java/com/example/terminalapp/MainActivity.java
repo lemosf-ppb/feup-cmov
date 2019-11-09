@@ -24,6 +24,7 @@ import java.text.DecimalFormat;
 
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
 
     TerminalViewModel mViewModel;
     private DecimalFormat df = new DecimalFormat("#.##");
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void decodeAndShow(byte[] encTag) {
         String transactionPayload = new String(encTag);
-        Log.e("app", transactionPayload);
+        Log.i(TAG, transactionPayload);
         mViewModel.postTransaction(transactionPayload);
     }
 
