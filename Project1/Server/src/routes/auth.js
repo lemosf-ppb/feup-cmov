@@ -25,10 +25,13 @@ router.post('/login', async (req, res) => {
   const { username, password, publicKey } = req.body;
 
   try {
-    const newUser = await usersController.login(username, password, publicKey);
+    const user = await usersController.login(username, password, publicKey);
+    const userInfo = await usersController.retrieve(user.id);
+
     return res.status(200).send({
       message: 'Login successful',
-      userId: newUser.id,
+      userId: user.id,
+      userInfo,
       supermarketPublicKey: auth.getPublicKey(),
     });
   } catch (error) {

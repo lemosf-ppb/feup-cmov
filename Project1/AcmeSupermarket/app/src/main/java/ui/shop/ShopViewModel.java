@@ -118,13 +118,11 @@ public class ShopViewModel extends ViewModel {
     }
 
     public void saveVouchers(Client client, ArrayList<Voucher> vouchers, Context context) {
-        String dir = client.getUsername() + "/" + VOUCHERS_FILENAME;
-        Utils.saveObject(dir, vouchers, context);
+        Utils.saveObject(client.getUsername() + "_" + VOUCHERS_FILENAME, vouchers, context);
     }
 
     private ArrayList<Voucher> loadVouchers(Client client, Context context) {
-        String dir = client.getUsername() + "/" + VOUCHERS_FILENAME;
-        return (ArrayList<Voucher>) Utils.loadObject(dir, context);
+        return (ArrayList<Voucher>) Utils.loadObject(client.getUsername() + "_" + VOUCHERS_FILENAME, context);
     }
 
     public void resetTransactionItems() {

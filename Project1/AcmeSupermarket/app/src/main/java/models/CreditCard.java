@@ -16,6 +16,13 @@ public class CreditCard implements Serializable {
         this.cvv = cvv;
     }
 
+    public CreditCard(JSONObject creditCard) throws JSONException {
+        this.holder = creditCard.getString("holder");
+        this.number = creditCard.getString("number");
+        this.expiry = creditCard.getString("validity");
+        this.cvv = creditCard.getString("cvv");
+    }
+
     public String getHolder() {
         return holder;
     }

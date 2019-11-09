@@ -31,13 +31,11 @@ public class TransactionsViewModel extends ViewModel {
     }
 
     public void saveTransactions(Client client, ArrayList<Transaction> transactions, Context context) {
-        String dir = client.getUsername() + "/" + TRANSACTIONS_FILENAME;
-        Utils.saveObject(dir, transactions, context);
+        Utils.saveObject(client.getUsername() + "_" + TRANSACTIONS_FILENAME, transactions, context);
     }
 
     private ArrayList<Transaction> loadTransactions(Client client, Context context) {
-        String dir = client.getUsername() + "/" + TRANSACTIONS_FILENAME;
-        return (ArrayList<Transaction>) Utils.loadObject(dir, context);
+        return (ArrayList<Transaction>) Utils.loadObject(client.getUsername() + "_" + TRANSACTIONS_FILENAME, context);
     }
 
 }

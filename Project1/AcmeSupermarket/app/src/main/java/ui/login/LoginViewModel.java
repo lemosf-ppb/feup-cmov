@@ -36,7 +36,7 @@ public class LoginViewModel extends ViewModel {
             this.client.setValue(client);
             authenticationState.setValue(AuthenticationState.AUTHENTICATED);
         } else {
-            AcmeRepository.LogIn logIn = new AcmeRepository.LogIn(this);
+            AcmeRepository.LogIn logIn = new AcmeRepository.LogIn(this, username, password, context);
             new Thread(logIn).start();
         }
     }
@@ -50,13 +50,11 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void saveClient(Client client, Context context) {
-        String dir = client.getUsername() + "/" + CLIENT_FILENAME;
-        Utils.saveObject(dir, client, context);
+        Utils.saveObject(client.getUsername() + "_" + CLIENT_FILENAME, client, context);
     }
 
     private Client loadClient(String username, Context context) {
-        String dir = username + "/" + CLIENT_FILENAME;
-        return (Client) Utils.loadObject(dir, context);
+        return (Client) Utils.loadObject(username + "_" + CLIENT_FILENAME, context);
     }
 
     public Client getClient() {

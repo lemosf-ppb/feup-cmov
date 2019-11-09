@@ -1,5 +1,6 @@
 package services.repository;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -8,11 +9,13 @@ import org.json.JSONObject;
 
 import java.security.PrivateKey;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import models.Client;
 import models.Transaction;
 import models.Voucher;
 import services.crypto.CryptoBuilder;
+import services.crypto.CryptoKeysManagement;
 import ui.login.LoginViewModel;
 import ui.registration.RegistrationViewModel;
 import ui.shop.ShopViewModel;
@@ -175,17 +178,29 @@ public class AcmeRepository {
     }
 
     public static class LogIn extends AbstractRestCall {
+        private final String username;
+        private final String password;
         private LoginViewModel loginViewModel;
+        private Context context;
 
-        public LogIn(LoginViewModel loginViewModel) {
+        public LogIn(LoginViewModel loginViewModel, String username, String password, Context context) {
             this.requestURL = Constants.ACME_REPOSITORY_URL + Constants.LOGIN;
             this.requestType = Constants.POST;
             this.loginViewModel = loginViewModel;
+            this.username = username;
+            this.password = password;
+            this.context = context;
+
         }
 
         @Override
         public String createPayload() throws JSONException {
-            return loginViewModel.getClient().getAsJSON().toString();
+            CryptoKeysManagement.generateAndStoreKeys(context);
+            JSONObject loginObject = new JSONObject();
+            loginObject.put("username", username);
+            loginObject.put("password", password);
+            loginObject.put("publicKey", CryptoKeysManagement.convertToPublicKeyPEMFormat(CryptoKeysManagement.getPublicKey()));
+            return loginObject.toString();
         }
 
         @Override
@@ -193,9 +208,14 @@ public class AcmeRepository {
             Log.e("Login", response.getCode() + response.getMessage());
             if (response.getCode() == 200) {
                 JSONObject responseObject = new JSONObject(response.getMessage());
-                Client client = loginViewModel.getClient();
+                Client client = new Client(UUID.fromString(responseObject.getString("userId")),
+                        username,
+                        password
+                );
+                client.setClientKeys();
                 client.setAcmePublicKey(responseObject.getString("supermarketPublicKey"));
-                client.setUserId(responseObject.getString("userId"));
+                client.updateUserInfo(responseObject.getJSONObject("userInfo"));
+                loginViewModel.client.postValue(client);
                 loginViewModel.authenticationState.postValue(LoginViewModel.AuthenticationState.AUTHENTICATED);
             } else {
                 loginViewModel.authenticationState.postValue(LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION);

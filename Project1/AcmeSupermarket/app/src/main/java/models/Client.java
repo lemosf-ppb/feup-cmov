@@ -25,6 +25,14 @@ public class Client implements Serializable {
     private Double totalValueSpent, discountValueAvailable;
     private Date createdAt;
 
+    public Client(UUID userId, String username, String password) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.totalValueSpent = 0.0;
+        this.discountValueAvailable = 0.0;
+    }
+
     public Client(String name, String username, String password) {
         this.name = name;
         this.username = username;
@@ -112,5 +120,14 @@ public class Client implements Serializable {
         totalValueSpent = clientObject.getDouble("totalValueSpent");
         discountValueAvailable = clientObject.getDouble("discountValueAvailable");
         createdAt = Utils.parseDate(clientObject.getString("createdAt"));
+    }
+
+    public void updateUserInfo(JSONObject clientObject) throws JSONException {
+        totalValueSpent = clientObject.getDouble("totalValueSpent");
+        discountValueAvailable = clientObject.getDouble("discountValueAvailable");
+        createdAt = Utils.parseDate(clientObject.getString("createdAt"));
+        name = clientObject.getString("name");
+        CreditCard creditCard = new CreditCard(clientObject.getJSONObject("CreditCard"));
+        this.creditCard = creditCard;
     }
 }
