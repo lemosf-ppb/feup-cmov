@@ -99,7 +99,7 @@ public class ShopViewModel extends ViewModel {
 
     public MutableLiveData<ArrayList<TransactionItem>> getTransactionItems() {
         if (transactionItems.getValue() == null) {
-            transactionItems.setValue(new ArrayList<>()); //TODO: Save this one?
+            transactionItems.setValue(new ArrayList<>());
         }
         return transactionItems;
     }

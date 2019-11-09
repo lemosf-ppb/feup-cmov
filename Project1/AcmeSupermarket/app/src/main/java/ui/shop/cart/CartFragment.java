@@ -182,7 +182,6 @@ public class CartFragment extends Fragment {
         }
     }
 
-    //TODO: SAVE UUID on the transaction item model
     private void decodeAndShow(byte[] encTag) {
         byte[] clearTag;
 
