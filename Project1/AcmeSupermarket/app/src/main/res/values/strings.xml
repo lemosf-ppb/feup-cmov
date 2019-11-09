@@ -66,5 +66,6 @@
     <string name="menu_profile">Profile</string>
 
     <string name="clear_cart">Clear Cart</string>
+    <string name="checkout_title">Show this QR code to the terminal!</string>
 
 </resources>

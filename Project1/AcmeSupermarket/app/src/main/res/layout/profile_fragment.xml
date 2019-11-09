@@ -31,8 +31,9 @@
                     android:id="@+id/username_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="false"
                     android:layout_marginStart="24dp"
+                    android:layout_marginTop="34dp"
                     android:layout_marginEnd="24dp"
                     android:textSize="18sp" />
 
@@ -41,6 +42,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/username_text"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/creation_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/full_name_textView"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"

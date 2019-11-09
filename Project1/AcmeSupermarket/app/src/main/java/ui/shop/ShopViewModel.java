@@ -70,6 +70,11 @@ public class ShopViewModel extends ViewModel {
         return total == MAX_CART_ITEMS;
     }
 
+    public boolean isCartEmpty() {
+        ArrayList<TransactionItem> transactionItemsList = transactionItems.getValue();
+        return transactionItemsList.isEmpty();
+    }
+
     private void updateTotalPrice(double price) {
         double newPrice = totalPrice.getValue() + price;
         if (newPrice <= 0) {

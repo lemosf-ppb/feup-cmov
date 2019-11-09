@@ -27,6 +27,7 @@ import androidx.navigation.Navigation;
 
 import com.example.acmesupermarket.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -117,12 +118,28 @@ public class CartFragment extends Fragment {
 
         Button checkout_button = view.findViewById(R.id.checkout_btn);
         checkout_button.setOnClickListener(v -> {
+            if(shopViewModel.isCartEmpty()){
+                Snackbar.make(view,
+                        "Your cart is empty! Please add at least one item!",
+                        Snackbar.LENGTH_SHORT
+                ).show();
+                return;
+            }
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
             navController.navigate(R.id.checkoutFragment);
         });
 
         Button clearCart_btn = view.findViewById(R.id.clear_btn);
-        clearCart_btn.setOnClickListener(v -> shopViewModel.resetTransactionItems());
+        clearCart_btn.setOnClickListener(v -> {
+            if(shopViewModel.isCartEmpty()){
+                Snackbar.make(view,
+                        "Your cart is already empty!",
+                        Snackbar.LENGTH_SHORT
+                ).show();
+                return;
+            }
+            shopViewModel.resetTransactionItems();
+        });
 
         FloatingActionButton add_item_btn = view.findViewById(R.id.add_item);
         add_item_btn.setOnClickListener(v -> scanQRCode());
