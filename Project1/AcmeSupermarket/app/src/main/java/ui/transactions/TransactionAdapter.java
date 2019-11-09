@@ -99,10 +99,9 @@ public class TransactionAdapter extends BaseExpandableListAdapter {
 
         TextView voucher_id_text_view = view.findViewById(R.id.used_voucher);
         String voucher_id;
-        if(transaction.getVoucher() != null){
-            voucher_id = ("Voucher: "+ (transaction.getVoucher().getId() + "").substring(0, 10));
-        }
-        else{
+        if (transaction.getVoucher() != null) {
+            voucher_id = ("Voucher: " + (transaction.getVoucher().getId() + "").substring(0, 10));
+        } else {
             voucher_id = "Voucher: None";
         }
         voucher_id_text_view.setText(voucher_id);
