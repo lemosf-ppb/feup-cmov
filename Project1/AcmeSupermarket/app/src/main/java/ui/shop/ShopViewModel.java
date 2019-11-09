@@ -104,9 +104,9 @@ public class ShopViewModel extends ViewModel {
         return transactionItems;
     }
 
-    public MutableLiveData<ArrayList<Voucher>> getVouchers(Context context) {
+    public MutableLiveData<ArrayList<Voucher>> getVouchers(Client client, Context context) {
         if (vouchers.getValue() == null) {
-            ArrayList<Voucher> vouchersLoaded = loadVouchers(context);
+            ArrayList<Voucher> vouchersLoaded = loadVouchers(client, context);
             this.vouchers.setValue(vouchersLoaded == null ? new ArrayList<>() : vouchersLoaded);
         }
         return vouchers;
@@ -117,12 +117,14 @@ public class ShopViewModel extends ViewModel {
         new Thread(getUnusedVouchers).start();
     }
 
-    public void saveVouchers(ArrayList<Voucher> vouchers, Context context) {
-        Utils.saveObject(VOUCHERS_FILENAME, vouchers, context);
+    public void saveVouchers(Client client, ArrayList<Voucher> vouchers, Context context) {
+        String dir = client.getUsername() + "/" + VOUCHERS_FILENAME;
+        Utils.saveObject(dir, vouchers, context);
     }
 
-    private ArrayList<Voucher> loadVouchers(Context context) {
-        return (ArrayList<Voucher>) Utils.loadObject(VOUCHERS_FILENAME, context);
+    private ArrayList<Voucher> loadVouchers(Client client, Context context) {
+        String dir = client.getUsername() + "/" + VOUCHERS_FILENAME;
+        return (ArrayList<Voucher>) Utils.loadObject(dir, context);
     }
 
     public void resetTransactionItems() {

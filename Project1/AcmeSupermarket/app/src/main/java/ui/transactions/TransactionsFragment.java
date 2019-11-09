@@ -10,6 +10,7 @@ import android.widget.ExpandableListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.acmesupermarket.R;
@@ -17,11 +18,15 @@ import com.example.acmesupermarket.R;
 import java.util.ArrayList;
 
 import models.Transaction;
+import ui.login.LoginViewModel;
 
 public class TransactionsFragment extends Fragment {
 
-    private TransactionsViewModel mViewModel;
+    private TransactionsViewModel transactionsViewModel;
     private TransactionAdapter transactionsAdapter;
+
+    private LoginViewModel loginViewModel;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -32,12 +37,16 @@ public class TransactionsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(requireActivity()).get(TransactionsViewModel.class);
+        ViewModelProvider provider = ViewModelProviders.of(requireActivity());
+        loginViewModel = provider.get(LoginViewModel.class);
+        transactionsViewModel = provider.get(TransactionsViewModel.class);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mViewModel = ViewModelProviders.of(requireActivity()).get(TransactionsViewModel.class);
+        ViewModelProvider provider = ViewModelProviders.of(requireActivity());
+        loginViewModel = provider.get(LoginViewModel.class);
+        transactionsViewModel = provider.get(TransactionsViewModel.class);
 
         setTransactionsAdapter(view);
 
@@ -47,7 +56,7 @@ public class TransactionsFragment extends Fragment {
 
     private void setTransactionsAdapter(View view) {
         Context context = requireActivity().getApplicationContext();
-        ArrayList<Transaction> transactions = mViewModel.getTransactions(context).getValue();
+        ArrayList<Transaction> transactions = transactionsViewModel.getTransactions(loginViewModel.getClient(), context).getValue();
 
         ExpandableListView transactionExpandableListView = view.findViewById(R.id.simpleExpandableListView);
         transactionsAdapter = new TransactionAdapter(context, transactions, getResources());
@@ -55,6 +64,6 @@ public class TransactionsFragment extends Fragment {
     }
 
     private void setTransactionsObserver() {
-        mViewModel.transactions.observe(this, transactions -> transactionsAdapter.setTransactions(transactions));
+        transactionsViewModel.transactions.observe(this, transactions -> transactionsAdapter.setTransactions(transactions));
     }
 }

@@ -83,9 +83,10 @@ public class MainActivity extends AppCompatActivity {
                 transactionsViewModel.syncDatabase(client);
             });
 
+            Client clientData = loginViewModel.getClient();
             loginViewModel.client.observe(this, client -> loginViewModel.saveClient(client, getApplicationContext()));
-            shopViewModel.vouchers.observe(this, vouchers -> shopViewModel.saveVouchers(vouchers, getApplicationContext()));
-            transactionsViewModel.transactions.observe(this, transactions -> transactionsViewModel.saveTransactions(transactions, getApplicationContext()));
+            shopViewModel.vouchers.observe(this, vouchers -> shopViewModel.saveVouchers(clientData, vouchers, getApplicationContext()));
+            transactionsViewModel.transactions.observe(this, transactions -> transactionsViewModel.saveTransactions(clientData, transactions, getApplicationContext()));
         }
 
     }
