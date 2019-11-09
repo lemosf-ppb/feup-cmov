@@ -46,10 +46,12 @@ public class LoginFragment extends Fragment {
         passwordEditText = view.findViewById(R.id.password_edit_text);
 
         Button loginButton = view.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(v ->
+        loginButton.setOnClickListener(v -> {
+                hideKeyboard(view);
                 mViewModel.authenticate(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString(),
-                        requireActivity().getApplicationContext()));
+                        requireActivity().getApplicationContext());
+        });
 
         final NavController navController = Navigation.findNavController(view);
 
@@ -67,7 +69,6 @@ public class LoginFragment extends Fragment {
                 authenticationState -> {
                     switch (authenticationState) {
                         case AUTHENTICATED:
-                            hideKeyboard(view);
                             navController.navigate(R.id.shopFragment);
                             break;
                         case INVALID_AUTHENTICATION:

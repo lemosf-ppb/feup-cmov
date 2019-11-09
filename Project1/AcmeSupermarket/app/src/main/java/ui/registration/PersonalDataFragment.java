@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.activity.OnBackPressedCallback;
@@ -58,6 +59,8 @@ public class PersonalDataFragment extends Fragment {
         // When the next button is clicked, collect the current values from the edit texts
         // and pass to the ViewModel to store.
         view.findViewById(R.id.btn_next).setOnClickListener(v -> {
+            hideKeyboard(view);
+
             if (!validateInputs()) return;
 
             registrationViewModel.collectProfileData(
@@ -122,5 +125,10 @@ public class PersonalDataFragment extends Fragment {
             return false;
         }
         return true;
+    }
+
+    private void hideKeyboard(@NonNull View view) {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

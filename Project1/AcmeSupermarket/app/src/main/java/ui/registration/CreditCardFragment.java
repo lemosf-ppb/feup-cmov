@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.activity.OnBackPressedCallback;
@@ -72,6 +73,8 @@ public class CreditCardFragment extends Fragment {
         // When the register button is clicked, collect the current values from
         // the two edit texts and pass to the ViewModel to complete registration.
         view.findViewById(R.id.btn_submitRegistry).setOnClickListener(v -> {
+            hideKeyboard(view);
+
             if (!validateInputs()) return;
 
             registrationViewModel.createCreditCard(
@@ -231,6 +234,11 @@ public class CreditCardFragment extends Fragment {
                         navController.popBackStack(R.id.personalDataFragment, false);
                     }
                 });
+    }
+
+    private void hideKeyboard(@NonNull View view) {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }
