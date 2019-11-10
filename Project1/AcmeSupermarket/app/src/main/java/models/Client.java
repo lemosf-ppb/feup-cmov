@@ -31,6 +31,7 @@ public class Client implements Serializable {
         this.password = password;
         this.totalValueSpent = 0.0;
         this.discountValueAvailable = 0.0;
+        this.createdAt = new Date();
     }
 
     public Client(String name, String username, String password) {
@@ -39,6 +40,7 @@ public class Client implements Serializable {
         this.password = password;
         this.totalValueSpent = 0.0;
         this.discountValueAvailable = 0.0;
+        this.createdAt = new Date();
     }
 
     public String getName() {

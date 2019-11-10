@@ -53,6 +53,7 @@ public class CartFragment extends Fragment {
     private ShopViewModel shopViewModel;
     private CartItemAdapter cartItemsAdapter;
     private Resources res;
+    private View view;
 
     private static AlertDialog showDialog(final Activity act) {
         AlertDialog.Builder downloadDialog = new AlertDialog.Builder(act);
@@ -75,6 +76,7 @@ public class CartFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        this.view = view;
         ViewModelProvider provider = ViewModelProviders.of(requireActivity());
         loginViewModel = provider.get(LoginViewModel.class);
         shopViewModel = provider.get(ShopViewModel.class);
@@ -142,7 +144,16 @@ public class CartFragment extends Fragment {
         });
 
         FloatingActionButton add_item_btn = view.findViewById(R.id.add_item);
-        add_item_btn.setOnClickListener(v -> scanQRCode());
+        add_item_btn.setOnClickListener(v -> {
+            if (shopViewModel.isCartFull()) {
+                Snackbar.make(view,
+                        "Your cart is already full!",
+                        Snackbar.LENGTH_SHORT
+                ).show();
+                return;
+            }
+            scanQRCode();
+        });
     }
 
     private void updateCurrentVoucherUI(View view, Voucher currentVoucher) {
@@ -227,7 +238,10 @@ public class CartFragment extends Fragment {
                 "Name: " + name + "\n" +
                 "Price: €" + euros + "." + cents;
 
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+        Snackbar.make(view,
+                text,
+                Snackbar.LENGTH_SHORT
+        ).show();
 
         double price = euros * 1.0 + cents / 100.0;
 

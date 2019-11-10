@@ -15,6 +15,7 @@ import com.cooltechworks.creditcarddesign.CreditCardView;
 import com.example.acmesupermarket.R;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
 import models.Client;
 import models.CreditCard;
@@ -25,6 +26,7 @@ public class ProfileFragment extends Fragment {
     private LoginViewModel mViewModel;
 
     private DecimalFormat df = new DecimalFormat("#.##");
+    public static final String DATE_FORMAT_2 = "dd-MMM-yyyy";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -53,6 +55,10 @@ public class ProfileFragment extends Fragment {
 
         TextView full_name = view.findViewById(R.id.full_name_textView);
         full_name.setText(String.format("Full Name: %s", client.getName()));
+
+        TextView date = view.findViewById(R.id.creation_date);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_2);
+        date.setText(String.format("Client since: %s", dateFormat.format(client.getCreatedAt())));
 
         TextView total_spent = view.findViewById(R.id.money_spent);
         String money_spent = String.format("%s", df.format(client.getTotalValueSpent()));

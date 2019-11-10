@@ -6,11 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.acmesupermarket.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -49,7 +49,10 @@ public class CartItemAdapter extends ArrayAdapter<TransactionItem> {
 
         convertView.findViewById(R.id.increase_btn).setOnClickListener(view -> {
             if (mViewModel.isCartFull()) {
-                Toast.makeText(getContext(), "Your cart is already full!", Toast.LENGTH_LONG).show();
+                Snackbar.make(view,
+                        "Your cart is already full!",
+                        Snackbar.LENGTH_SHORT
+                ).show();
             } else {
                 mViewModel.addTransactionItem(transactionItem);
             }
@@ -57,7 +60,10 @@ public class CartItemAdapter extends ArrayAdapter<TransactionItem> {
 
         convertView.findViewById(R.id.decrease_btn).setOnClickListener(view -> {
             if (transactionItem.getQuantity() == 1) {
-                Toast.makeText(getContext(), "You only have one transactionItem of that type left!", Toast.LENGTH_LONG).show();
+                Snackbar.make(view,
+                        "You only have one item of that type left!",
+                        Snackbar.LENGTH_SHORT
+                ).show();
             } else {
                 mViewModel.decreaseTransactionItem(transactionItem);
             }
