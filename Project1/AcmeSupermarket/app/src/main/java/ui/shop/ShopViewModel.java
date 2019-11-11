@@ -134,5 +134,6 @@ public class ShopViewModel extends ViewModel {
         ArrayList<TransactionItem> clearCart = transactionItems.getValue();
         clearCart.clear();
         transactionItems.setValue(clearCart);
+        setSelectedVoucher(null);
     }
 }
