@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -120,7 +119,7 @@ public class CartFragment extends Fragment {
 
         Button checkout_button = view.findViewById(R.id.checkout_btn);
         checkout_button.setOnClickListener(v -> {
-            if(shopViewModel.isCartEmpty()){
+            if (shopViewModel.isCartEmpty()) {
                 Snackbar.make(view,
                         "Your cart is empty! Please add at least one item!",
                         Snackbar.LENGTH_SHORT
@@ -133,7 +132,7 @@ public class CartFragment extends Fragment {
 
         Button clearCart_btn = view.findViewById(R.id.clear_btn);
         clearCart_btn.setOnClickListener(v -> {
-            if(shopViewModel.isCartEmpty()){
+            if (shopViewModel.isCartEmpty()) {
                 Snackbar.make(view,
                         "Your cart is already empty!",
                         Snackbar.LENGTH_SHORT

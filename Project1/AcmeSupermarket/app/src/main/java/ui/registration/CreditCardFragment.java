@@ -7,7 +7,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.activity.OnBackPressedCallback;
@@ -25,6 +24,7 @@ import com.google.android.material.snackbar.Snackbar;
 import ui.login.LoginViewModel;
 
 import static androidx.navigation.Navigation.findNavController;
+import static ui.Utils.hideKeyboard;
 import static ui.registration.RegistrationViewModel.RegistrationState.REGISTRATION_COMPLETED;
 import static ui.registration.RegistrationViewModel.RegistrationState.REGISTRATION_FAILED;
 
@@ -73,7 +73,7 @@ public class CreditCardFragment extends Fragment {
         // When the register button is clicked, collect the current values from
         // the two edit texts and pass to the ViewModel to complete registration.
         view.findViewById(R.id.btn_submitRegistry).setOnClickListener(v -> {
-            hideKeyboard(view);
+            hideKeyboard(view, requireContext());
 
             if (!validateInputs()) return;
 
@@ -235,10 +235,4 @@ public class CreditCardFragment extends Fragment {
                     }
                 });
     }
-
-    private void hideKeyboard(@NonNull View view) {
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(getActivity().INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
 }

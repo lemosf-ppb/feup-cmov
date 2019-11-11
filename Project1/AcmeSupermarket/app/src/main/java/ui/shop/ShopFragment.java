@@ -13,6 +13,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.acmesupermarket.R;
 import com.google.android.material.tabs.TabLayout;
 
+import static ui.Utils.disableBackButtonNavigation;
+
 public class ShopFragment extends Fragment {
     @Nullable
     @Override
@@ -30,5 +32,7 @@ public class ShopFragment extends Fragment {
 
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+
+        disableBackButtonNavigation(requireActivity(), this);
     }
 }

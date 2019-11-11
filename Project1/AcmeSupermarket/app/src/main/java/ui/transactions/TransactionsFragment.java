@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import models.Transaction;
 import ui.login.LoginViewModel;
 
+import static ui.Utils.disableBackButtonNavigation;
+
 public class TransactionsFragment extends Fragment {
 
     private TransactionsViewModel transactionsViewModel;
@@ -51,6 +53,8 @@ public class TransactionsFragment extends Fragment {
         setTransactionsAdapter(view);
 
         setTransactionsObserver();
+
+        disableBackButtonNavigation(requireActivity(), this);
     }
 
 

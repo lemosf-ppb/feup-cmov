@@ -21,12 +21,13 @@ import models.Client;
 import models.CreditCard;
 import ui.login.LoginViewModel;
 
+import static ui.Utils.disableBackButtonNavigation;
+
 public class ProfileFragment extends Fragment {
 
-    private LoginViewModel mViewModel;
-
-    private DecimalFormat df = new DecimalFormat("#.##");
     public static final String DATE_FORMAT_2 = "dd-MMM-yyyy";
+    private LoginViewModel mViewModel;
+    private DecimalFormat df = new DecimalFormat("#.##");
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -46,6 +47,8 @@ public class ProfileFragment extends Fragment {
         mViewModel = ViewModelProviders.of(requireActivity()).get(LoginViewModel.class);
 
         displayClientInfo(view, mViewModel.getClient());
+
+        disableBackButtonNavigation(requireActivity(), this);
     }
 
     private void displayClientInfo(View view, Client client) {

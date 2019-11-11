@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -18,6 +17,8 @@ import androidx.navigation.Navigation;
 
 import com.example.acmesupermarket.R;
 import com.google.android.material.snackbar.Snackbar;
+
+import static ui.Utils.hideKeyboard;
 
 public class LoginFragment extends Fragment {
 
@@ -47,10 +48,10 @@ public class LoginFragment extends Fragment {
 
         Button loginButton = view.findViewById(R.id.login_button);
         loginButton.setOnClickListener(v -> {
-                hideKeyboard(view);
-                mViewModel.authenticate(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString(),
-                        requireActivity().getApplicationContext());
+            hideKeyboard(view, requireContext());
+            mViewModel.authenticate(usernameEditText.getText().toString(),
+                    passwordEditText.getText().toString(),
+                    requireActivity().getApplicationContext());
         });
 
         final NavController navController = Navigation.findNavController(view);
@@ -79,11 +80,6 @@ public class LoginFragment extends Fragment {
                             break;
                     }
                 });
-    }
-
-    private void hideKeyboard(@NonNull View view) {
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(getActivity().INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
 

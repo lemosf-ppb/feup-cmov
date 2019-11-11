@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
-
     <fragment
         android:id="@+id/homeFragment"
         android:name="ui.home.HomeFragment"
@@ -22,11 +21,6 @@
         android:name="ui.login.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" />
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="ui.profile.ProfileFragment"
-        android:label="Profile"
-        tools:layout="@layout/profile_fragment" />
     <navigation
         android:id="@+id/registration_graph"
         app:startDestination="@id/personalDataFragment">
@@ -44,6 +38,11 @@
                 app:destination="@id/creditCardFragment" />
         </fragment>
     </navigation>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/profile_fragment" />
     <fragment
         android:id="@+id/shopFragment"
         android:name="ui.shop.ShopFragment"
