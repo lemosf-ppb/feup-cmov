@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/cart_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/price_discounts_checkout_layout"
+        android:layout_alignParentTop="true">
+
+
+    </ListView>
+
+    <FrameLayout
+        android:id="@+id/price_discounts_checkout_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:paddingTop="@dimen/margin_small">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="5dp"
+            android:cropToPadding="false"
+            android:duplicateParentState="false"
+            android:elevation="20dp"
+            android:fitsSystemWindows="false"
+            android:foreground="@mipmap/cart_icon_foreground"
+            android:src="@mipmap/cart_icon_foreground"
+            app:backgroundTint="@color/text_shadow_white"
+            app:fabSize="normal"
+            app:useCompatPadding="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_large"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/voucher_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_shadow_white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/discount_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_shadow_white"
+                android:textSize="18sp" />
+
+            <Switch
+                android:id="@+id/apply_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/text_shadow_white"
+                android:switchPadding="15dp"
+                android:text="@string/apply"
+                android:textColor="@color/text_shadow_white"
+                android:textColorHighlight="@color/text_shadow_white"
+                android:textColorHint="@color/text_shadow_white"
+                android:textColorLink="@color/text_shadow_white"
+                android:textCursorDrawable="@color/text_shadow_white"
+                android:textSize="18sp"
+                android:thumbTint="@color/text_shadow_white" />
+
+            <TextView
+                android:id="@+id/total_price_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_shadow_white"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/checkout_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@color/text_shadow_white"
+                    android:text="@string/action_checkout"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Button
+                    android:id="@+id/clear_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="95dp"
+                    android:backgroundTint="@color/text_shadow_white"
+                    android:text="@string/clear_cart"
+                    android:textColor="@color/colorPrimaryDark" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+</RelativeLayout>

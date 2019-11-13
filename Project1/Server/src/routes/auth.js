@@ -1,55 +1,42 @@
 const router = require('express').Router();
-const jwt = require('jsonwebtoken');
-const passport = require('passport');
-const { JWT_SECRET } = require('../config/configs');
-
+const { usersController } = require('../controllers');
+const { auth } = require('../services/auth');
 
 router.post('/signup', async (req, res) => {
-  passport.authenticate('signup', { session: false }, async (err, user, info) => {
-    if (!user && info) {
-      return res.status(400).send(info.message);
-    }
+  const {
+    username, password, name, creditCard, publicKey,
+  } = req.body;
 
-    if (!user) return res.status(400).send();
-    /* eslint-disable */
-    delete user.dataValues.password;
-    delete user._previousDataValues.password;
-    /* eslint-enable */
-    return req.login(user, { session: false }, async () => {
-      const body = { id: user.id, email: user.email };
-      const token = jwt.sign({ user: body }, JWT_SECRET);
-
-      return res.json({
-        message: 'Signup successful',
-        user,
-        token,
-      });
+  try {
+    const newUser = await usersController.signup(
+      username, password, name, creditCard, publicKey,
+    );
+    return res.status(200).send({
+      message: 'Signup successful',
+      userId: newUser.id,
+      supermarketPublicKey: auth.getPublicKey(),
     });
-  })(req, res);
+  } catch (error) {
+    return res.status(400).send(error.message);
+  }
 });
 
-router.post('/login', async (req, res, next) => {
-  passport.authenticate('login', async (err, user, info) => {
-    try {
-      if (!user && info) {
-        return res.status(400).send(info.message);
-      }
+router.post('/login', async (req, res) => {
+  const { username, password, publicKey } = req.body;
 
-      if (!user) return res.status(400).send();
+  try {
+    const user = await usersController.login(username, password, publicKey);
+    const userInfo = await usersController.retrieve(user.id);
 
-      req.login(user, { session: false }, async (error) => {
-        if (error) return next(error);
-
-        const body = { id: user.id, email: user.email };
-        const token = jwt.sign({ user: body }, JWT_SECRET);
-
-        return res.json({ token });
-      });
-      return next();
-    } catch (error) {
-      return next(error);
-    }
-  })(req, res, next);
+    return res.status(200).send({
+      message: 'Login successful',
+      userId: user.id,
+      userInfo,
+      supermarketPublicKey: auth.getPublicKey(),
+    });
+  } catch (error) {
+    return res.status(400).send(error.message);
+  }
 });
 
 module.exports = router;

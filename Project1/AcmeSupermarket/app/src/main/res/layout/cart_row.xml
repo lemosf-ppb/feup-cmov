@@ -1,38 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="1">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/itemTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/margin_small"
         android:layout_weight="0.4"
-        android:gravity="center_vertical"
-        android:text="Item 1" />
+        android:gravity="left|center_vertical"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/priceUnit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:text="X€/unit" />
+        android:layout_gravity="right|center_vertical"
+        android:layout_weight="0.24"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/quantityItem"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.2"
-        android:text="3" />
+        android:layout_gravity="right|center_vertical"
+        android:layout_weight="0.1"
+        android:textSize="18sp" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_weight="0.01"
-        android:text="X" />
+        android:id="@+id/increase_btn"
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:layout_gravity="left|center_vertical"
+        android:layout_weight="0.08"
+        android:background="@mipmap/plus" />
 
-</TableRow>
+    <Button
+        android:id="@+id/decrease_btn"
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:layout_gravity="left|center_vertical"
+        android:layout_weight="0.08"
+        android:background="@mipmap/minus" />
+
+    <Button
+        android:id="@+id/remove_btn"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_weight="0.1"
+        android:background="@mipmap/trash_foreground" />
+
+</LinearLayout>
