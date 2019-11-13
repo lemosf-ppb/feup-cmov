@@ -18,5 +18,10 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
+
+  CreditCard.associate = (models) => {
+    CreditCard.belongsTo(models.User);
+  };
+
   return CreditCard;
 };

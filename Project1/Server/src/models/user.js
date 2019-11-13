@@ -40,10 +40,7 @@ module.exports = (sequelize, DataTypes) => {
   {});
 
   User.associate = (models) => {
-    User.hasOne(models.CreditCard, {
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    });
+    User.hasOne(models.CreditCard);
   };
 
   // eslint-disable-next-line
