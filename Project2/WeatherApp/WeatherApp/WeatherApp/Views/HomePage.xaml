@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeatherApp.Views.HomePage">
+    <RelativeLayout>
+        <Image Source="overlay.png" Aspect="AspectFill" 
+               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"/>
+        <Grid VerticalOptions="FillAndExpand"
+              RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="CenterAndExpand">
+                <Frame BackgroundColor="White" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="False">
+                    <Picker VerticalOptions="Center" x:Name="CityPicker" 
+                            Title="Please select a city"
+                            ItemsSource="{Binding Cities}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding SelectedCity}">
+                    </Picker> 
+                </Frame>
+                <Button Text="FOLLOW"
+                        CornerRadius="10"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="Center"
+                        Clicked="OnFollowBtnClicked" />
+            </StackLayout>
+            <ListView x:Name="FavoriteCitiesList" ItemsSource="{Binding FavoriteCities}" ItemTapped="OnItemSelected" SeparatorVisibility="None"
+                      Grid.Row="1" Margin="20,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate >
+                        <ViewCell>
+                            <Frame BackgroundColor="White" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="False">
+                                <Grid HeightRequest="50" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Name}" TextColor="#757575" FontSize="12" VerticalOptions="Center" Margin="20,0"/>
+                                    <Button Text="X"
+                                            CornerRadius="10"
+                                            VerticalOptions="CenterAndExpand"
+                                            HorizontalOptions="Center"
+                                            Clicked="OnUnFollowBtnClicked" />
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </RelativeLayout>
+</ContentPage>
