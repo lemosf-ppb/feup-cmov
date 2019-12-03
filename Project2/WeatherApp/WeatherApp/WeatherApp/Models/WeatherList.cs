@@ -22,19 +22,20 @@ namespace WeatherApp.Models
         {
             WeatherByDays = new Dictionary<int, List<WeatherByHour>>();
 
-            string url = apiBase + city.Name;
+            var url = apiBase + city.Name;
             
             //TODO chamar api
             
-            //ParseJsonResponse(template);
+            ParseJsonResponse(template);
             
-            getWeather().Wait();
+            getWeather(url);
+            
         }
         
-        public async Task getWeather ()
+        public async void getWeather (string url)
         {
             var _client = new HttpClient ();
-            var uri = new Uri (string.Format (apiBase + "London,us&units=metric", string.Empty));
+            var uri = new Uri (string.Format (url, string.Empty));
             Console.WriteLine("oi");
             Console.WriteLine(uri.ToString());
             var response = await _client.GetAsync (uri);
@@ -45,6 +46,10 @@ namespace WeatherApp.Models
                 Console.WriteLine(responseString);
                 Console.WriteLine("aqui2");
                 ParseJsonResponse(responseString);
+            }
+            else
+            {
+                Console.WriteLine("Rip");
             }
         }
         private void ParseJsonResponse2(string response)
