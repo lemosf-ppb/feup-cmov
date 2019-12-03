@@ -26,12 +26,12 @@ namespace WeatherApp.Models
             
             //TODO chamar api
             
-            ParseJsonResponse(template);
+            //ParseJsonResponse(template);
             
-            getWeather();
+            getWeather().Wait();
         }
         
-        public async void getWeather ()
+        public async Task getWeather ()
         {
             var _client = new HttpClient ();
             var uri = new Uri (string.Format (apiBase + "London,us&units=metric", string.Empty));
