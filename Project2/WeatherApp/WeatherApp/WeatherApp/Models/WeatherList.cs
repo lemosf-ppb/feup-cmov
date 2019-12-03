@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -26,13 +27,65 @@ namespace WeatherApp.Models
             //TODO chamar api
             
             ParseJsonResponse(template);
+            
+            getWeather();
+        }
+        
+        public async void getWeather ()
+        {
+            var _client = new HttpClient ();
+            var uri = new Uri (string.Format (apiBase + "London,us&units=metric", string.Empty));
+            Console.WriteLine("oi");
+            Console.WriteLine(uri.ToString());
+            var response = await _client.GetAsync (uri);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("aqui");
+                Console.WriteLine(responseString);
+                Console.WriteLine("aqui2");
+                ParseJsonResponse(responseString);
+            }
+        }
+        private void ParseJsonResponse2(string response)
+        {
+            
+            var json = JArray.Parse(response);
+
+            var previousHour = 0;
+            var day = 0;
+            var weatherByHours = new List<WeatherByHour>();
+            
+            foreach (var item in json)
+            {
+                var weather = new WeatherByHour(item);
+                
+                DateTime date = DateTime.ParseExact(weather.dt_txt, "yyyy-MM-dd HH:mm:ss",
+                    System.Globalization.CultureInfo.InvariantCulture);
+
+                var hour = date.Hour;
+                if (hour < previousHour)
+                {
+                    WeatherByDays[day] = weatherByHours;
+                    day++;
+                    if (day > 1)
+                    {
+                        break;
+                    }
+                    
+                    weatherByHours = new List<WeatherByHour>();
+                }
+
+                previousHour = hour;
+                weatherByHours.Add(weather);
+            }
         }
 
         private void ParseJsonResponse(string response)
         {
             var resultObject = JObject.Parse(response);
             var json = resultObject["list"];
-            Console.WriteLine(json);
+//            Console.WriteLine(json);
 
             var previousHour = 0;
             var day = 0;
