@@ -15,6 +15,8 @@ namespace WeatherApp.Views
     {
         private City City { get; set; }
         private DateTime Today { get; set; }
+        
+        private WeatherByHour TodayWeather { get; set; }
         public CityDetail(City city)
         {
             InitializeComponent();
@@ -25,6 +27,20 @@ namespace WeatherApp.Views
             Today = DateTime.Now;
             
             Date.Text = $"{Today:dddd, MMMM d, yyyy}";
+
+            TodayWeather = city.WeatherList.WeatherByDays[0][0];
+            Wind.Text = TodayWeather.WindSpeed.ToString(CultureInfo.InvariantCulture) + " m/s";
+            
+            Humidity.Text = TodayWeather.Humidity.ToString(CultureInfo.InvariantCulture) + "%";
+            
+            Pressure.Text = TodayWeather.Pressure.ToString(CultureInfo.InvariantCulture) + " hpa";
+            
+            Cloudiness.Text = TodayWeather.Cloudiness.ToString(CultureInfo.InvariantCulture) + "%";
+            
+            Precipitation.Text = TodayWeather.Rain.ToString(CultureInfo.InvariantCulture) + "%";
+
+            Temperature.Text = TodayWeather.Temp.ToString(CultureInfo.InvariantCulture);
+
         }
         
         async void OnFollowBtnClicked(object sender, EventArgs args)

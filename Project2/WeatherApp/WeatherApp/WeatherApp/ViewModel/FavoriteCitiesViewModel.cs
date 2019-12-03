@@ -39,23 +39,27 @@ namespace WeatherApp.ViewModel
             }
         }
 
-        public void addCity()
+        public void AddCity()
         {
             if (_selectedCity == null)
             {
                 return;
             }
-            FavoriteCities.Add(_selectedCity);
-            updateViewModel(_selectedCity);
+
+            var newCity = _selectedCity;
+            newCity.WeatherList = new WeatherList(_selectedCity);
+            
+            FavoriteCities.Add(newCity);
+            UpdateViewModel(_selectedCity);
         }
 
-        public void removeCity(City city)
+        public void RemoveCity(City city)
         {
             FavoriteCities.Remove(city);
             Cities.Add(city);
         }
 
-        private void updateViewModel(City selectedCity)
+        private void UpdateViewModel(City selectedCity)
         {
             Cities.Remove(_selectedCity);
             _selectedCity = Cities.Count > 0 ? Cities[0] : null;

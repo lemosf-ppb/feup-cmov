@@ -38,10 +38,15 @@
                             <Frame BackgroundColor="White" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="False">
                                 <Grid HeightRequest="50" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Label Text="{Binding Name}" TextColor="#757575" FontSize="12" VerticalOptions="Center" Margin="20,0"/>
-                                    <Button Text="X"
+                                    <Label Grid.Column="1" Text="{Binding Temp}" TextColor="#757575" FontSize="12" VerticalOptions="Center" Margin="20,0"/>
+                                    <Image Grid.Column="2" Source="{Binding Icon}" VerticalOptions="Center" Margin="20,0"/>
+                                    <Button Grid.Column="3" Text="X"
                                             CornerRadius="10"
                                             VerticalOptions="CenterAndExpand"
                                             HorizontalOptions="Center"

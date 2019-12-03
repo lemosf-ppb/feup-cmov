@@ -11,6 +11,8 @@ namespace WeatherApp.Views
     public partial class HomePage : ContentPage
     {
         private FavoriteCitiesViewModel _favoriteCitiesViewModel;
+        private Dictionary<int, List<WeatherByHour>> WeatherByDays;
+        
         public HomePage()
         {
             InitializeComponent();
@@ -25,14 +27,14 @@ namespace WeatherApp.Views
 
         private async void OnFollowBtnClicked(Object sender, EventArgs args)
         {
-            _favoriteCitiesViewModel.addCity();
+            _favoriteCitiesViewModel.AddCity();
         }
         
         private async void OnUnFollowBtnClicked(Object sender, EventArgs args)
         {
             var button = sender as Button;
             var city = button?.BindingContext as City;
-            _favoriteCitiesViewModel.removeCity(city);
+            _favoriteCitiesViewModel.RemoveCity(city);
         }
     }
 }
