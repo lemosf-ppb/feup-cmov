@@ -57,66 +57,42 @@
                             <StackLayout  Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
                                 <Label Text="00:00" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                                 <Image Source="wind.png" HeightRequest="35" HorizontalOptions="Center"/>
-                                <StackLayout Spacing="2" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                                    <Label Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                    <Label Text="°C" TextColor="#7D7D7D" FontSize="14" HorizontalOptions="Center"/>
-                                </StackLayout>
+                                <Label x:Name="Temp0" Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
                                 <Label Text="03:00" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                                 <Image Source="wind.png" HeightRequest="35" HorizontalOptions="Center"/>
-                                <StackLayout Spacing="2" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                                    <Label Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                    <Label Text="°C" TextColor="#7D7D7D" FontSize="14" HorizontalOptions="Center"/>
-                                </StackLayout>
+                                <Label x:Name="Temp1" Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
                                 <Label Text="06:00" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                                 <Image Source="wind.png" HeightRequest="35" HorizontalOptions="Center"/>
-                                <StackLayout Spacing="2" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                                    <Label Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                    <Label Text="°C" TextColor="#7D7D7D" FontSize="14" HorizontalOptions="Center"/>
-                                </StackLayout>
+                                <Label x:Name="Temp2" Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
                                 <Label Text="09:00" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                                 <Image Source="wind.png" HeightRequest="35" HorizontalOptions="Center"/>
-                                <StackLayout Spacing="2" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                                    <Label Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                    <Label Text="°C" TextColor="#7D7D7D" FontSize="14" HorizontalOptions="Center"/>
-                                </StackLayout>
+                                <Label x:Name="Temp3" Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                             </StackLayout>
                             <StackLayout  Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
                                 <Label Text="12:00" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                                 <Image Source="wind.png" HeightRequest="35" HorizontalOptions="Center"/>
-                                <StackLayout Spacing="2" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                                    <Label Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                    <Label Text="°C" TextColor="#7D7D7D" FontSize="14" HorizontalOptions="Center"/>
-                                </StackLayout>
+                                <Label x:Name="Temp4" Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                             </StackLayout>
                             <StackLayout  Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
                                 <Label Text="15:00" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                                 <Image Source="wind.png" HeightRequest="35" HorizontalOptions="Center"/>
-                                <StackLayout Spacing="2" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                                    <Label Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                    <Label Text="°C" TextColor="#7D7D7D" FontSize="14" HorizontalOptions="Center"/>
-                                </StackLayout>
+                                <Label x:Name="Temp5" Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                             </StackLayout>
                             <StackLayout  Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
                                 <Label Text="18:00" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                                 <Image Source="wind.png" HeightRequest="35" HorizontalOptions="Center"/>
-                                <StackLayout Spacing="2" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                                    <Label Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                    <Label Text="°C" TextColor="#7D7D7D" FontSize="14" HorizontalOptions="Center"/>
-                                </StackLayout>
+                                <Label x:Name="Temp6" Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                             </StackLayout>
                             <StackLayout  Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
                                 <Label Text="21:00" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                                 <Image Source="wind.png" HeightRequest="35" HorizontalOptions="Center"/>
-                                <StackLayout Spacing="2" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                                    <Label Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                    <Label Text="°C" TextColor="#7D7D7D" FontSize="14" HorizontalOptions="Center"/>
-                                </StackLayout>
+                                <Label x:Name="Temp7" Text="16" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                             </StackLayout>
                         </StackLayout>
                 </ScrollView>
