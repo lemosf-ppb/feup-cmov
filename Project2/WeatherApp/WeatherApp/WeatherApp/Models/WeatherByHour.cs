@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -36,9 +37,9 @@ namespace WeatherApp.Models
             Dt = (int) item["dt"];
                 
             var main = item["main"];
-            Temp = convertToCelsius((double) main["temp"]);
-            Temp_min = convertToCelsius((double) main["temp_min"]);
-            Temp_max = convertToCelsius((double) main["temp_max"]);
+            Temp = ConvertToCelsius((double) main["temp"]);
+            Temp_min = ConvertToCelsius((double) main["temp_min"]);
+            Temp_max = ConvertToCelsius((double) main["temp_max"]);
             Pressure = (int) main["pressure"];
             Sea_level = (int) main["sea_level"];
             Grnd_level = (int) main["grnd_level"];
@@ -71,9 +72,9 @@ namespace WeatherApp.Models
             dt_txt = (string) item["dt_txt"];
         }
 
-        private int convertToCelsius(double kelvin)
+        private double ConvertToCelsius(double kelvin)
         {
-            return (int) (kelvin - 273.15);
+            return  Math.Round(kelvin - 273.15, 1);
         }
     }
 }

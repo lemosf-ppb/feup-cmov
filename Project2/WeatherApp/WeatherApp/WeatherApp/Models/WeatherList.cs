@@ -20,7 +20,6 @@ namespace WeatherApp.Models
         public Dictionary<int, List<WeatherByHour>> WeatherByDays;
         public WeatherList(City city)
         {
-            WeatherByDays = new Dictionary<int, List<WeatherByHour>>();
 
             var url = apiBase + city.Name;
             
@@ -52,42 +51,11 @@ namespace WeatherApp.Models
                 Console.WriteLine("Rip");
             }
         }
-        private void ParseJsonResponse2(string response)
-        {
-            
-            var json = JArray.Parse(response);
-
-            var previousHour = 0;
-            var day = 0;
-            var weatherByHours = new List<WeatherByHour>();
-            
-            foreach (var item in json)
-            {
-                var weather = new WeatherByHour(item);
-                
-                DateTime date = DateTime.ParseExact(weather.dt_txt, "yyyy-MM-dd HH:mm:ss",
-                    System.Globalization.CultureInfo.InvariantCulture);
-
-                var hour = date.Hour;
-                if (hour < previousHour)
-                {
-                    WeatherByDays[day] = weatherByHours;
-                    day++;
-                    if (day > 1)
-                    {
-                        break;
-                    }
-                    
-                    weatherByHours = new List<WeatherByHour>();
-                }
-
-                previousHour = hour;
-                weatherByHours.Add(weather);
-            }
-        }
 
         private void ParseJsonResponse(string response)
         {
+            WeatherByDays = new Dictionary<int, List<WeatherByHour>>();
+            
             var resultObject = JObject.Parse(response);
             var json = resultObject["list"];
 //            Console.WriteLine(json);
