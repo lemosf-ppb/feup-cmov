@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -19,20 +20,45 @@ namespace WeatherApp.Models
         public Dictionary<int, List<WeatherByHour>> WeatherByDays;
         public WeatherList(City city)
         {
-            WeatherByDays = new Dictionary<int, List<WeatherByHour>>();
 
-            string url = apiBase + city.Name;
+            var url = apiBase + city.Name;
             
             //TODO chamar api
             
             ParseJsonResponse(template);
+            
+            getWeather(url);
+            
+        }
+        
+        public async void getWeather (string url)
+        {
+            var _client = new HttpClient ();
+            var uri = new Uri (string.Format (url, string.Empty));
+            Console.WriteLine("oi");
+            Console.WriteLine(uri.ToString());
+            var response = await _client.GetAsync (uri);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("aqui");
+                Console.WriteLine(responseString);
+                Console.WriteLine("aqui2");
+                ParseJsonResponse(responseString);
+            }
+            else
+            {
+                Console.WriteLine("Rip");
+            }
         }
 
         private void ParseJsonResponse(string response)
         {
+            WeatherByDays = new Dictionary<int, List<WeatherByHour>>();
+            
             var resultObject = JObject.Parse(response);
             var json = resultObject["list"];
-            Console.WriteLine(json);
+//            Console.WriteLine(json);
 
             var previousHour = 0;
             var day = 0;
