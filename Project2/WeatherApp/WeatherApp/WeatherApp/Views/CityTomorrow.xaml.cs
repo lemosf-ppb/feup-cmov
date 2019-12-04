@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Microcharts;
+using SkiaSharp;
 using WeatherApp.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Entry = Xamarin.Forms.Entry;
 
 namespace WeatherApp.Views
 {
@@ -40,13 +43,27 @@ namespace WeatherApp.Views
             
             var maxWindSpeed = 0.0;
             var minWindSpeed = 10000.0;
+
+            var entries = new ChartEntry[WeatherByHours.Count];
             
             foreach (var weather in WeatherByHours)
             {
                 var name = "Temp" + i;
-                if (this.FindByName(name) is Label tempLabel)
+                if (FindByName(name) is Label tempLabel)
                 {
-                    tempLabel.Text = weather.Temp.ToString(CultureInfo.InvariantCulture) + "°C";
+                    var temp = weather.Temp;
+                    var tempString = temp.ToString(CultureInfo.InvariantCulture) + "°C";
+                    tempLabel.Text = tempString;
+
+                    var date = weather.dt_txt;
+                    var time = date.Substring(11, 2);
+                    var entry = new ChartEntry((float) temp)
+                    {
+                        Label = time +"h",
+                        ValueLabel = tempString,
+                        Color = SKColors.White
+                    };
+                    entries[i] = entry;
                 }
 
                 //TEMP
@@ -76,7 +93,32 @@ namespace WeatherApp.Views
                 i++;
             }
 
+            MaxMinCloudiness.Text = minCloudiness + "/" + maxCloudiness + "%";
             
+            MaxMinHumidity.Text = minHumidity + "/" + maxHumidity + "%";
+            
+            MaxMinPrecipitation.Text = minRain + "/" + maxRain + "%";
+
+            MaxMinPressure.Text = minPressure + "/" + maxPressure + " hpa";
+
+            MaxMinWind.Text = minWindSpeed + "/" + maxWindSpeed + " m/s";
+
+            
+            var chart = new LineChart()
+            {
+                Entries = entries,
+                LineMode = LineMode.Straight,
+                PointMode = PointMode.Circle,
+                PointSize = 15,
+                LineSize = 3,
+                BackgroundColor = SKColors.Transparent,
+                LabelTextSize = 50,
+                LabelColor = SKColors.White,
+                LabelOrientation = Orientation.Horizontal
+            };
+
+            ChartView.Chart = chart;
+
         }
 
         private static int UpdateMin(int value, int min)

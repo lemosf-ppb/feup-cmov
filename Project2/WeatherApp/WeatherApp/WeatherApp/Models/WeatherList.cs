@@ -27,7 +27,7 @@ namespace WeatherApp.Models
             
             ParseJsonResponse(template);
             
-            getWeather(url);
+           // getWeather(url);
             
         }
         
