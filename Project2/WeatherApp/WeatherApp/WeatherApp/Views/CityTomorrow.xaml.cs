@@ -25,6 +25,8 @@ namespace WeatherApp.Views
             
             Temperature.Text = WeatherByHours[0].Temp.ToString(CultureInfo.InvariantCulture);
 
+            IconSource.Source = WeatherByHours[0].IconSource;
+
             var i = 0;
             var minTemp = 100.0;
             var maxTemp = -100.0;
@@ -45,7 +47,7 @@ namespace WeatherApp.Views
             var minWindSpeed = 10000.0;
 
             var entries = new ChartEntry[WeatherByHours.Count];
-            
+
             foreach (var weather in WeatherByHours)
             {
                 var name = "Temp" + i;
@@ -64,6 +66,12 @@ namespace WeatherApp.Views
                         Color = SKColors.White
                     };
                     entries[i] = entry;
+                }
+                
+                var icon = "Icon" + i;
+                if (FindByName(icon) is Image iconImage)
+                {
+                    iconImage.Source = weather.IconSource;
                 }
 
                 //TEMP

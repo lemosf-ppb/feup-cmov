@@ -13,7 +13,7 @@ namespace WeatherApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CityDetail : ContentPage
     {
-        private City City { get; set; }
+        public City City { get; set; }
         private DateTime Today { get; set; }
         
         private WeatherByHour TodayWeather { get; set; }
@@ -41,6 +41,7 @@ namespace WeatherApp.Views
 
             Temperature.Text = TodayWeather.Temp.ToString(CultureInfo.InvariantCulture);
 
+            IconSource.Source = TodayWeather.IconSource;
         }
         
         async void OnFollowBtnClicked(object sender, EventArgs args)
@@ -52,12 +53,5 @@ namespace WeatherApp.Views
         {
             await Navigation.PushAsync(new CityTomorrow(City, Today.AddDays(1)));
         }
-    }
-    
-    public class Weather
-    {
-        public string Temp { get; set; }
-        public string Date { get; set; }
-        public string Icon { get; set; }
     }
 }

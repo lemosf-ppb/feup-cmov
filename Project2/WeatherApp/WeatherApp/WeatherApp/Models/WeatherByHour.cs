@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Xamarin.Forms;
 
 namespace WeatherApp.Models
 {
@@ -31,6 +34,13 @@ namespace WeatherApp.Models
         public int Rain;
 
         public string dt_txt;
+
+        private ImageSource _iconSource;
+        public ImageSource IconSource
+        {
+            get => _iconSource;
+            private set => _iconSource = value;
+        }
 
         public WeatherByHour(JToken item)
         {
@@ -70,11 +80,20 @@ namespace WeatherApp.Models
             }
 
             dt_txt = (string) item["dt_txt"];
+            IconSource = GetImageSource();
         }
 
         private double ConvertToCelsius(double kelvin)
         {
             return  Math.Round(kelvin - 273.15, 1);
+        }
+
+        private ImageSource GetImageSource()
+        {
+            var client = new WebClient();
+            var url = "http://openweathermap.org/img/wn/" + Icon + "@2x.png";
+            var byteArray = client.DownloadData(url);
+            return ImageSource.FromStream(() => new MemoryStream(byteArray));
         }
     }
 }

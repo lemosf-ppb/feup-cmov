@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using System.Net;
 using Xamarin.Forms;
 
 namespace WeatherApp.Models
@@ -36,7 +38,7 @@ namespace WeatherApp.Models
             }
         }
 
-        public string Icon => "http://openweathermap.org/img/wn/" + WeatherByDays[0][0].Icon + "@2x.png";
+        public ImageSource Icon => WeatherByDays[0][0].IconSource;
 
         private void OnPropertyChanged(string propertyName)
         {
