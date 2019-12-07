@@ -1,28 +1,46 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace WeatherApp.Models
 {
-    public class City
+    public class City : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         public string Name { get; set; }
 
-        private WeatherList _weatherList { get; set; }
-        
-        public WeatherList WeatherList
+        private Dictionary<int, List<WeatherByHour>> _weatherByDays;
+        private double _temp;
+
+        public Dictionary<int, List<WeatherByHour>> WeatherByDays
         {
-            get => _weatherList;
+            get => _weatherByDays;
             set
             {
-                if (_weatherList != value)
-                {
-                    _weatherList = value;
-                }
+                _weatherByDays = value;
+                Temp = _weatherByDays[0][0].Temp;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("WeatherByDaysChanged");
             }
         }
-        
-        public double Temp => WeatherList.WeatherByDays[0][0].Temp;
 
-        public ImageSource Icon => ImageSource.FromUri(new Uri("http://openweathermap.org/img/wn/"+ WeatherList.WeatherByDays[0][0].Icon + "@2x.png"));
+        public double Temp
+        {
+            get => _temp;
+            set
+            {
+                _temp = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("TempChanged");
+            }
+        }
+
+        public ImageSource Icon => ImageSource.FromUri(new Uri("http://openweathermap.org/img/wn/"+ WeatherByDays[0][0].Icon + "@2x.png"));
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

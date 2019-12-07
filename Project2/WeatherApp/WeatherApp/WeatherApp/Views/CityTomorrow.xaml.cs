@@ -21,7 +21,7 @@ namespace WeatherApp.Views
             CityName.Text = city.Name;
             Date.Text = $"{tomorrow:dddd, MMMM d, yyyy}";
             
-            WeatherByHours = city.WeatherList.WeatherByDays[1];
+            WeatherByHours = city.WeatherByDays[1];
             
             Temperature.Text = WeatherByHours[0].Temp.ToString(CultureInfo.InvariantCulture);
 

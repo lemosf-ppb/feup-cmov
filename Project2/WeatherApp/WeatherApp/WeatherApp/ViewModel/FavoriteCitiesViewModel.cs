@@ -45,22 +45,19 @@ namespace WeatherApp.ViewModel
             {
                 return;
             }
-
-            var newCity = _selectedCity;
-            newCity.WeatherList = new WeatherList(_selectedCity);
             
-            FavoriteCities.Add(newCity);
-            UpdateViewModel(_selectedCity);
+            new WeatherList(_selectedCity, this);
         }
-
+        
         public void RemoveCity(City city)
         {
             FavoriteCities.Remove(city);
             Cities.Add(city);
         }
 
-        private void UpdateViewModel(City selectedCity)
+        public void UpdateViewModel(City selectedCity)
         {
+            FavoriteCities.Add(selectedCity);
             Cities.Remove(_selectedCity);
             _selectedCity = Cities.Count > 0 ? Cities[0] : null;
         }

@@ -28,7 +28,7 @@ namespace WeatherApp.Views
             
             Date.Text = $"{Today:dddd, MMMM d, yyyy}";
 
-            TodayWeather = city.WeatherList.WeatherByDays[0][0];
+            TodayWeather = city.WeatherByDays[0][0];
             Wind.Text = TodayWeather.WindSpeed.ToString(CultureInfo.InvariantCulture) + " m/s";
             
             Humidity.Text = TodayWeather.Humidity.ToString(CultureInfo.InvariantCulture) + "%";
