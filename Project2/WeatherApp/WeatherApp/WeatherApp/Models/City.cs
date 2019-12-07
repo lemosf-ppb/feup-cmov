@@ -36,7 +36,7 @@ namespace WeatherApp.Models
             }
         }
 
-        public ImageSource Icon => ImageSource.FromUri(new Uri("http://openweathermap.org/img/wn/"+ WeatherByDays[0][0].Icon + "@2x.png"));
+        public string Icon => "http://openweathermap.org/img/wn/" + WeatherByDays[0][0].Icon + "@2x.png";
 
         private void OnPropertyChanged(string propertyName)
         {
