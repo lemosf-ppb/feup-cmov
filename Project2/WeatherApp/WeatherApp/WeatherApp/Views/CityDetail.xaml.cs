@@ -9,9 +9,6 @@ namespace WeatherApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CityDetail : ContentPage
     {
-        public CityInfo CityInfo { get; set; }
-        private DateTime Today { get; set; }
-
         public CityDetail(CityInfo cityInfo)
         {
             InitializeComponent();
@@ -34,17 +31,17 @@ namespace WeatherApp.Views
             Cloudiness.Text = todayWeather.Clouds.All.ToString(CultureInfo.InvariantCulture) + "%";
 
             var rainValue = 0;
-            if (todayWeather.Rain != null)
-            {
-                rainValue = (int) (todayWeather.Rain.Value * 100);
-            }
+            if (todayWeather.Rain != null) rainValue = (int) (todayWeather.Rain.Value * 100);
 
             Precipitation.Text = rainValue.ToString(CultureInfo.InvariantCulture) + "%";
 
             Temperature.Text = todayWeather.Main.Temperature.ToString(CultureInfo.InvariantCulture);
-            
+
             IconSource.Source = todayWeather.Weather[0].IconSource;
         }
+
+        public CityInfo CityInfo { get; set; }
+        private DateTime Today { get; }
 
         private async void OnFollowBtnClicked(object sender, EventArgs args)
         {

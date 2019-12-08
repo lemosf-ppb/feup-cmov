@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
 using WeatherApp.Models;
 using Xamarin.Forms;
@@ -11,6 +10,15 @@ namespace WeatherApp.ViewModel
         public ObservableCollection<CityInfo> cities;
         public ObservableCollection<CityInfo> favoriteCities;
         public CityInfo selectedCity;
+
+
+        public FavoriteViewModel()
+        {
+            FavoriteCities = new ObservableCollection<CityInfo>();
+            Cities = CitiesData();
+            AddCityCommand = new Command<CityInfo>(AddCity);
+            RemoveCityCommand = new Command<CityInfo>(RemoveCity);
+        }
 
         public ObservableCollection<CityInfo> Cities
         {
@@ -30,17 +38,8 @@ namespace WeatherApp.ViewModel
             set => SetProperty(ref selectedCity, value);
         }
 
-        public ICommand AddCityCommand { private set; get; }
-        public ICommand RemoveCityCommand { private set; get; }
-
-
-        public FavoriteViewModel()
-        {
-            FavoriteCities = new ObservableCollection<CityInfo>();
-            Cities = CitiesData();
-            AddCityCommand = new Command<CityInfo>(AddCity);
-            RemoveCityCommand = new Command<CityInfo>(RemoveCity);
-        }
+        public ICommand AddCityCommand { get; }
+        public ICommand RemoveCityCommand { get; }
 
         private ObservableCollection<CityInfo> CitiesData()
         {
@@ -48,7 +47,7 @@ namespace WeatherApp.ViewModel
             {
                 new CityInfo("Porto"),
                 new CityInfo("Lisboa"),
-                new CityInfo("Coimbra"),
+                new CityInfo("Coimbra")
             };
         }
 
@@ -56,7 +55,7 @@ namespace WeatherApp.ViewModel
         {
             if (selectedCity == null)
                 return;
-            
+
             await selectedCity.OnLoadWeatherForecast();
             FavoriteCities.Add(selectedCity);
             Cities.Remove(selectedCity);

@@ -8,7 +8,7 @@ namespace WeatherApp.Converters
 {
     public class ImageSourceConverter : IValueConverter
     {
-        static WebClient _client = new WebClient();
+        private static readonly WebClient _client = new WebClient();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

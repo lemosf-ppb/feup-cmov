@@ -12,8 +12,6 @@ namespace WeatherApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CityTomorrow : ContentPage
     {
-        private List<WeatherData> WeatherByHours { get; set; }
-
         public CityTomorrow(CityInfo city, DateTime tomorrow)
         {
             InitializeComponent();
@@ -66,12 +64,9 @@ namespace WeatherApp.Views
                     };
                     entries[i] = entry;
                 }
-                
+
                 var icon = "Icon" + i;
-                if (FindByName(icon) is Image iconImage)
-                {
-                    iconImage.Source = weather.Weather[0].IconSource;
-                }
+                if (FindByName(icon) is Image iconImage) iconImage.Source = weather.Weather[0].IconSource;
 
                 minTemp = UpdateMin(weather.Main.TempMin, minTemp);
                 maxTemp = UpdateMax(weather.Main.TempMax, maxTemp);
@@ -94,10 +89,7 @@ namespace WeatherApp.Views
 
                 //PRECIPITATION
                 var rainValue = 0;
-                if (weather.Rain != null)
-                {
-                    rainValue = (int) (weather.Rain.Value * 100);
-                }
+                if (weather.Rain != null) rainValue = (int) (weather.Rain.Value * 100);
 
                 minRain = UpdateMin(rainValue, minRain);
                 maxRain = UpdateMax(rainValue, maxRain);
@@ -132,42 +124,32 @@ namespace WeatherApp.Views
             ChartView.Chart = chart;
         }
 
+        private List<WeatherData> WeatherByHours { get; }
+
         private static int UpdateMin(int value, int min)
         {
-            if (value < min)
-            {
-                min = value;
-            }
+            if (value < min) min = value;
 
             return min;
         }
 
         private static double UpdateMin(double value, double min)
         {
-            if (value < min)
-            {
-                min = value;
-            }
+            if (value < min) min = value;
 
             return min;
         }
 
         private static int UpdateMax(int value, int max)
         {
-            if (value > max)
-            {
-                max = value;
-            }
+            if (value > max) max = value;
 
             return max;
         }
 
         private static double UpdateMax(double value, double max)
         {
-            if (value > max)
-            {
-                max = value;
-            }
+            if (value > max) max = value;
 
             return max;
         }

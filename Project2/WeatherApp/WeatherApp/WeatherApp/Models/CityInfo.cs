@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using WeatherApp.Services;
-using Xamarin.Forms;
 
 namespace WeatherApp.Models
 {
     public class CityInfo
     {
-        public string Name { get; set; }
-        public WeatherForecast WeatherForecast { get; set; }
-
         public CityInfo(string name)
         {
-            this.Name = name;
+            Name = name;
             WeatherForecast = new WeatherForecast();
         }
+
+        public string Name { get; set; }
+        public WeatherForecast WeatherForecast { get; set; }
 
         public async Task OnLoadWeatherForecast()
         {
@@ -26,25 +26,23 @@ namespace WeatherApp.Models
         private void OnCalculateWeatherByDays()
         {
             var weatherByDays = new Dictionary<int, List<WeatherData>>();
-            
+
             var previousHour = 0;
             var day = 0;
             var weatherByHours = new List<WeatherData>();
-            
+
             foreach (var weather in WeatherForecast.Weather)
             {
                 var date = DateTime.ParseExact(weather.DtTxt, "yyyy-MM-dd HH:mm:ss",
-                    System.Globalization.CultureInfo.InvariantCulture);
+                    CultureInfo.InvariantCulture);
 
                 var hour = date.Hour;
                 if (hour < previousHour)
                 {
                     weatherByDays[day] = weatherByHours;
                     day++;
-                    if (day > 1)
-                    {
-                        break;
-                    }
+                    if (day > 1) break;
+
                     weatherByHours = new List<WeatherData>();
                 }
 
