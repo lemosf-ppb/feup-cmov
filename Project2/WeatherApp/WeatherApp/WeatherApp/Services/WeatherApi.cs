@@ -19,7 +19,8 @@ namespace WeatherApp.Services
                 WeatherForecast weatherForecast = null;
                 try
                 {
-                    var response = await client.GetAsync(GenerateRequestUri(Constants.OpenWeatherMapForecastEndpoint, cityName));
+                    var response =
+                        await client.GetAsync(GenerateRequestUri(Constants.OpenWeatherMapForecastEndpoint, cityName));
                     if (response.IsSuccessStatusCode)
                     {
                         var content = await response.Content.ReadAsStringAsync();
@@ -34,7 +35,7 @@ namespace WeatherApp.Services
                 return weatherForecast;
             }
         }
-        
+
         public static async Task<WeatherNow> GetWeatherNow(string cityName)
         {
             using (var client = new HttpClient())
@@ -42,7 +43,8 @@ namespace WeatherApp.Services
                 WeatherNow weatherNow = null;
                 try
                 {
-                    var response = await client.GetAsync(GenerateRequestUri(Constants.OpenWeatherMapWeatherEndpoint, cityName));
+                    var response =
+                        await client.GetAsync(GenerateRequestUri(Constants.OpenWeatherMapWeatherEndpoint, cityName));
                     if (response.IsSuccessStatusCode)
                     {
                         var content = await response.Content.ReadAsStringAsync();

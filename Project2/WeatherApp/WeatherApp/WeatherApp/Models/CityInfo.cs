@@ -16,7 +16,7 @@ namespace WeatherApp.Models
 
         public string Name { get; set; }
         public WeatherForecast WeatherForecast { get; set; }
-        
+
         public WeatherNow WeatherNow { get; set; }
 
         public async Task OnLoadWeatherForecast()

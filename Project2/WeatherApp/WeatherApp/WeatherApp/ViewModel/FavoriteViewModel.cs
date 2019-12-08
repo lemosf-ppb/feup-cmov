@@ -9,16 +9,8 @@ namespace WeatherApp.ViewModel
     {
         public ObservableCollection<CityInfo> cities;
         public ObservableCollection<CityInfo> favoriteCities;
-        public CityInfo selectedCity;
         private bool isLoading = false;
-        public bool IsLoading
-        {
-            get { return isLoading; }
-            set
-            {
-                SetProperty(ref isLoading, value);
-            }
-        }
+        public CityInfo selectedCity;
 
         public FavoriteViewModel()
         {
@@ -26,6 +18,12 @@ namespace WeatherApp.ViewModel
             Cities = CitiesData();
             AddCityCommand = new Command<CityInfo>(AddCity);
             RemoveCityCommand = new Command<CityInfo>(RemoveCity);
+        }
+
+        public bool IsLoading
+        {
+            get { return isLoading; }
+            set { SetProperty(ref isLoading, value); }
         }
 
         public ObservableCollection<CityInfo> Cities

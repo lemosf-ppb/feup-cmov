@@ -39,7 +39,7 @@
                       Grid.Row="1" Margin="20,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
                 <ListView.ItemTemplate>
-                    
+
                     <DataTemplate x:Key="FavouriteCity">
 
                         <ViewCell>
@@ -77,7 +77,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}"  Color ="Red" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+            <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="Red"
+                               VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
         </Grid>
     </RelativeLayout>
 </ContentPage>
