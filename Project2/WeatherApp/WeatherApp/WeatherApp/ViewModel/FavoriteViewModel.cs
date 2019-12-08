@@ -10,7 +10,15 @@ namespace WeatherApp.ViewModel
         public ObservableCollection<CityInfo> cities;
         public ObservableCollection<CityInfo> favoriteCities;
         public CityInfo selectedCity;
-
+        private bool isLoading = false;
+        public bool IsLoading
+        {
+            get { return isLoading; }
+            set
+            {
+                SetProperty(ref isLoading, value);
+            }
+        }
 
         public FavoriteViewModel()
         {
@@ -55,8 +63,10 @@ namespace WeatherApp.ViewModel
         {
             if (selectedCity == null)
                 return;
-
+            IsLoading = true;
             await selectedCity.OnLoadWeatherForecast();
+            IsLoading = false;
+
             FavoriteCities.Add(selectedCity);
             Cities.Remove(selectedCity);
             this.selectedCity = Cities.Count > 0 ? Cities[0] : null;
