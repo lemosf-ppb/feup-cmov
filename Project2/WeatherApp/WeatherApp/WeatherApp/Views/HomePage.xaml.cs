@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using WeatherApp.Models;
 using WeatherApp.ViewModel;
 using Xamarin.Forms;
@@ -10,31 +9,16 @@ namespace WeatherApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : ContentPage
     {
-        private FavoriteCitiesViewModel _favoriteCitiesViewModel;
-        private Dictionary<int, List<WeatherByHour>> WeatherByDays;
-        
         public HomePage()
         {
             InitializeComponent();
-            this.BindingContext = _favoriteCitiesViewModel = new FavoriteCitiesViewModel();
+            BindingContext = new FavoriteViewModel();
         }
 
         private async void OnItemSelected(Object sender, ItemTappedEventArgs e)
         {
-            var details = e.Item as City;
-            await Navigation.PushAsync(new CityDetail(details));
-        }
-
-        private async void OnFollowBtnClicked(Object sender, EventArgs args)
-        {
-            _favoriteCitiesViewModel.AddCity();
-        }
-        
-        private async void OnUnFollowBtnClicked(Object sender, EventArgs args)
-        {
-            var button = sender as Button;
-            var city = button?.BindingContext as City;
-            _favoriteCitiesViewModel.RemoveCity(city);
+            var citySelected = e.Item as CityInfo;
+            await Navigation.PushAsync(new CityDetail(citySelected));
         }
     }
 }

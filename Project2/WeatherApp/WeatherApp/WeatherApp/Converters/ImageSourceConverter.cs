@@ -8,11 +8,11 @@ namespace WeatherApp.Converters
 {
     public class ImageSourceConverter : IValueConverter
     {
-        static WebClient Client = new WebClient();
+        static WebClient _client = new WebClient();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var byteArray = Client.DownloadData(value.ToString());
+            var byteArray = _client.DownloadData($"http://openweathermap.org/img/wn/{value}@2x.png");
             return ImageSource.FromStream(() => new MemoryStream(byteArray));
         }
 

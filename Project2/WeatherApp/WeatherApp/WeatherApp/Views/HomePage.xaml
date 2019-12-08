@@ -3,68 +3,76 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:WeatherApp.Converters;assembly=WeatherApp"
-             x:Class="WeatherApp.Views.HomePage">
-    
-    
-   <ContentPage.Resources>
-    <ResourceDictionary>
-        <converters:ImageSourceConverter x:Key="ImageSourceConverter" />
-    </ResourceDictionary>
+             x:Class="WeatherApp.Views.HomePage"
+             x:Name="HomePageName">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageSourceConverter x:Key="ImageSourceConverter" />
+        </ResourceDictionary>
     </ContentPage.Resources>
-    
+
     <RelativeLayout>
-        <Image Source="overlay.png" Aspect="AspectFill" 
+        <Image Source="overlay.png" Aspect="AspectFill"
                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
-               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"/>
+               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" />
         <Grid VerticalOptions="FillAndExpand"
               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">
-            
+
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="CenterAndExpand">
                 <Frame BackgroundColor="White" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="False">
-                    <Picker VerticalOptions="Center" x:Name="CityPicker" 
+                    <Picker VerticalOptions="Center" x:Name="CityPicker"
                             Title="Please select a city"
                             ItemsSource="{Binding Cities}"
                             ItemDisplayBinding="{Binding Name}"
-                            SelectedItem="{Binding SelectedCity}">
-                    </Picker> 
+                            SelectedItem="{Binding SelectedCity}" />
                 </Frame>
                 <Button Text="FOLLOW"
                         CornerRadius="10"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="Center"
-                        Clicked="OnFollowBtnClicked" />
+                        Command="{Binding AddCityCommand}"
+                        CommandParameter="{Binding SelectedCity}" />
             </StackLayout>
-            <ListView x:Name="FavoriteCitiesList" ItemsSource="{Binding FavoriteCities}" ItemTapped="OnItemSelected" SeparatorVisibility="None"
+            <ListView x:Name="FavoriteCitiesList" ItemsSource="{Binding FavoriteCities}" ItemTapped="OnItemSelected"
+                      SeparatorVisibility="None"
                       Grid.Row="1" Margin="20,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
-                    <DataTemplate >
+                    <DataTemplate x:Key="FavouriteCity">
                         <ViewCell>
-                            <Frame BackgroundColor="White" CornerRadius="10" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="False">
+                            <Frame BackgroundColor="White" CornerRadius="10" BorderColor="#F0F0F0" Padding="5"
+                                   Margin="0,0,0,5" HasShadow="False">
                                 <Grid HeightRequest="50" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding Name}" TextColor="Black" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" Margin="20,0"/>
+                                    <Label Text="{Binding Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"
+                                           VerticalOptions="Center" Margin="20,0" />
                                     <StackLayout Grid.Column="1" Spacing="0" Orientation="Horizontal" Margin="20,0">
-                                        <Label Text="{Binding Temp}" TextColor="Black" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
-                                        <Label Text="°C" TextColor="Black" FontSize="14" FontAttributes="Bold" VerticalOptions="Center"/>
+                                        <Label Text="{Binding WeatherForecast.Weather[0].Main.Temperature}"
+                                               TextColor="Black" FontSize="16" FontAttributes="Bold"
+                                               VerticalOptions="Center" />
+                                        <Label Text="°C" TextColor="Black" FontSize="14" FontAttributes="Bold"
+                                               VerticalOptions="Center" />
                                     </StackLayout>
                                     <Image Grid.Column="2"
-                                           Source="{Binding Icon, Converter={StaticResource ImageSourceConverter}}"
+                                           Source="{Binding WeatherForecast.Weather[0].Weather[0].Icon, Converter={StaticResource ImageSourceConverter}}"
                                            VerticalOptions="Center" Margin="20,0" />
                                     <Button Grid.Column="3" Text="X"
                                             CornerRadius="10"
                                             VerticalOptions="CenterAndExpand"
                                             HorizontalOptions="Center"
-                                            Clicked="OnUnFollowBtnClicked" />
+                                            Command="{Binding Path=BindingContext.RemoveCityCommand, Source={x:Reference HomePageName}}"
+                                            CommandParameter="{Binding .}" />
                                 </Grid>
                             </Frame>
                         </ViewCell>
