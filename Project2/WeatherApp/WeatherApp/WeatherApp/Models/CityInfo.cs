@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WeatherApp.Services;
+using Xamarin.Forms;
 
 namespace WeatherApp.Models
 {

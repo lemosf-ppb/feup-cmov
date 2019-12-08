@@ -17,14 +17,14 @@ namespace WeatherApp.Views
         public CityTomorrow(CityInfo city, DateTime tomorrow)
         {
             InitializeComponent();
-            Console.WriteLine("bamuuus");
-            Console.WriteLine(city.Name);
+
             CityName.Text = city.Name;
             Date.Text = $"{tomorrow:dddd, MMMM d, yyyy}";
 
             WeatherByHours = city.WeatherForecast.WeatherByDays[1];
 
             Temperature.Text = WeatherByHours[0].Main.Temperature.ToString(CultureInfo.InvariantCulture);
+            IconSource.Source = WeatherByHours[0].Weather[0].IconSource;
 
             var i = 0;
             var minTemp = 100.0;
@@ -50,7 +50,6 @@ namespace WeatherApp.Views
             foreach (var weather in WeatherByHours)
             {
                 var name = "Temp" + i;
-                Console.WriteLine(name);
                 if (FindByName(name) is Label tempLabel)
                 {
                     var temp = weather.Main.Temperature;
@@ -66,6 +65,12 @@ namespace WeatherApp.Views
                         Color = SKColors.White
                     };
                     entries[i] = entry;
+                }
+                
+                var icon = "Icon" + i;
+                if (FindByName(icon) is Image iconImage)
+                {
+                    iconImage.Source = weather.Weather[0].IconSource;
                 }
 
                 minTemp = UpdateMin(weather.Main.TempMin, minTemp);

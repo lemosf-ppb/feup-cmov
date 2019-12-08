@@ -6,13 +6,6 @@
              x:Class="WeatherApp.Views.HomePage"
              x:Name="HomePageName">
 
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:ImageSourceConverter x:Key="ImageSourceConverter" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <RelativeLayout>
         <Image Source="overlay.png" Aspect="AspectFill"
                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
@@ -65,7 +58,7 @@
                                                VerticalOptions="Center" />
                                     </StackLayout>
                                     <Image Grid.Column="2"
-                                           Source="{Binding WeatherForecast.Weather[0].Weather[0].Icon, Converter={StaticResource ImageSourceConverter}}"
+                                           Source="{Binding WeatherForecast.Weather[0].Weather[0].IconSource}"
                                            VerticalOptions="Center" Margin="20,0" />
                                     <Button Grid.Column="3" Text="X"
                                             CornerRadius="10"

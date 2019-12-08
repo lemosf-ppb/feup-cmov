@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using WeatherApp.Models;
+using Xamarin.Forms;
 
 namespace WeatherApp.Services
 {
@@ -29,6 +32,25 @@ namespace WeatherApp.Services
                 }
 
                 return weatherForecast;
+            }
+        }
+
+        public static ImageSource GetIconSource(string icon)
+        {
+            using (var client = new WebClient())
+            {
+                try
+                {
+                    var byteArray = client.DownloadData($"http://openweathermap.org/img/wn/{icon}@2x.png");
+                    return ImageSource.FromStream(() => new MemoryStream(byteArray));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("\t\tERROR {0}", ex.Message);
+                }
+
+                return ImageSource.FromStream(() => new MemoryStream());
+                ;
             }
         }
 

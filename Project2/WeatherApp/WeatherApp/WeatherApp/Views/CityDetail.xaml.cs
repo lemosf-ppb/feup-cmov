@@ -42,6 +42,8 @@ namespace WeatherApp.Views
             Precipitation.Text = rainValue.ToString(CultureInfo.InvariantCulture) + "%";
 
             Temperature.Text = todayWeather.Main.Temperature.ToString(CultureInfo.InvariantCulture);
+            
+            IconSource.Source = todayWeather.Weather[0].IconSource;
         }
 
         private async void OnFollowBtnClicked(object sender, EventArgs args)
