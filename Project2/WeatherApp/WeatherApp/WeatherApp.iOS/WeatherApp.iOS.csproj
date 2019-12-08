@@ -138,48 +138,15 @@
     <BundleResource Include="Resources\overlay.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\place.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\pressure.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\settings.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\weather.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\wind.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\add.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\bg.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\cloudiness.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\dashboard.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\grid.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\gridColor.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\humidity.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\list.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\listColor.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\menu.png" />
   </ItemGroup>
 </Project>

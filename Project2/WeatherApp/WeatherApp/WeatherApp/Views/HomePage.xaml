@@ -2,15 +2,15 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:converters="clr-namespace:WeatherApp.Converters;assembly=WeatherApp"
+             xmlns:weatherApp="clr-namespace:WeatherApp;assembly=WeatherApp"
              x:Class="WeatherApp.Views.HomePage"
              x:Name="HomePageName">
-
+    
     <RelativeLayout>
-        <Image Source="overlay.png" Aspect="AspectFill"
-               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
-               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" />
-        <Grid VerticalOptions="FillAndExpand"
+        <!-- <Image Source="overlay.png" Aspect="AspectFill" -->
+        <!--        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}" -->
+        <!--        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" /> -->
+        <Grid VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource DeepAqua}"
               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">
 
@@ -19,10 +19,12 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="CenterAndExpand">
-                <Frame BackgroundColor="White" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="False">
+            <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="CenterAndExpand" Margin="0,5,0,0">
+                <Frame BackgroundColor="{StaticResource Seafoam}" BorderColor="{StaticResource Seafoam}" Padding="5" Margin="0,0,0,5" HasShadow="False">
                     <Picker VerticalOptions="Center" x:Name="CityPicker"
                             Title="Please select a city"
+                            TextColor="{StaticResource DeepAqua}"
+                            
                             ItemsSource="{Binding Cities}"
                             ItemDisplayBinding="{Binding Name}"
                             SelectedItem="{Binding SelectedCity}" />
@@ -31,11 +33,14 @@
                         CornerRadius="10"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="Center"
+                        BackgroundColor="{StaticResource Wave}"
+                        TextColor="{StaticResource DeepAqua}"
                         Command="{Binding AddCityCommand}"
                         CommandParameter="{Binding SelectedCity}" />
             </StackLayout>
-            <ListView x:Name="FavoriteCitiesList" ItemsSource="{Binding FavoriteCities}" ItemTapped="OnItemSelected"
+            <ListView x:Name="FavoriteCitiesList" ItemsSource="{Binding FavoriteCities}" ItemTapped="OnItemSelected" 
                       SeparatorVisibility="None"
+                      HasUnevenRows="true"
                       Grid.Row="1" Margin="20,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
                 <ListView.ItemTemplate>
@@ -43,31 +48,35 @@
                     <DataTemplate x:Key="FavouriteCity">
 
                         <ViewCell>
-                            <Frame BackgroundColor="White" CornerRadius="10" BorderColor="#F0F0F0" Padding="5"
-                                   Margin="0,0,0,5" HasShadow="False">
-                                <Grid HeightRequest="50" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                            <Frame BackgroundColor="{StaticResource Ocean}" CornerRadius="10" BorderColor="#336B87" Padding="5"
+                                   Margin="0,0,0,5" HasShadow="False" >
+                                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Start">
 
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="1.5*" />
+                                        <ColumnDefinition Width="1.5*" />
+                                        <ColumnDefinition Width="0.5*" />
                                     </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"
-                                           VerticalOptions="Center" Margin="20,0" />
-                                    <StackLayout Grid.Column="1" Spacing="0" Orientation="Horizontal" Margin="20,0">
+                                    
+                                    <Label Grid.Column="0" Text="{Binding Name}" TextColor="{StaticResource Seafoam}" FontSize="16" FontAttributes="Bold"
+                                           VerticalOptions="Center" Margin="10,0" />
+                                    <StackLayout Grid.Column="1" Spacing="0" Orientation="Horizontal" Margin="10,0">
                                         <Label Text="{Binding WeatherNow.Main.Temperature}"
-                                               TextColor="Black" FontSize="16" FontAttributes="Bold"
+                                               TextColor="{StaticResource Seafoam}" FontSize="16" FontAttributes="Bold"
                                                VerticalOptions="Center" />
-                                        <Label Text="°C" TextColor="Black" FontSize="14" FontAttributes="Bold"
+                                        <Label Text="°C" TextColor="{StaticResource Seafoam}" FontSize="14" FontAttributes="Bold"
                                                VerticalOptions="Center" />
                                     </StackLayout>
                                     <Image Grid.Column="2"
+                                           Aspect="AspectFill"
                                            Source="{Binding WeatherNow.Weather[0].IconSource}"
-                                           VerticalOptions="Center" Margin="20,0" />
+                                           VerticalOptions="Center" Margin="10,0" />
                                     <Button Grid.Column="3" Text="X"
                                             CornerRadius="10"
-                                            VerticalOptions="CenterAndExpand"
+                                            BackgroundColor="{StaticResource Wave}"
+                                            TextColor="{StaticResource DeepAqua}"
+                                            VerticalOptions="Center"
                                             HorizontalOptions="Center"
                                             Command="{Binding Path=BindingContext.RemoveCityCommand, Source={x:Reference HomePageName}}"
                                             CommandParameter="{Binding .}" />

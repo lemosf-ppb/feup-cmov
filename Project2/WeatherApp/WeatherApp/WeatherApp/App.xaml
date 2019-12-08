@@ -7,6 +7,11 @@
              mc:Ignorable="d"
              x:Class="WeatherApp.App">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <Color x:Key="DeepAqua">#003B46</Color>
+            <Color x:Key="Ocean">#07575B</Color>
+            <Color x:Key="Wave">#66A5AD</Color>
+            <Color x:Key="Seafoam">#C4DFE6</Color>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

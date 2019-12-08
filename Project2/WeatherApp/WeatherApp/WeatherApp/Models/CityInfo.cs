@@ -6,7 +6,7 @@ using WeatherApp.Services;
 
 namespace WeatherApp.Models
 {
-    public class CityInfo
+    public class CityInfo : IComparable
     {
         public CityInfo(string name)
         {
@@ -23,6 +23,7 @@ namespace WeatherApp.Models
         {
             WeatherForecast = await WeatherApi.GetWeatherForecast(Name);
             WeatherNow = await WeatherApi.GetWeatherNow(Name);
+            WeatherNow.Weather[0].IconSource = WeatherApi.GetIconSource(WeatherNow.Weather[0].Icon);
             OnCalculateWeatherByDays();
         }
 
@@ -50,10 +51,18 @@ namespace WeatherApp.Models
                 }
 
                 previousHour = hour;
+                
+                weather.Weather[0].IconSource = WeatherApi.GetIconSource(weather.Weather[0].Icon);
                 weatherByHours.Add(weather);
             }
 
             WeatherForecast.WeatherByDays = weatherByDays;
+        }
+
+        public int CompareTo(object obj)
+        {
+            var secondObject = (CityInfo) obj;
+            return string.CompareOrdinal(this.Name,secondObject.Name);
         }
     }
 }

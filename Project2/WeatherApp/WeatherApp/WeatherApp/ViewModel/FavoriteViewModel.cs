@@ -1,4 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using WeatherApp.Models;
 using Xamarin.Forms;
@@ -7,10 +10,10 @@ namespace WeatherApp.ViewModel
 {
     public class FavoriteViewModel : ViewModelBase
     {
-        public ObservableCollection<CityInfo> cities;
-        public ObservableCollection<CityInfo> favoriteCities;
-        private bool isLoading = false;
-        public CityInfo selectedCity;
+        private ObservableCollection<CityInfo> _cities;
+        private ObservableCollection<CityInfo> _favoriteCities;
+        private bool isLoading;
+        private CityInfo _selectedCity;
 
         public FavoriteViewModel()
         {
@@ -28,20 +31,20 @@ namespace WeatherApp.ViewModel
 
         public ObservableCollection<CityInfo> Cities
         {
-            get => cities;
-            set => SetProperty(ref cities, value);
+            get => _cities;
+            set => SetProperty(ref _cities, value);
         }
 
         public ObservableCollection<CityInfo> FavoriteCities
         {
-            get => favoriteCities;
-            set => SetProperty(ref favoriteCities, value);
+            get => _favoriteCities;
+            set => SetProperty(ref _favoriteCities, value);
         }
 
         public CityInfo SelectedCity
         {
-            get => selectedCity;
-            set => SetProperty(ref selectedCity, value);
+            get => _selectedCity;
+            set => SetProperty(ref _selectedCity, value);
         }
 
         public ICommand AddCityCommand { get; }
@@ -51,10 +54,26 @@ namespace WeatherApp.ViewModel
         {
             return new ObservableCollection<CityInfo>
             {
-                new CityInfo("Porto"),
+                new CityInfo("Aveiro"),
+                new CityInfo("Beja"),
+                new CityInfo("Braga"),
+                new CityInfo("Bragança"),
+                new CityInfo("Castelo Branco"),
+                new CityInfo("Coimbra"),
+                new CityInfo("Évora"),
+                new CityInfo("Faro"),
+                new CityInfo("Guarda"),
+                new CityInfo("Leiria"),
                 new CityInfo("Lisboa"),
-                new CityInfo("Coimbra")
+                new CityInfo("Portalegre"),
+                new CityInfo("Porto"),
+                new CityInfo("Santarém"),
+                new CityInfo("Setúbal"),
+                new CityInfo("Viana do Castelo"),
+                new CityInfo("Vila Real"),
+                new CityInfo("Viseu")
             };
+            
         }
 
         private async void AddCity(CityInfo selectedCity)
@@ -67,13 +86,29 @@ namespace WeatherApp.ViewModel
 
             FavoriteCities.Add(selectedCity);
             Cities.Remove(selectedCity);
-            this.selectedCity = Cities.Count > 0 ? Cities[0] : null;
+            _selectedCity = Cities.Count > 0 ? Cities[0] : null;
         }
 
-        private async void RemoveCity(CityInfo city)
+        private static void BubbleSort(IList o) {
+            for (var i = o.Count - 1; i >= 0; i--) {
+                for (var j = 1; j <= i; j++) {
+                    var o1 = o[j - 1];
+                    var o2 = o[j];
+                    if (((IComparable) o1).CompareTo(o2) <= 0)
+                    {
+                        continue;
+                    }
+                    o.Remove(o1);
+                    o.Insert(j, o1);
+                }
+            }
+        }
+
+        private void RemoveCity(CityInfo city)
         {
             FavoriteCities.Remove(city);
             Cities.Add(city);
+            BubbleSort(Cities);
         }
     }
 }

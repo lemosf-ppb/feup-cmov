@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using WeatherApp.Services;
 using Xamarin.Forms;
@@ -76,7 +77,14 @@ namespace WeatherApp.Models
 
     public class Main
     {
-        [JsonProperty("temp")] public double Temperature { get; set; }
+        private double _temperature;
+
+        [JsonProperty("temp")]
+        public double Temperature
+        {
+            get => Math.Round(_temperature,1);
+            set => _temperature = value;
+        }
 
         [JsonProperty("temp_min")] public double TempMin { get; set; }
 
@@ -97,7 +105,7 @@ namespace WeatherApp.Models
 
         [JsonProperty("icon")] public string Icon { get; set; }
 
-        public ImageSource IconSource => WeatherApi.GetIconSource(Icon);
+        public ImageSource IconSource { get; set; }
     }
 
     public class Wind
