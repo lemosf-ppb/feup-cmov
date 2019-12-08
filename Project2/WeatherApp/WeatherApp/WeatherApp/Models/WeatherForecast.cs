@@ -5,6 +5,23 @@ using Xamarin.Forms;
 
 namespace WeatherApp.Models
 {
+    public class WeatherNow
+    {
+        [JsonProperty("weather")] public Weather[] Weather { get; set; }
+
+        [JsonProperty("main")] public Main Main { get; set; }
+
+        [JsonProperty("visibility")] public long Visibility { get; set; }
+
+        [JsonProperty("wind")] public Wind Wind { get; set; }
+
+        [JsonProperty("clouds")] public Clouds Clouds { get; set; }
+
+        [JsonProperty("dt")] public long Dt { get; set; }
+
+        [JsonProperty("rain")] public Rain Rain { get; set; }
+    }
+
     public class WeatherForecast
     {
         [JsonProperty("list")] public WeatherData[] Weather { get; set; }
@@ -92,6 +109,7 @@ namespace WeatherApp.Models
 
     public class Rain
     {
-        [JsonProperty("3h")] public double Value { get; set; }
+        [JsonProperty("1h")] public double LastHour { get; set; }
+        [JsonProperty("3h")] public double Last3Hour { get; set; }
     }
 }

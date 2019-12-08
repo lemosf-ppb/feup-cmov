@@ -14,14 +14,13 @@ namespace WeatherApp.Views
             InitializeComponent();
 
             CityInfo = cityInfo;
-            Console.WriteLine("oi" + CityInfo.Name);
             CityName.Text = cityInfo.Name;
 
             Today = DateTime.Now;
 
             Date.Text = $"{Today:dddd, MMMM d, yyyy}";
 
-            var todayWeather = CityInfo.WeatherForecast.Weather[0];
+            var todayWeather = CityInfo.WeatherNow;
             Wind.Text = todayWeather.Wind.Speed.ToString(CultureInfo.InvariantCulture) + " m/s";
 
             Humidity.Text = todayWeather.Main.Humidity.ToString(CultureInfo.InvariantCulture) + "%";
@@ -30,10 +29,10 @@ namespace WeatherApp.Views
 
             Cloudiness.Text = todayWeather.Clouds.All.ToString(CultureInfo.InvariantCulture) + "%";
 
-            var rainValue = 0;
-            if (todayWeather.Rain != null) rainValue = (int) (todayWeather.Rain.Value * 100);
+            var rainValue = 0.0;
+            if (todayWeather.Rain != null) rainValue = todayWeather.Rain.LastHour;
 
-            Precipitation.Text = rainValue.ToString(CultureInfo.InvariantCulture) + "%";
+            Precipitation.Text = rainValue.ToString(CultureInfo.InvariantCulture) + "mm";
 
             Temperature.Text = todayWeather.Main.Temperature.ToString(CultureInfo.InvariantCulture);
 

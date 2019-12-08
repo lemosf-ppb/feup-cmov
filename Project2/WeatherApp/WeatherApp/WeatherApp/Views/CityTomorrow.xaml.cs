@@ -28,8 +28,8 @@ namespace WeatherApp.Views
             var minTemp = 100.0;
             var maxTemp = -100.0;
 
-            var maxRain = 0;
-            var minRain = 100;
+            var maxRain = 0.0;
+            var minRain = 100.0;
 
             var maxHumidity = 0;
             var minHumidity = 100;
@@ -88,8 +88,8 @@ namespace WeatherApp.Views
                 maxCloudiness = (int) UpdateMax(weather.Clouds.All, maxCloudiness);
 
                 //PRECIPITATION
-                var rainValue = 0;
-                if (weather.Rain != null) rainValue = (int) (weather.Rain.Value * 100);
+                var rainValue = 0.0;
+                if (weather.Rain != null) rainValue = weather.Rain.Last3Hour;
 
                 minRain = UpdateMin(rainValue, minRain);
                 maxRain = UpdateMax(rainValue, maxRain);
@@ -101,7 +101,7 @@ namespace WeatherApp.Views
 
             MaxMinHumidity.Text = minHumidity + "/" + maxHumidity + "%";
 
-            MaxMinPrecipitation.Text = minRain + "/" + maxRain + "%";
+            MaxMinPrecipitation.Text = minRain + "/" + maxRain + "mm";
 
             MaxMinPressure.Text = minPressure + "/" + maxPressure + " hpa";
 

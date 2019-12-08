@@ -7,9 +7,9 @@
              x:Name="HomePageName">
 
     <RelativeLayout>
-        <!-- <Image Source="overlay.png" Aspect="AspectFill" -->
-        <!--        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}" -->
-        <!--        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" /> -->
+        <Image Source="overlay.png" Aspect="AspectFill"
+               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" />
         <Grid VerticalOptions="FillAndExpand"
               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">
@@ -56,14 +56,14 @@
                                     <Label Text="{Binding Name}" TextColor="Black" FontSize="16" FontAttributes="Bold"
                                            VerticalOptions="Center" Margin="20,0" />
                                     <StackLayout Grid.Column="1" Spacing="0" Orientation="Horizontal" Margin="20,0">
-                                        <Label Text="{Binding WeatherForecast.Weather[0].Main.Temperature}"
+                                        <Label Text="{Binding WeatherNow.Main.Temperature}"
                                                TextColor="Black" FontSize="16" FontAttributes="Bold"
                                                VerticalOptions="Center" />
                                         <Label Text="°C" TextColor="Black" FontSize="14" FontAttributes="Bold"
                                                VerticalOptions="Center" />
                                     </StackLayout>
                                     <Image Grid.Column="2"
-                                           Source="{Binding WeatherForecast.Weather[0].Weather[0].IconSource}"
+                                           Source="{Binding WeatherNow.Weather[0].IconSource}"
                                            VerticalOptions="Center" Margin="20,0" />
                                     <Button Grid.Column="3" Text="X"
                                             CornerRadius="10"
