@@ -81,7 +81,7 @@ namespace WeatherApp.Services
 
         private static string GenerateRequestUri(string requestUri, string cityName)
         {
-            requestUri += $"?q={cityName}";
+            requestUri += $"?q={cityName},PT";
             requestUri += "&units=metric";
             requestUri += $"&APPID={Constants.OpenWeatherMapApiKey}";
             return requestUri;
