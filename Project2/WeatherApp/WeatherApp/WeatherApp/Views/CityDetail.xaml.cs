@@ -42,11 +42,6 @@ namespace WeatherApp.Views
         public CityInfo CityInfo { get; set; }
         private DateTime Today { get; }
 
-        private async void OnFollowBtnClicked(object sender, EventArgs args)
-        {
-            //Remove city from list
-        }
-
         private async void OnTomorrowBtnClicked(object sender, EventArgs args)
         {
             await Navigation.PushAsync(new CityTomorrow(CityInfo, Today.AddDays(1)));

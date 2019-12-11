@@ -7,9 +7,6 @@
              x:Name="HomePageName">
     
     <RelativeLayout>
-        <!-- <Image Source="overlay.png" Aspect="AspectFill" -->
-        <!--        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}" -->
-        <!--        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" /> -->
         <Grid VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource DeepAqua}"
               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">
@@ -19,25 +16,40 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="CenterAndExpand" Margin="0,5,0,0">
-                <Frame BackgroundColor="{StaticResource Seafoam}" BorderColor="{StaticResource Seafoam}" Padding="5" Margin="0,0,0,5" HasShadow="False">
-                    <Picker VerticalOptions="Center" x:Name="CityPicker"
-                            Title="Please select a city"
-                            TextColor="{StaticResource DeepAqua}"
-                            
-                            ItemsSource="{Binding Cities}"
-                            ItemDisplayBinding="{Binding Name}"
-                            SelectedItem="{Binding SelectedCity}" />
-                </Frame>
-                <Button Text="FOLLOW"
+            <FlexLayout Grid.Row="0" Margin="10,5,10,0" HeightRequest="70"
+                        Direction="Row"
+                        AlignItems="Center"
+                        JustifyContent="SpaceBetween">
+                
+                <Button Text="SYNC"
                         CornerRadius="10"
+                        Margin="0,0,15,0"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="Center"
                         BackgroundColor="{StaticResource Wave}"
                         TextColor="{StaticResource DeepAqua}"
-                        Command="{Binding AddCityCommand}"
-                        CommandParameter="{Binding SelectedCity}" />
-            </StackLayout>
+                        Command="{Binding SyncCommand}"/>
+                
+                <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="CenterAndExpand">
+                    <Frame BackgroundColor="{StaticResource Seafoam}" BorderColor="{StaticResource Seafoam}" Padding="5" HasShadow="False">
+                        <Picker VerticalOptions="Center" x:Name="CityPicker"
+                                Title="Please select a city"
+                                TextColor="{StaticResource DeepAqua}"
+                            
+                                ItemsSource="{Binding Cities}"
+                                ItemDisplayBinding="{Binding Name}"
+                                SelectedItem="{Binding SelectedCity}" />
+                    </Frame>
+                    <Button Text="FOLLOW"
+                            CornerRadius="10"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="Center"
+                            BackgroundColor="{StaticResource Wave}"
+                            TextColor="{StaticResource DeepAqua}"
+                            Command="{Binding AddCityCommand}"
+                            CommandParameter="{Binding SelectedCity}" />
+                </StackLayout>
+            </FlexLayout>
             <ListView x:Name="FavoriteCitiesList" ItemsSource="{Binding FavoriteCities}" ItemTapped="OnItemSelected" 
                       SeparatorVisibility="None"
                       HasUnevenRows="true"
@@ -86,7 +98,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="Red"
+            <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="{StaticResource Seafoam}"
                                VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
         </Grid>
     </RelativeLayout>

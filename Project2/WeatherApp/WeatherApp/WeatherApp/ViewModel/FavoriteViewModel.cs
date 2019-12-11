@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using WeatherApp.Models;
@@ -21,6 +22,9 @@ namespace WeatherApp.ViewModel
             Cities = CitiesData();
             AddCityCommand = new Command<CityInfo>(AddCity);
             RemoveCityCommand = new Command<CityInfo>(RemoveCity);
+            SyncCommand = new Command(Sync);
+
+            LoadData();
         }
 
         public bool IsLoading
@@ -49,6 +53,8 @@ namespace WeatherApp.ViewModel
 
         public ICommand AddCityCommand { get; }
         public ICommand RemoveCityCommand { get; }
+        
+        public ICommand SyncCommand { get; }
 
         private ObservableCollection<CityInfo> CitiesData()
         {
@@ -87,6 +93,8 @@ namespace WeatherApp.ViewModel
             FavoriteCities.Add(selectedCity);
             Cities.Remove(selectedCity);
             _selectedCity = Cities.Count > 0 ? Cities[0] : null;
+
+            StoreData();
         }
 
         private static void BubbleSort(IList o) {
@@ -109,6 +117,55 @@ namespace WeatherApp.ViewModel
             FavoriteCities.Remove(city);
             Cities.Add(city);
             BubbleSort(Cities);
+        }
+
+        private async void Sync()
+        {
+            if (_favoriteCities.Count == 0)
+            {
+                return;
+            }
+            
+            IsLoading = true;
+            foreach (var city in _favoriteCities)
+            {
+                await city.OnLoadWeatherForecast();
+            }
+            IsLoading = false;
+        }
+
+        private void StoreData()
+        {
+            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "data.txt");
+
+            var data = "";
+            for (var i=0; i<_favoriteCities.Count; i++)
+            {
+                data += _favoriteCities[i].Name;
+                if (i != _favoriteCities.Count - 1)
+                {
+                    data += "\n";
+                }
+            }
+
+            File.WriteAllText(filePath, data);
+        }
+
+        private void LoadData()
+        {
+            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "data.txt");
+
+            if (!File.Exists(filePath)) return;
+            
+            string line;  
+            var file =   new StreamReader(filePath);  
+            while((line = file.ReadLine()) != null)  
+            {  
+                var cityInfo = new CityInfo(line);
+                AddCity(cityInfo);
+            }  
+  
+            file.Close();
         }
     }
 }

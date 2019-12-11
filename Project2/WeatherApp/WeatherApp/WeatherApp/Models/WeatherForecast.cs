@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using SkiaSharp;
 using WeatherApp.Services;
 using Xamarin.Forms;
 
@@ -106,6 +107,8 @@ namespace WeatherApp.Models
         [JsonProperty("icon")] public string Icon { get; set; }
 
         public ImageSource IconSource { get; set; }
+        
+        public SKBitmap IconBitmap { get; set; }
     }
 
     public class Wind

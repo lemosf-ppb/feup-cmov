@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using SkiaSharp;
 using WeatherApp.Models;
 using Xamarin.Forms;
 
@@ -24,6 +25,7 @@ namespace WeatherApp.Services
                     if (response.IsSuccessStatusCode)
                     {
                         var content = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine(content);
                         weatherForecast = JsonConvert.DeserializeObject<WeatherForecast>(content);
                     }
                 }
@@ -76,6 +78,24 @@ namespace WeatherApp.Services
 
                 return ImageSource.FromStream(() => new MemoryStream());
                 ;
+            }
+        }
+        
+        public static SKBitmap GetIconBitMap(string icon)
+        {
+            using (var client = new WebClient())
+            {
+                try
+                {
+                    var stream = client.OpenRead($"http://openweathermap.org/img/wn/{icon}@2x.png");
+                    return SKBitmap.Decode(stream);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("\t\tERROR {0}", ex.Message);
+                }
+
+                return new SKBitmap();
             }
         }
 

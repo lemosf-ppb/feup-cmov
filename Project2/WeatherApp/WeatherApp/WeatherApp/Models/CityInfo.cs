@@ -24,6 +24,7 @@ namespace WeatherApp.Models
             WeatherForecast = await WeatherApi.GetWeatherForecast(Name);
             WeatherNow = await WeatherApi.GetWeatherNow(Name);
             WeatherNow.Weather[0].IconSource = WeatherApi.GetIconSource(WeatherNow.Weather[0].Icon);
+            WeatherNow.Weather[0].IconBitmap = WeatherApi.GetIconBitMap(WeatherNow.Weather[0].Icon);
             OnCalculateWeatherByDays();
         }
 
@@ -35,6 +36,8 @@ namespace WeatherApp.Models
             var day = 0;
             var weatherByHours = new List<WeatherData>();
 
+            var dayAfterTomorrow = false;
+
             foreach (var weather in WeatherForecast.Weather)
             {
                 var date = DateTime.ParseExact(weather.DtTxt, "yyyy-MM-dd HH:mm:ss",
@@ -45,7 +48,11 @@ namespace WeatherApp.Models
                 {
                     weatherByDays[day] = weatherByHours;
                     day++;
-                    if (day > 1) break;
+
+                    if (day > 1)
+                    {
+                        dayAfterTomorrow = true;
+                    }
 
                     weatherByHours = new List<WeatherData>();
                 }
@@ -53,7 +60,13 @@ namespace WeatherApp.Models
                 previousHour = hour;
                 
                 weather.Weather[0].IconSource = WeatherApi.GetIconSource(weather.Weather[0].Icon);
+                weather.Weather[0].IconBitmap = WeatherApi.GetIconBitMap(weather.Weather[0].Icon);
                 weatherByHours.Add(weather);
+                if (dayAfterTomorrow)
+                {
+                    weatherByDays[day] = weatherByHours;
+                    break;
+                }
             }
 
             WeatherForecast.WeatherByDays = weatherByDays;
