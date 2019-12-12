@@ -6,6 +6,10 @@
              xmlns:converters="clr-namespace:WeatherApp.Converters;assembly=WeatherApp"
              x:Class="WeatherApp.Views.HomePage"
              x:Name="HomePageName">
+    
+    <NavigationPage.TitleView>
+        <Label FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Seafoam}">Portugal Weather Seer</Label>
+    </NavigationPage.TitleView>
 
     <ContentPage.Resources>
         <ResourceDictionary>

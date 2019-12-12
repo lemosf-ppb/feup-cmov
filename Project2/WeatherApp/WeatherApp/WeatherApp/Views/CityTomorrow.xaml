@@ -7,7 +7,12 @@
              xmlns:forms="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              mc:Ignorable="d"
              x:Class="WeatherApp.Views.CityTomorrow">
-    <ContentPage.Content>
+       
+       <NavigationPage.TitleView>
+              <Label FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Seafoam}">Portugal Weather Seer</Label>
+       </NavigationPage.TitleView>
+       
+       <ContentPage.Content>
         <RelativeLayout BackgroundColor="{StaticResource DeepAqua}">
             <Grid VerticalOptions="FillAndExpand"
                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"

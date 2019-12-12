@@ -6,6 +6,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="WeatherApp.Views.CityDetail">
+    
+    <NavigationPage.TitleView>
+        <Label FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Seafoam}">Portugal Weather Seer</Label>
+    </NavigationPage.TitleView>
 
     <RelativeLayout>
         <!-- <Image Source="overlay.png" Aspect="AspectFill" -->
