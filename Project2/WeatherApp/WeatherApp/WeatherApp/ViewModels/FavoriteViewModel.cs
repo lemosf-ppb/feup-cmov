@@ -114,6 +114,8 @@ namespace WeatherApp.ViewModels
             FavoriteCities.Remove(city);
             Cities.Add(city);
             BubbleSort(Cities);
+            
+            StoreData();
         }
 
         private async void Sync()
