@@ -88,7 +88,7 @@
                     </StackLayout>
                     <StackLayout Grid.Column="2" Orientation="Vertical" Spacing="10"
                                  HorizontalOptions="CenterAndExpand">
-                        <Image Source="humidity.png" HeightRequest="35" HorizontalOptions="Center" />
+                        <Image Source="rain.png" HeightRequest="35" HorizontalOptions="Center" />
                         <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
                             <Label x:Name="Precipitation" Text="24%" TextColor="{StaticResource DeepAqua}"
                                    FontSize="16"
