@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace WeatherApp.ViewModel
+namespace WeatherApp.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

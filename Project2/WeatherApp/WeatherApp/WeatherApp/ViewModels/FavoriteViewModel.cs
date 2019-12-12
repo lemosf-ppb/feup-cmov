@@ -6,7 +6,7 @@ using System.Windows.Input;
 using WeatherApp.Models;
 using Xamarin.Forms;
 
-namespace WeatherApp.ViewModel
+namespace WeatherApp.ViewModels
 {
     public class FavoriteViewModel : ViewModelBase
     {

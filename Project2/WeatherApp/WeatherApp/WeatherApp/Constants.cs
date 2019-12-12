@@ -1,4 +1,8 @@
-﻿namespace WeatherApp
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace WeatherApp
 {
     public static class Constants
     {

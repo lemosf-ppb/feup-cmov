@@ -1,5 +1,5 @@
 ﻿using WeatherApp.Models;
-using WeatherApp.ViewModel;
+using WeatherApp.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
