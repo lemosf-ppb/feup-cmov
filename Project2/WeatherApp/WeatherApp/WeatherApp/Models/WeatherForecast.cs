@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using SkiaSharp;
-using WeatherApp.Services;
 using Xamarin.Forms;
 
 namespace WeatherApp.Models
@@ -83,7 +82,7 @@ namespace WeatherApp.Models
         [JsonProperty("temp")]
         public double Temperature
         {
-            get => Math.Round(_temperature,1);
+            get => Math.Round(_temperature, 1);
             set => _temperature = value;
         }
 
@@ -107,7 +106,7 @@ namespace WeatherApp.Models
         [JsonProperty("icon")] public string Icon { get; set; }
 
         public ImageSource IconSource { get; set; }
-        
+
         public SKBitmap IconBitmap { get; set; }
     }
 

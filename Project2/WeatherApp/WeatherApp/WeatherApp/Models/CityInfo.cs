@@ -19,6 +19,12 @@ namespace WeatherApp.Models
 
         public WeatherNow WeatherNow { get; set; }
 
+        public int CompareTo(object obj)
+        {
+            var secondObject = (CityInfo) obj;
+            return string.CompareOrdinal(Name, secondObject.Name);
+        }
+
         public async Task OnLoadWeatherForecast()
         {
             WeatherForecast = await WeatherApi.GetWeatherForecast(Name);
@@ -49,16 +55,13 @@ namespace WeatherApp.Models
                     weatherByDays[day] = weatherByHours;
                     day++;
 
-                    if (day > 1)
-                    {
-                        dayAfterTomorrow = true;
-                    }
+                    if (day > 1) dayAfterTomorrow = true;
 
                     weatherByHours = new List<WeatherData>();
                 }
 
                 previousHour = hour;
-                
+
                 weather.Weather[0].IconSource = WeatherApi.GetIconSource(weather.Weather[0].Icon);
                 weather.Weather[0].IconBitmap = WeatherApi.GetIconBitMap(weather.Weather[0].Icon);
                 weatherByHours.Add(weather);
@@ -70,12 +73,6 @@ namespace WeatherApp.Models
             }
 
             WeatherForecast.WeatherByDays = weatherByDays;
-        }
-
-        public int CompareTo(object obj)
-        {
-            var secondObject = (CityInfo) obj;
-            return string.CompareOrdinal(this.Name,secondObject.Name);
         }
     }
 }

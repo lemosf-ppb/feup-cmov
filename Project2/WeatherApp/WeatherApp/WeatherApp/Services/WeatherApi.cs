@@ -80,7 +80,7 @@ namespace WeatherApp.Services
                 ;
             }
         }
-        
+
         public static SKBitmap GetIconBitMap(string icon)
         {
             using (var client = new WebClient())

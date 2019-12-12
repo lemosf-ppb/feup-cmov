@@ -5,7 +5,7 @@
              xmlns:weatherApp="clr-namespace:WeatherApp;assembly=WeatherApp"
              x:Class="WeatherApp.Views.HomePage"
              x:Name="HomePageName">
-    
+
     <RelativeLayout>
         <Grid VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource DeepAqua}"
               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
@@ -20,7 +20,7 @@
                         Direction="Row"
                         AlignItems="Center"
                         JustifyContent="SpaceBetween">
-                
+
                 <Button Text="SYNC"
                         CornerRadius="10"
                         Margin="0,0,15,0"
@@ -28,14 +28,15 @@
                         HorizontalOptions="Center"
                         BackgroundColor="{StaticResource Wave}"
                         TextColor="{StaticResource DeepAqua}"
-                        Command="{Binding SyncCommand}"/>
-                
+                        Command="{Binding SyncCommand}" />
+
                 <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="CenterAndExpand">
-                    <Frame BackgroundColor="{StaticResource Seafoam}" BorderColor="{StaticResource Seafoam}" Padding="5" HasShadow="False">
+                    <Frame BackgroundColor="{StaticResource Seafoam}" BorderColor="{StaticResource Seafoam}"
+                           Padding="5" HasShadow="False">
                         <Picker VerticalOptions="Center" x:Name="CityPicker"
                                 Title="Please select a city"
                                 TextColor="{StaticResource DeepAqua}"
-                            
+
                                 ItemsSource="{Binding Cities}"
                                 ItemDisplayBinding="{Binding Name}"
                                 SelectedItem="{Binding SelectedCity}" />
@@ -50,7 +51,7 @@
                             CommandParameter="{Binding SelectedCity}" />
                 </StackLayout>
             </FlexLayout>
-            <ListView x:Name="FavoriteCitiesList" ItemsSource="{Binding FavoriteCities}" ItemTapped="OnItemSelected" 
+            <ListView x:Name="FavoriteCitiesList" ItemsSource="{Binding FavoriteCities}" ItemTapped="OnItemSelected"
                       SeparatorVisibility="None"
                       HasUnevenRows="true"
                       Grid.Row="1" Margin="20,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
@@ -60,8 +61,9 @@
                     <DataTemplate x:Key="FavouriteCity">
 
                         <ViewCell>
-                            <Frame BackgroundColor="{StaticResource Ocean}" CornerRadius="10" BorderColor="#336B87" Padding="5"
-                                   Margin="0,0,0,5" HasShadow="False" >
+                            <Frame BackgroundColor="{StaticResource Ocean}" CornerRadius="10" BorderColor="#336B87"
+                                   Padding="5"
+                                   Margin="0,0,0,5" HasShadow="False">
                                 <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Start">
 
                                     <Grid.ColumnDefinitions>
@@ -70,14 +72,16 @@
                                         <ColumnDefinition Width="1.5*" />
                                         <ColumnDefinition Width="0.5*" />
                                     </Grid.ColumnDefinitions>
-                                    
-                                    <Label Grid.Column="0" Text="{Binding Name}" TextColor="{StaticResource Seafoam}" FontSize="16" FontAttributes="Bold"
+
+                                    <Label Grid.Column="0" Text="{Binding Name}" TextColor="{StaticResource Seafoam}"
+                                           FontSize="16" FontAttributes="Bold"
                                            VerticalOptions="Center" Margin="10,0" />
                                     <StackLayout Grid.Column="1" Spacing="0" Orientation="Horizontal" Margin="10,0">
                                         <Label Text="{Binding WeatherNow.Main.Temperature}"
                                                TextColor="{StaticResource Seafoam}" FontSize="16" FontAttributes="Bold"
                                                VerticalOptions="Center" />
-                                        <Label Text="°C" TextColor="{StaticResource Seafoam}" FontSize="14" FontAttributes="Bold"
+                                        <Label Text="°C" TextColor="{StaticResource Seafoam}" FontSize="14"
+                                               FontAttributes="Bold"
                                                VerticalOptions="Center" />
                                     </StackLayout>
                                     <Image Grid.Column="2"
@@ -98,7 +102,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="{StaticResource Seafoam}"
+            <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}"
+                               Color="{StaticResource Seafoam}"
                                VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
         </Grid>
     </RelativeLayout>

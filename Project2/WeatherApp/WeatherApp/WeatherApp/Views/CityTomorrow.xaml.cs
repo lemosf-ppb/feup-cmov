@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Microcharts;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using WeatherApp.Models;
@@ -13,8 +12,6 @@ namespace WeatherApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CityTomorrow : ContentPage
     {
-        private List<GraphEntry> Entries { get; set;}
-
         public CityTomorrow(CityInfo city, DateTime tomorrow)
         {
             InitializeComponent();
@@ -60,9 +57,9 @@ namespace WeatherApp.Views
                     var date = weather.DtTxt;
                     var time = date.Substring(11, 2);
 
-                    Entries.Add(new GraphEntry((float)temp,time + "h", tempString, weather.Weather[0].IconBitmap));
+                    Entries.Add(new GraphEntry((float) temp, time + "h", tempString, weather.Weather[0].IconBitmap));
                 }
-                
+
                 var icon = "Icon" + i;
                 if (FindByName(icon) is Image iconImage) iconImage.Source = weather.Weather[0].IconSource;
 
@@ -104,15 +101,18 @@ namespace WeatherApp.Views
             MaxMinPressure.Text = minPressure + "/" + maxPressure + " hpa";
 
             MaxMinWind.Text = minWindSpeed + "/" + maxWindSpeed + " m/s";
-            
+
             var dayAfterTomorrow = city.WeatherForecast.WeatherByDays[2][0];
             var dayAfterTomorrowTemp = dayAfterTomorrow.Main.Temperature;
             var dayAfterTomorrowTempString = dayAfterTomorrowTemp.ToString(CultureInfo.InvariantCulture) + "°C";
-            
-            Entries.Add(new GraphEntry((float)dayAfterTomorrowTemp,"00h", dayAfterTomorrowTempString, dayAfterTomorrow.Weather[0].IconBitmap));
+
+            Entries.Add(new GraphEntry((float) dayAfterTomorrowTemp, "00h", dayAfterTomorrowTempString,
+                dayAfterTomorrow.Weather[0].IconBitmap));
             canvas.PaintSurface += OnPaint;
         }
-        
+
+        private List<GraphEntry> Entries { get; }
+
         private List<WeatherData> WeatherByHours { get; }
 
         private static double UpdateMin(double value, double min)
@@ -134,12 +134,12 @@ namespace WeatherApp.Views
             var info = e.Info;
             var surface = e.Surface;
             var canvas = surface.Canvas;
-            
-            var maxWidth = (int)Math.Round(info.Width * 0.95);
-            var maxHeight = (int)Math.Round(info.Height * 0.90);
-            var minWidth = (int)Math.Round(info.Width * 0.15);
-            var minHeight = (int)Math.Round(info.Height * 0.15);
-            var circleRadius = (int)Math.Round((double)info.Width / 125);
+
+            var maxWidth = (int) Math.Round(info.Width * 0.95);
+            var maxHeight = (int) Math.Round(info.Height * 0.90);
+            var minWidth = (int) Math.Round(info.Width * 0.15);
+            var minHeight = (int) Math.Round(info.Height * 0.15);
+            var circleRadius = (int) Math.Round((double) info.Width / 125);
 
             // clear canvas
             canvas.Clear(SKColor.Parse("#003B46"));
@@ -152,7 +152,7 @@ namespace WeatherApp.Views
                 StrokeWidth = 12,
                 TextSize = 30
             };
-            
+
             var linePaint = new SKPaint
             {
                 IsAntialias = true,
@@ -170,55 +170,54 @@ namespace WeatherApp.Views
             {
                 var temp = t.Temperature;
                 hours.Add(t.Label);
-                
+
                 if (temp > tempMax)
                     tempMax = temp;
                 if (temp < tempMin)
                     tempMin = temp;
             }
-            var xStep = ((double)maxWidth - minWidth)/(Entries.Count-1);
+
+            var xStep = ((double) maxWidth - minWidth) / (Entries.Count - 1);
             tempMin = Entries.Count > 1 ? tempMax - 1.1 * (tempMax - tempMin) : tempMin;
-            var yFactor = (maxHeight-minHeight)/ (tempMax - tempMin);
+            var yFactor = (maxHeight - minHeight) / (tempMax - tempMin);
 
             // draw graph axis and aux lines
-            DrawGraphAxis(canvas, hours, new SKPoint(minWidth, minHeight), new SKPoint(maxWidth, maxHeight), xStep, tempMin, tempMax);
+            DrawGraphAxis(canvas, hours, new SKPoint(minWidth, minHeight), new SKPoint(maxWidth, maxHeight), xStep,
+                tempMin, tempMax);
 
             // draw graph
-            for(var i=0; i<Entries.Count; i++)
+            for (var i = 0; i < Entries.Count; i++)
             {
-                
                 double currentClose = Entries[i].Temperature;
-                int currentX = (int)Math.Round(minWidth + i*xStep);
-                int currentY = maxHeight - (int)Math.Round((currentClose - tempMin) * yFactor);
+                var currentX = (int) Math.Round(minWidth + i * xStep);
+                var currentY = maxHeight - (int) Math.Round((currentClose - tempMin) * yFactor);
 
-                SKPoint currentPoint = new SKPoint(currentX, currentY);
+                var currentPoint = new SKPoint(currentX, currentY);
                 canvas.DrawCircle(currentPoint, circleRadius, dotPaint);
 
                 var iconBitMap = Entries[i].Icon;
                 var width = iconBitMap.Width;
                 var height = iconBitMap.Height;
-                
-                var iconPoint = new SKPoint(currentX - width/2, currentY - height);
-                
+
+                var iconPoint = new SKPoint(currentX - width / 2, currentY - height);
+
                 canvas.DrawBitmap(iconBitMap, iconPoint, dotPaint);
 
-                if (i == 0)
-                {
-                    continue;
-                }
-                
-                double prevClose = Entries[i-1].Temperature;
+                if (i == 0) continue;
 
-                var prevY = maxHeight - (int)Math.Round((prevClose - tempMin) * yFactor);
-                var prevX = (int)Math.Round(minWidth + (i-1) * xStep);
+                double prevClose = Entries[i - 1].Temperature;
+
+                var prevY = maxHeight - (int) Math.Round((prevClose - tempMin) * yFactor);
+                var prevX = (int) Math.Round(minWidth + (i - 1) * xStep);
                 var prevPoint = new SKPoint(prevX, prevY);
 
-                DrawShade(canvas, prevPoint, currentPoint, (float)tempMin, maxHeight);
+                DrawShade(canvas, prevPoint, currentPoint, (float) tempMin, maxHeight);
                 canvas.DrawLine(prevPoint, currentPoint, linePaint);
             }
         }
 
-        private static void DrawShade(SKCanvas canvas, SKPoint prevPoint, SKPoint currentPoint, float minHeight, int maxHeight)
+        private static void DrawShade(SKCanvas canvas, SKPoint prevPoint, SKPoint currentPoint, float minHeight,
+            int maxHeight)
         {
             var x = (prevPoint.X + currentPoint.X) / 2;
             var strongColor = SKColor.Parse("#C4DFE6DA");
@@ -237,7 +236,7 @@ namespace WeatherApp.Views
                     null,
                     SKShaderTileMode.Clamp)
             };
-            var path = new SKPath { FillType = SKPathFillType.EvenOdd };
+            var path = new SKPath {FillType = SKPathFillType.EvenOdd};
             path.MoveTo(prevPoint);
             path.LineTo(currentPoint);
             path.LineTo(currentPoint.X, maxHeight);
@@ -247,13 +246,14 @@ namespace WeatherApp.Views
             canvas.DrawPath(path, shaderPaint);
         }
 
-        private static void DrawGraphAxis(SKCanvas canvas, IReadOnlyList<string> hours, SKPoint min, SKPoint max, double xStep, double tempMin, double tempMax)
+        private static void DrawGraphAxis(SKCanvas canvas, IReadOnlyList<string> hours, SKPoint min, SKPoint max,
+            double xStep, double tempMin, double tempMax)
         {
             const int graphLines = 4;
             double heightDiff = max.Y - min.Y;
             var heightStep = heightDiff / graphLines;
             var tempStep = (tempMax - tempMin) / graphLines;
-            
+
             var axisColor = SKColor.Parse("#66A5AD");
 
             var axisPaint = new SKPaint
@@ -262,14 +262,14 @@ namespace WeatherApp.Views
                 StrokeCap = SKStrokeCap.Square,
                 StrokeWidth = 10
             };
-            
+
             var auxLinePaint = new SKPaint
             {
                 Color = axisColor,
                 StrokeCap = SKStrokeCap.Butt,
                 StrokeWidth = 2
             };
-            
+
             var textPaint = new SKPaint
             {
                 Color = SKColor.Parse("#C4DFE6"),
@@ -280,7 +280,7 @@ namespace WeatherApp.Views
             canvas.DrawLine(origin, new SKPoint(min.X, min.Y), axisPaint);
             canvas.DrawLine(origin, new SKPoint(max.X, max.Y), axisPaint);
 
-            for(var i=1; i<=graphLines; i++)
+            for (var i = 1; i <= graphLines; i++)
             {
                 var height = (int) Math.Round(max.Y - i * heightStep);
                 var temp = Math.Round(tempMin + i * tempStep, 1);
@@ -291,14 +291,13 @@ namespace WeatherApp.Views
 
             double widthDiff = max.X - min.X;
             var widthOffset = widthDiff / 28;
-            for(var i=0; i<hours.Count; i++)
+            for (var i = 0; i < hours.Count; i++)
             {
-                var width = (int)Math.Round(min.X + i * xStep);
-                if(i!=0)
-                {
-                    canvas.DrawLine(new SKPoint(width, min.Y), new SKPoint(width, max.Y), auxLinePaint);
-                }
-                canvas.DrawText(hours[i], new SKPoint(width - (float)widthOffset, min.Y + (float)heightDiff*1.11f), textPaint);
+                var width = (int) Math.Round(min.X + i * xStep);
+                if (i != 0) canvas.DrawLine(new SKPoint(width, min.Y), new SKPoint(width, max.Y), auxLinePaint);
+
+                canvas.DrawText(hours[i], new SKPoint(width - (float) widthOffset, min.Y + (float) heightDiff * 1.11f),
+                    textPaint);
             }
         }
     }

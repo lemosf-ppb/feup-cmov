@@ -22,16 +22,19 @@
                         Direction="Row"
                         AlignItems="Start"
                         JustifyContent="SpaceBetween">
-                
+
                 <StackLayout Orientation="Horizontal" Spacing="20" HorizontalOptions="CenterAndExpand">
-                    <Label x:Name="CityName" FontSize="26"  VerticalOptions="Center" TextColor="{StaticResource Seafoam}" />
+                    <Label x:Name="CityName" FontSize="26" VerticalOptions="Center"
+                           TextColor="{StaticResource Seafoam}" />
                 </StackLayout>
             </FlexLayout>
             <StackLayout Grid.Row="1" Orientation="Vertical" Margin="0,5" HorizontalOptions="Center"
                          VerticalOptions="Start">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Image x:Name="IconSource" Aspect="AspectFill" WidthRequest="80" HeightRequest="80" VerticalOptions="Center" />
-                    <Label x:Name="Temperature" Text="12" TextColor="{StaticResource Seafoam}" FontSize="70" FontAttributes="Bold"
+                    <Image x:Name="IconSource" Aspect="AspectFill" WidthRequest="80" HeightRequest="80"
+                           VerticalOptions="Center" />
+                    <Label x:Name="Temperature" Text="12" TextColor="{StaticResource Seafoam}" FontSize="70"
+                           FontAttributes="Bold"
                            VerticalOptions="Center" />
                     <Label Text="°C" TextColor="{StaticResource Seafoam}" FontSize="34" VerticalOptions="Center" />
                 </StackLayout>
@@ -43,27 +46,31 @@
                 <StackLayout Orientation="Vertical" Spacing="5" VerticalOptions="Center">
                     <Label Text="HOURLY:" TextColor="{StaticResource Seafoam}" FontSize="16" FontAttributes="Bold"
                            VerticalOptions="Center" />
-                    <Frame HasShadow="True" CornerRadius="10" VerticalOptions="Start" BackgroundColor="{StaticResource Seafoam}">
+                    <Frame HasShadow="True" CornerRadius="10" VerticalOptions="Start"
+                           BackgroundColor="{StaticResource Seafoam}">
                         <ScrollView Orientation="Horizontal" Margin="20,0">
                             <StackLayout Orientation="Horizontal" Spacing="50" VerticalOptions="Center">
                                 <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-                                    <Label Text="00:00" TextColor="{StaticResource DeepAqua}" FontSize="16" FontAttributes="Bold"
+                                    <Label Text="00:00" TextColor="{StaticResource DeepAqua}" FontSize="16"
+                                           FontAttributes="Bold"
                                            HorizontalOptions="Center" />
-                                    <Image x:Name="Icon0" Source="wind.png"  Aspect="AspectFill" HeightRequest="70"
+                                    <Image x:Name="Icon0" Source="wind.png" Aspect="AspectFill" HeightRequest="70"
                                            HorizontalOptions="Center" />
                                     <Label x:Name="Temp0" Text="16" TextColor="{StaticResource DeepAqua}" FontSize="16"
                                            FontAttributes="Bold" HorizontalOptions="Center" />
                                 </StackLayout>
                                 <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-                                    <Label Text="03:00" TextColor="{StaticResource DeepAqua}" FontSize="16" FontAttributes="Bold"
+                                    <Label Text="03:00" TextColor="{StaticResource DeepAqua}" FontSize="16"
+                                           FontAttributes="Bold"
                                            HorizontalOptions="Center" />
-                                    <Image x:Name="Icon1" Source="wind.png"  Aspect="AspectFill" HeightRequest="70"
+                                    <Image x:Name="Icon1" Source="wind.png" Aspect="AspectFill" HeightRequest="70"
                                            HorizontalOptions="Center" />
                                     <Label x:Name="Temp1" Text="16" TextColor="{StaticResource DeepAqua}" FontSize="16"
                                            FontAttributes="Bold" HorizontalOptions="Center" />
                                 </StackLayout>
                                 <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-                                    <Label Text="06:00" TextColor="{StaticResource DeepAqua}" FontSize="16" FontAttributes="Bold"
+                                    <Label Text="06:00" TextColor="{StaticResource DeepAqua}" FontSize="16"
+                                           FontAttributes="Bold"
                                            HorizontalOptions="Center" />
                                     <Image x:Name="Icon2" Source="wind.png" Aspect="AspectFill" HeightRequest="70"
                                            HorizontalOptions="Center" />
@@ -71,7 +78,8 @@
                                            FontAttributes="Bold" HorizontalOptions="Center" />
                                 </StackLayout>
                                 <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-                                    <Label Text="09:00" TextColor="{StaticResource DeepAqua}" FontSize="16" FontAttributes="Bold"
+                                    <Label Text="09:00" TextColor="{StaticResource DeepAqua}" FontSize="16"
+                                           FontAttributes="Bold"
                                            HorizontalOptions="Center" />
                                     <Image x:Name="Icon3" Source="wind.png" Aspect="AspectFill" HeightRequest="70"
                                            HorizontalOptions="Center" />
@@ -79,7 +87,8 @@
                                            FontAttributes="Bold" HorizontalOptions="Center" />
                                 </StackLayout>
                                 <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-                                    <Label Text="12:00" TextColor="{StaticResource DeepAqua}" FontSize="16" FontAttributes="Bold"
+                                    <Label Text="12:00" TextColor="{StaticResource DeepAqua}" FontSize="16"
+                                           FontAttributes="Bold"
                                            HorizontalOptions="Center" />
                                     <Image x:Name="Icon4" Source="wind.png" Aspect="AspectFill" HeightRequest="70"
                                            HorizontalOptions="Center" />
@@ -87,7 +96,8 @@
                                            FontAttributes="Bold" HorizontalOptions="Center" />
                                 </StackLayout>
                                 <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-                                    <Label Text="15:00" TextColor="{StaticResource DeepAqua}" FontSize="16" FontAttributes="Bold"
+                                    <Label Text="15:00" TextColor="{StaticResource DeepAqua}" FontSize="16"
+                                           FontAttributes="Bold"
                                            HorizontalOptions="Center" />
                                     <Image x:Name="Icon5" Source="wind.png" Aspect="AspectFill" HeightRequest="70"
                                            HorizontalOptions="Center" />
@@ -95,7 +105,8 @@
                                            FontAttributes="Bold" HorizontalOptions="Center" />
                                 </StackLayout>
                                 <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-                                    <Label Text="18:00" TextColor="{StaticResource DeepAqua}" FontSize="16" FontAttributes="Bold"
+                                    <Label Text="18:00" TextColor="{StaticResource DeepAqua}" FontSize="16"
+                                           FontAttributes="Bold"
                                            HorizontalOptions="Center" />
                                     <Image x:Name="Icon6" Source="wind.png" Aspect="AspectFill" HeightRequest="70"
                                            HorizontalOptions="Center" />
@@ -103,7 +114,8 @@
                                            FontAttributes="Bold" HorizontalOptions="Center" />
                                 </StackLayout>
                                 <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-                                    <Label Text="21:00" TextColor="{StaticResource DeepAqua}" FontSize="16" FontAttributes="Bold"
+                                    <Label Text="21:00" TextColor="{StaticResource DeepAqua}" FontSize="16"
+                                           FontAttributes="Bold"
                                            HorizontalOptions="Center" />
                                     <Image x:Name="Icon7" Source="wind.png" Aspect="AspectFill" HeightRequest="70"
                                            HorizontalOptions="Center" />
@@ -113,9 +125,11 @@
                             </StackLayout>
                         </ScrollView>
                     </Frame>
-                    <Label Text="WEATHER AMPLITUDES (MIN/MAX):" Margin="0,5,0,0" TextColor="{StaticResource Seafoam}" FontSize="16"
+                    <Label Text="WEATHER AMPLITUDES (MIN/MAX):" Margin="0,5,0,0" TextColor="{StaticResource Seafoam}"
+                           FontSize="16"
                            FontAttributes="Bold" VerticalOptions="Center" />
-                    <Frame HasShadow="True" CornerRadius="10" VerticalOptions="Start" BackgroundColor="{StaticResource Seafoam}">
+                    <Frame HasShadow="True" CornerRadius="10" VerticalOptions="Start"
+                           BackgroundColor="{StaticResource Seafoam}">
                         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -126,16 +140,19 @@
                                          HorizontalOptions="CenterAndExpand">
                                 <Image Source="wind.png" HeightRequest="35" HorizontalOptions="Center" />
                                 <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
-                                    <Label x:Name="MaxMinWind" Text="2.6 m/s" TextColor="{StaticResource DeepAqua}" FontSize="16"
+                                    <Label x:Name="MaxMinWind" Text="2.6 m/s" TextColor="{StaticResource DeepAqua}"
+                                           FontSize="16"
                                            FontAttributes="Bold" HorizontalOptions="Center" />
-                                    <Label Text="Wind" TextColor="{StaticResource Ocean}" FontSize="14" HorizontalOptions="Center" />
+                                    <Label Text="Wind" TextColor="{StaticResource Ocean}" FontSize="14"
+                                           HorizontalOptions="Center" />
                                 </StackLayout>
                             </StackLayout>
                             <StackLayout Grid.Column="1" Orientation="Vertical" Spacing="10"
                                          HorizontalOptions="CenterAndExpand">
                                 <Image Source="cloudiness.png" HeightRequest="35" HorizontalOptions="Center" />
                                 <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
-                                    <Label x:Name="MaxMinCloudiness" Text="24%" TextColor="{StaticResource DeepAqua}" FontSize="16"
+                                    <Label x:Name="MaxMinCloudiness" Text="24%" TextColor="{StaticResource DeepAqua}"
+                                           FontSize="16"
                                            FontAttributes="Bold" HorizontalOptions="Center" />
                                     <Label Text="Cloudiness" TextColor="{StaticResource Ocean}" FontSize="14"
                                            HorizontalOptions="Center" />
@@ -145,7 +162,8 @@
                                          HorizontalOptions="CenterAndExpand">
                                 <Image Source="humidity.png" HeightRequest="35" HorizontalOptions="Center" />
                                 <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
-                                    <Label x:Name="MaxMinPrecipitation" Text="24%" TextColor="{StaticResource DeepAqua}" FontSize="16"
+                                    <Label x:Name="MaxMinPrecipitation" Text="24%"
+                                           TextColor="{StaticResource DeepAqua}" FontSize="16"
                                            FontAttributes="Bold" HorizontalOptions="Center" />
                                     <Label Text="Precipitation" TextColor="{StaticResource Ocean}" FontSize="14"
                                            HorizontalOptions="Center" />
@@ -153,7 +171,8 @@
                             </StackLayout>
                         </Grid>
                     </Frame>
-                    <Frame HasShadow="True" CornerRadius="10" VerticalOptions="Start" BackgroundColor="{StaticResource Seafoam}">
+                    <Frame HasShadow="True" CornerRadius="10" VerticalOptions="Start"
+                           BackgroundColor="{StaticResource Seafoam}">
                         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -162,28 +181,33 @@
                             <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
                                 <Image Source="humidity.png" HeightRequest="35" HorizontalOptions="Center" />
                                 <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
-                                    <Label x:Name="MaxMinHumidity" Text="50%" TextColor="{StaticResource DeepAqua}" FontSize="16"
+                                    <Label x:Name="MaxMinHumidity" Text="50%" TextColor="{StaticResource DeepAqua}"
+                                           FontSize="16"
                                            FontAttributes="Bold" HorizontalOptions="Center" />
-                                    <Label Text="Humidity" TextColor="{StaticResource Ocean}" FontSize="14" HorizontalOptions="Center" />
+                                    <Label Text="Humidity" TextColor="{StaticResource Ocean}" FontSize="14"
+                                           HorizontalOptions="Center" />
                                 </StackLayout>
                             </StackLayout>
                             <StackLayout Grid.Column="1" Orientation="Vertical" HorizontalOptions="CenterAndExpand">
                                 <Image Source="pressure.png" HeightRequest="35" HorizontalOptions="Center" />
                                 <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
-                                    <Label x:Name="MaxMinPressure" Text="1011 hpa" TextColor="{StaticResource DeepAqua}" FontSize="16"
+                                    <Label x:Name="MaxMinPressure" Text="1011 hpa"
+                                           TextColor="{StaticResource DeepAqua}" FontSize="16"
                                            FontAttributes="Bold" HorizontalOptions="Center" />
-                                    <Label Text="Pressure" TextColor="{StaticResource Ocean}" FontSize="14" HorizontalOptions="Center" />
+                                    <Label Text="Pressure" TextColor="{StaticResource Ocean}" FontSize="14"
+                                           HorizontalOptions="Center" />
                                 </StackLayout>
                             </StackLayout>
                         </Grid>
                     </Frame>
-                    <Label Text="TEMPERATURE GRAPH:" Margin="0,5,0,0" TextColor="{StaticResource Seafoam}" FontSize="16"
+                    <Label Text="TEMPERATURE GRAPH:" Margin="0,5,0,0" TextColor="{StaticResource Seafoam}"
+                           FontSize="16"
                            FontAttributes="Bold" VerticalOptions="Center" />
                     <forms:SKCanvasView x:Name="canvas"
                                         Margin="0,0,0,15"
                                         HeightRequest="200"
-                                       HorizontalOptions="Fill"
-                                       VerticalOptions="FillAndExpand"/>
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="FillAndExpand" />
                 </StackLayout>
             </ScrollView>
 

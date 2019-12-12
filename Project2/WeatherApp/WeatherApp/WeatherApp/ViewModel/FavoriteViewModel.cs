@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Windows.Input;
 using WeatherApp.Models;
 using Xamarin.Forms;
@@ -13,8 +12,8 @@ namespace WeatherApp.ViewModel
     {
         private ObservableCollection<CityInfo> _cities;
         private ObservableCollection<CityInfo> _favoriteCities;
-        private bool isLoading;
         private CityInfo _selectedCity;
+        private bool isLoading;
 
         public FavoriteViewModel()
         {
@@ -29,8 +28,8 @@ namespace WeatherApp.ViewModel
 
         public bool IsLoading
         {
-            get { return isLoading; }
-            set { SetProperty(ref isLoading, value); }
+            get => isLoading;
+            set => SetProperty(ref isLoading, value);
         }
 
         public ObservableCollection<CityInfo> Cities
@@ -53,7 +52,7 @@ namespace WeatherApp.ViewModel
 
         public ICommand AddCityCommand { get; }
         public ICommand RemoveCityCommand { get; }
-        
+
         public ICommand SyncCommand { get; }
 
         private ObservableCollection<CityInfo> CitiesData()
@@ -79,7 +78,6 @@ namespace WeatherApp.ViewModel
                 new CityInfo("Vila Real"),
                 new CityInfo("Viseu")
             };
-            
         }
 
         private async void AddCity(CityInfo selectedCity)
@@ -97,18 +95,17 @@ namespace WeatherApp.ViewModel
             StoreData();
         }
 
-        private static void BubbleSort(IList o) {
-            for (var i = o.Count - 1; i >= 0; i--) {
-                for (var j = 1; j <= i; j++) {
-                    var o1 = o[j - 1];
-                    var o2 = o[j];
-                    if (((IComparable) o1).CompareTo(o2) <= 0)
-                    {
-                        continue;
-                    }
-                    o.Remove(o1);
-                    o.Insert(j, o1);
-                }
+        private static void BubbleSort(IList o)
+        {
+            for (var i = o.Count - 1; i >= 0; i--)
+            for (var j = 1; j <= i; j++)
+            {
+                var o1 = o[j - 1];
+                var o2 = o[j];
+                if (((IComparable) o1).CompareTo(o2) <= 0) continue;
+
+                o.Remove(o1);
+                o.Insert(j, o1);
             }
         }
 
@@ -121,31 +118,24 @@ namespace WeatherApp.ViewModel
 
         private async void Sync()
         {
-            if (_favoriteCities.Count == 0)
-            {
-                return;
-            }
-            
+            if (_favoriteCities.Count == 0) return;
+
             IsLoading = true;
-            foreach (var city in _favoriteCities)
-            {
-                await city.OnLoadWeatherForecast();
-            }
+            foreach (var city in _favoriteCities) await city.OnLoadWeatherForecast();
+
             IsLoading = false;
         }
 
         private void StoreData()
         {
-            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "data.txt");
+            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "data.txt");
 
             var data = "";
-            for (var i=0; i<_favoriteCities.Count; i++)
+            for (var i = 0; i < _favoriteCities.Count; i++)
             {
                 data += _favoriteCities[i].Name;
-                if (i != _favoriteCities.Count - 1)
-                {
-                    data += "\n";
-                }
+                if (i != _favoriteCities.Count - 1) data += "\n";
             }
 
             File.WriteAllText(filePath, data);
@@ -153,18 +143,19 @@ namespace WeatherApp.ViewModel
 
         private void LoadData()
         {
-            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "data.txt");
+            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "data.txt");
 
             if (!File.Exists(filePath)) return;
-            
-            string line;  
-            var file =   new StreamReader(filePath);  
-            while((line = file.ReadLine()) != null)  
-            {  
+
+            string line;
+            var file = new StreamReader(filePath);
+            while ((line = file.ReadLine()) != null)
+            {
                 var cityInfo = new CityInfo(line);
                 AddCity(cityInfo);
-            }  
-  
+            }
+
             file.Close();
         }
     }
