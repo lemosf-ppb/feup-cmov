@@ -7,7 +7,12 @@
              xmlns:forms="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              mc:Ignorable="d"
              x:Class="WeatherApp.Views.CityTomorrow">
-    <ContentPage.Content>
+       
+       <NavigationPage.TitleView>
+              <Label FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Seafoam}">Portugal Weather Seer</Label>
+       </NavigationPage.TitleView>
+       
+       <ContentPage.Content>
         <RelativeLayout BackgroundColor="{StaticResource DeepAqua}">
             <Grid VerticalOptions="FillAndExpand"
                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
@@ -178,7 +183,7 @@
                                 </StackLayout>
                                 <StackLayout Grid.Column="2" Orientation="Vertical" Spacing="10"
                                              HorizontalOptions="CenterAndExpand">
-                                    <Image Source="humidity.png" HeightRequest="35" HorizontalOptions="Center" />
+                                    <Image Source="rain.png" HeightRequest="35" HorizontalOptions="Center" />
                                     <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
                                         <Label x:Name="MaxMinPrecipitation" Text="24%"
                                                TextColor="{StaticResource DeepAqua}" FontSize="16"
