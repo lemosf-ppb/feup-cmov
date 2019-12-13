@@ -22,7 +22,7 @@ namespace WeatherApp.Views
             WeatherByHours = city.WeatherForecast.WeatherByDays[1];
 
             Temperature.Text = WeatherByHours[0].Main.Temperature.ToString(CultureInfo.InvariantCulture);
-            IconSource.Source = WeatherByHours[0].Weather[0].IconSource;
+            IconSource.Source = $"https://openweathermap.org/img/wn/{WeatherByHours[0].Weather[0].Icon}@2x.png";
 
             var i = 0;
             var minTemp = 100.0;
@@ -61,7 +61,8 @@ namespace WeatherApp.Views
                 }
 
                 var icon = "Icon" + i;
-                if (FindByName(icon) is Image iconImage) iconImage.Source = weather.Weather[0].IconSource;
+                if (FindByName(icon) is Image iconImage)
+                    iconImage.Source = $"https://openweathermap.org/img/wn/{weather.Weather[0].Icon}@2x.png";
 
                 minTemp = UpdateMin(weather.Main.TempMin, minTemp);
                 maxTemp = UpdateMax(weather.Main.TempMax, maxTemp);

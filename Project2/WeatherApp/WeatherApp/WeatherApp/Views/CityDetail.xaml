@@ -12,9 +12,6 @@
     </NavigationPage.TitleView>
 
     <RelativeLayout>
-        <!-- <Image Source="overlay.png" Aspect="AspectFill" -->
-        <!--        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}" -->
-        <!--        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" /> -->
         <Grid VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource DeepAqua}"
               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">

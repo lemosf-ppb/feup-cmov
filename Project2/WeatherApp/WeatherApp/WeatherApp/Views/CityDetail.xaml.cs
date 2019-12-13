@@ -36,7 +36,7 @@ namespace WeatherApp.Views
 
             Temperature.Text = todayWeather.Main.Temperature.ToString(CultureInfo.InvariantCulture);
 
-            IconSource.Source = todayWeather.Weather[0].IconSource;
+            IconSource.Source = $"https://openweathermap.org/img/wn/{todayWeather.Weather[0].Icon}@2x.png";
         }
 
         public CityInfo CityInfo { get; set; }

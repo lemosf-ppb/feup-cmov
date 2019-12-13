@@ -25,7 +25,6 @@ namespace WeatherApp.Services
                     if (response.IsSuccessStatusCode)
                     {
                         var content = await response.Content.ReadAsStringAsync();
-                        Console.WriteLine(content);
                         weatherForecast = JsonConvert.DeserializeObject<WeatherForecast>(content);
                     }
                 }
